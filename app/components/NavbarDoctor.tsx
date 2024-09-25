@@ -1,16 +1,19 @@
 import React from 'react';
 import Link from 'next/link';
-import { ImPlus } from "react-icons/im";
 import { ImProfile } from "react-icons/im";
+import Image from 'next/image';
+import Logo from '../assets/logo.svg';
 
 const NavbarDoctor: React.FC = () => {
+
+  console.log(Logo);
   return (
     <nav className="fixed top-0 left-0 bg-green-800 p-4 w-full">
       <div className="container mx-auto flex justify-between items-center text-white ">
-        <ImPlus className='text-3xl'/>
+        <Image src={Logo} alt=''/>
         <div className=" flex text-white gap-4 text-lg font-bold ">
           <Link href="/">Pacientes</Link>
-          <Link href="/Prontuarios-Medico">Prontuarios</Link>
+          <Link href="/Prontuarios-Medico">Prontuários</Link>
           <Link href="/Solicitacoes-Medico">Solicitações</Link>
           <Link href="/Sobre">Sobre</Link>
         </div>

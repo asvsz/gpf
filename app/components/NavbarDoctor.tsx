@@ -8,7 +8,7 @@ const NavbarDoctor: React.FC = () => {
 
   console.log(Logo);
   return (
-    <nav className="fixed top-0 left-0 bg-green-800 p-4 w-full">
+    <nav className="fixed top-0 left-0 bg-green-800 p-4 w-full z-10">
       <div className="container mx-auto flex justify-between items-center text-white ">
         <Image src={Logo} alt=''/>
         <div className=" flex text-white gap-4 text-lg font-bold ">

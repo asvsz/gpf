@@ -1,5 +1,5 @@
 import React from "react"
-import ButtonOne from "./Button-one";
+import ButtonOne from "./ButtonOne";
 import { useRouter } from "next/navigation";
 
 interface PatientProps {
@@ -9,9 +9,9 @@ interface PatientProps {
 }
 
 export default function PatientCell({ nome, cpf, numeroProntuario }: PatientProps) {
-  
+
   const router = useRouter();
-  
+
   return (
     <div className="flex gap-10 items-center">
       <div className="flex py-6 px-8 bg-gray-200 justify-between h-auto w-[800px] rounded-2xl items-center shadow-lg">

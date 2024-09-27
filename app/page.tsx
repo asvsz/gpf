@@ -1,59 +1,43 @@
-'use client'
-import FooterBar from "./components/Footer";
-import Navbar from "./components/NavbarDoctor";
-import PatientCell from "./components/Patient-cell";
-import SearchEngine from "./components/Search-engine";
-import patientData from "./data/patient.json";
-import { useEffect, useState } from "react";
+'use client';
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from './context/AuthContext'; // Importa o contexto de autenticação
 
-interface Patient {
-  nome: string;
-  cpf: string;
-  numeroProntuario: string;
-}
+const TipoUsuario: React.FC = () => {
+  const router = useRouter();
+  const { login } = useAuth(); // Obtém a função de login do contexto
 
-export default function Home() {
-  const [patients, setPatients] = useState<Patient[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const handleUserTypeSelection = (userType: 'patient' | 'clinician') => {
+    // Realiza o login (armazenando o tipo de usuário)
+    login(userType);
 
-  useEffect(() => {
-    setPatients(patientData);
-  }, []);
-
-  // Função para atualizar o termo de busca
-  const handleSearch = (term: string) => {
-    setSearchTerm(term);
+    // Redireciona para a rota apropriada
+    if (userType === 'patient') {
+      router.push('/Login');
+    } else if (userType === 'clinician') {
+      router.push('/Login');
+    }
   };
 
-  // Filtrar pacientes com base no termo de busca
-  const filteredPatients = patients.filter((patient) =>
-    patient.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    patient.cpf.includes(searchTerm)
-  );
-
   return (
-    <div className="gap-8 grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <Navbar />
-      <main className=" flex row-start-2 items-center sm:items-start z-0">
-        <div className="flex flex-col gap-8 pt-10">
-          {/* Passar a função de busca para o componente de busca */}
-          <SearchEngine onSearch={handleSearch} />
-          {/* Exibir apenas o paciente filtrado */}
-          {filteredPatients.length > 0 ? (
-            filteredPatients.map((patient) => (
-              <PatientCell
-                key={patient.cpf}
-                nome={patient.nome}
-                cpf={patient.cpf}
-                numeroProntuario={patient.numeroProntuario}
-              />
-            ))
-          ) : (
-            <div className="p-3 text-gray-500">Nenhum paciente encontrado</div>
-          )}
-        </div>
-      </main>
-      <FooterBar />
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <h1 className="text-3xl mb-6">Selecione o Tipo de Usuário</h1>
+      <div className="flex flex-col space-y-4">
+        <button
+          className="bg-green-800 text-white rounded-lg px-4 py-2 hover:bg-green-700 transition duration-300"
+          onClick={() => handleUserTypeSelection('patient')}
+        >
+          Paciente
+        </button>
+        <button
+          className="bg-blue-800 text-white rounded-lg px-4 py-2 hover:bg-blue-700 transition duration-300"
+          onClick={() => handleUserTypeSelection('clinician')}
+        >
+          Clínico
+        </button>
+      </div>
     </div>
   );
-}
+};
+
+export default TipoUsuario;

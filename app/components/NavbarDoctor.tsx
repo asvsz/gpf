@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ImProfile } from "react-icons/im";
 import Image from 'next/image';
 import Logo from '../assets/logo.svg';
+import LogoutButton from './LogoutButton';
 
 const NavbarDoctor: React.FC = () => {
 
@@ -12,15 +13,16 @@ const NavbarDoctor: React.FC = () => {
       <div className="container mx-auto flex justify-between items-center text-white ">
         <Image src={Logo} alt=''/>
         <div className=" flex text-white gap-4 text-lg font-bold ">
-          <Link href="/">Pacientes</Link>
-          <Link href="/Prontuarios-Medico">Prontuários</Link>
-          <Link href="/Solicitacoes-Medico">Solicitações</Link>
-          <Link href="/Sobre">Sobre</Link>
+          <Link href="/Medico/Pacientes">Pacientes</Link>
+          <Link href="/Medico/Fichas">Fichas</Link>
+          <Link href="/Medico/Solicitacoes">Solicitações</Link>
+          <Link href="/Medico/Sobre">Sobre</Link>
         </div>
         <div className='flex gap-4 justify-between items-center'>
           <p>Amanda Souza</p>
           <ImProfile />
         </div>
+        <LogoutButton />
       </div>
     </nav>
   );

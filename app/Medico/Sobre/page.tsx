@@ -1,6 +1,5 @@
-import FooterBar from "../components/Footer";
-import NavbarDoctor from "../components/NavbarDoctor";
-
+import FooterBar from "@/app/components/Footer";
+import NavbarDoctor from "@/app/components/NavbarDoctor";
 
 export default function Sobre() {
   return (

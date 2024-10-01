@@ -1,8 +1,8 @@
 'use client'
+import ButtonIcon from "@/app/components/ButtonIcon";
+import FooterBar from "@/app/components/Footer";
+import NavbarDoctor from "@/app/components/NavbarDoctor";
 import { useRouter } from "next/navigation";
-import FooterBar from "../components/Footer";
-import NavbarDoctor from "../components/NavbarDoctor";
-import ButtonIcon from "../components/Button-icon";
 import { GoPlus } from "react-icons/go";
 
 

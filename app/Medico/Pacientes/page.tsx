@@ -1,17 +1,21 @@
 'use client'
 import FooterBar from "../../components/Footer";
-import LogoutButton from "../../components/LogoutButton";
 import Navbar from "../../components/NavbarDoctor";
 import PatientCell from "../../components/PatientCell";
 import SearchEngine from "../../components/SearchEngine";
-import patientData from "../../data/patient.json";
 import { useEffect, useState } from "react";
 import PrivateRoute from "../../components/PrivateRoute";
+import api from "@/app/services/api";
 
 interface Patient {
-  nome: string;
+  name: string;
+  surname: string;
+  email: string;
+  phoneNumber: string;
+  universalMedicalRecordId: string;
+  birthDate: string;
+  gender: string;
   cpf: string;
-  numeroProntuario: string;
 }
 
 export default function Home() {
@@ -20,7 +24,37 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
-    setPatients(patientData);
+
+    const fetchPatients = async () => {
+      const token = localStorage.getItem("access_token")
+      try {
+        
+        const response = await api.get(`/patients`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+
+        console.log("Pacientes retornados:", response.data);
+        const mappedPatients = response.data.patients.map((patient: any) => ({
+          id: patient.id,
+          name: patient.name,
+          surname: patient.surname,
+          email: patient.email,
+          phoneNumber: patient.phoneNumber,
+          universalMedicalRecordId: patient.universalMedicalRecordId,
+          birthDate: patient.birthDate,
+          gender: patient.gender,
+          cpf: patient.cpf,
+        }));
+        console.log(response.data)
+        setPatients(mappedPatients)
+
+      } catch (error) {
+        console.error('Erro ao buscar pacientes', error)
+      }
+    }
+    fetchPatients()
   }, []);
 
   // Função para atualizar o termo de busca
@@ -30,9 +64,10 @@ export default function Home() {
 
   // Filtrar pacientes com base no termo de busca
   const filteredPatients = patients.filter((patient) =>
-    patient.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    patient.cpf.includes(searchTerm)
+    patient.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const patientsToDisplay = searchTerm ? filteredPatients : patients;
 
   return (
     <PrivateRoute requiredUserType="clinician">
@@ -43,13 +78,14 @@ export default function Home() {
             {/* Passar a função de busca para o componente de busca */}
             <SearchEngine onSearch={handleSearch} />
             {/* Exibir apenas o paciente filtrado */}
-            {filteredPatients.length > 0 ? (
-              filteredPatients.map((patient) => (
+            {patientsToDisplay.length > 0 ? (
+              patientsToDisplay.map((patient) => (
                 <PatientCell
-                  key={patient.cpf}
-                  nome={patient.nome}
+                  key={patient.universalMedicalRecordId}
+                  name={patient.name}
+                  email={patient.email}
                   cpf={patient.cpf}
-                  numeroProntuario={patient.numeroProntuario}
+                  id={patient.universalMedicalRecordId}
                 />
               ))
             ) : (

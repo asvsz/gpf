@@ -6,6 +6,7 @@ import { useAuth } from '@/app/context/AuthContext';
 import SaveButton from '@/app/components/SaveButton';
 import CancelButton from '@/app/components/CancelButton';
 import axios from 'axios';
+import PrivateRoute from '@/app/components/PrivateRoute';
 
 
 interface Prontuario {
@@ -99,101 +100,103 @@ export default function EditPage() {
   if (loading) return <div>Carregando...</div>;
 
   return (
-    <div className="p-8">
-      <h2 className="text-lg font-bold">Editar Prontuário</h2>
-      {error && <div className="text-red-500">{error}</div>}
-      {prontuario ? (
-        <div className="flex flex-col gap-4">
-          <input
-            type="text"
-            value={prontuario.profession || ''}
-            onChange={(e) => setProntuario({ ...prontuario, profession: e.target.value })}
-            className="border rounded-md px-2 py-1"
-            placeholder="Profissão"
-          />
-          <input
-            type="text"
-            value={prontuario.address || ''}
-            onChange={(e) => setProntuario({ ...prontuario, address: e.target.value })}
-            className="border rounded-md px-2 py-1"
-            placeholder="Endereço"
-          />
-          <input
-            type="text"
-            value={prontuario.city || ''}
-            onChange={(e) => setProntuario({ ...prontuario, city: e.target.value })}
-            className="border rounded-md px-2 py-1"
-            placeholder="Cidade"
-          />
-          <input
-            type="text"
-            value={prontuario.state || ''}
-            onChange={(e) => setProntuario({ ...prontuario, state: e.target.value })}
-            className="border rounded-md px-2 py-1"
-            placeholder="Estado"
-          />
-          <input
-            type="text"
-            value={prontuario.emergencyContactEmail || ''}
-            onChange={(e) => setProntuario({ ...prontuario, emergencyContactEmail: e.target.value })}
-            className="border rounded-md px-2 py-1"
-            placeholder="Email de Contato de Emergência"
-          />
-          <input
-            type="text"
-            value={prontuario.emergencyContactNumber || ''}
-            onChange={(e) => setProntuario({ ...prontuario, emergencyContactNumber: e.target.value })}
-            className="border rounded-md px-2 py-1"
-            placeholder="Número de Contato de Emergência"
-          />
-          <input
-            type="text"
-            value={prontuario.allergies || ''}
-            onChange={(e) => setProntuario({ ...prontuario, allergies: e.target.value })}
-            className="border rounded-md px-2 py-1"
-            placeholder="Alergias"
-          />
-          <input
-            type="text"
-            value={prontuario.maritalStatus || ''}
-            onChange={(e) => setProntuario({ ...prontuario, maritalStatus: e.target.value })}
-            className="border rounded-md px-2 py-1"
-            placeholder="Estado Civil"
-          />
-          <input
-            type="number"
-            value={prontuario.height || ''}
-            onChange={(e) => setProntuario({ ...prontuario, height: Number(e.target.value) })}
-            className="border rounded-md px-2 py-1"
-            placeholder="Altura (cm)"
-          />
-          <input
-            type="number"
-            value={prontuario.weight || ''}
-            onChange={(e) => setProntuario({ ...prontuario, weight: Number(e.target.value) })}
-            className="border rounded-md px-2 py-1"
-            placeholder="Peso (kg)"
-          />
-          <textarea
-            value={prontuario.medicationsInUse.join(', ') || ''}
-            onChange={(e) => setProntuario({ ...prontuario, medicationsInUse: e.target.value.split(',').map(med => med.trim()) })}
-            className="border rounded-md px-2 py-1"
-            placeholder="Medicações em Uso (separe por vírgulas)"
-          />
-          <textarea
-            value={prontuario.diagnosis.join(', ') || ''}
-            onChange={(e) => setProntuario({ ...prontuario, diagnosis: e.target.value.split(',').map(diag => diag.trim()) })}
-            className="border rounded-md px-2 py-1"
-            placeholder="Diagnósticos (separe por vírgulas)"
-          />
-          <div className="flex gap-2 mt-4">
-            <SaveButton onClick={handleSave} />
-            <CancelButton onClick={() => router.push('/Medico/Pacientes/Prontuario')} />
+    <PrivateRoute requiredUserType='clinician' >
+      <div className="p-8">
+        <h2 className="text-lg font-bold">Editar Prontuário</h2>
+        {error && <div className="text-red-500">{error}</div>}
+        {prontuario ? (
+          <div className="flex flex-col gap-4">
+            <input
+              type="text"
+              value={prontuario.profession || ''}
+              onChange={(e) => setProntuario({ ...prontuario, profession: e.target.value })}
+              className="border rounded-md px-2 py-1"
+              placeholder="Profissão"
+            />
+            <input
+              type="text"
+              value={prontuario.address || ''}
+              onChange={(e) => setProntuario({ ...prontuario, address: e.target.value })}
+              className="border rounded-md px-2 py-1"
+              placeholder="Endereço"
+            />
+            <input
+              type="text"
+              value={prontuario.city || ''}
+              onChange={(e) => setProntuario({ ...prontuario, city: e.target.value })}
+              className="border rounded-md px-2 py-1"
+              placeholder="Cidade"
+            />
+            <input
+              type="text"
+              value={prontuario.state || ''}
+              onChange={(e) => setProntuario({ ...prontuario, state: e.target.value })}
+              className="border rounded-md px-2 py-1"
+              placeholder="Estado"
+            />
+            <input
+              type="text"
+              value={prontuario.emergencyContactEmail || ''}
+              onChange={(e) => setProntuario({ ...prontuario, emergencyContactEmail: e.target.value })}
+              className="border rounded-md px-2 py-1"
+              placeholder="Email de Contato de Emergência"
+            />
+            <input
+              type="text"
+              value={prontuario.emergencyContactNumber || ''}
+              onChange={(e) => setProntuario({ ...prontuario, emergencyContactNumber: e.target.value })}
+              className="border rounded-md px-2 py-1"
+              placeholder="Número de Contato de Emergência"
+            />
+            <input
+              type="text"
+              value={prontuario.allergies || ''}
+              onChange={(e) => setProntuario({ ...prontuario, allergies: e.target.value })}
+              className="border rounded-md px-2 py-1"
+              placeholder="Alergias"
+            />
+            <input
+              type="text"
+              value={prontuario.maritalStatus || ''}
+              onChange={(e) => setProntuario({ ...prontuario, maritalStatus: e.target.value })}
+              className="border rounded-md px-2 py-1"
+              placeholder="Estado Civil"
+            />
+            <input
+              type="number"
+              value={prontuario.height || ''}
+              onChange={(e) => setProntuario({ ...prontuario, height: Number(e.target.value) })}
+              className="border rounded-md px-2 py-1"
+              placeholder="Altura (cm)"
+            />
+            <input
+              type="number"
+              value={prontuario.weight || ''}
+              onChange={(e) => setProntuario({ ...prontuario, weight: Number(e.target.value) })}
+              className="border rounded-md px-2 py-1"
+              placeholder="Peso (kg)"
+            />
+            <textarea
+              value={prontuario.medicationsInUse.join(', ') || ''}
+              onChange={(e) => setProntuario({ ...prontuario, medicationsInUse: e.target.value.split(',').map(med => med.trim()) })}
+              className="border rounded-md px-2 py-1"
+              placeholder="Medicações em Uso (separe por vírgulas)"
+            />
+            <textarea
+              value={prontuario.diagnosis.join(', ') || ''}
+              onChange={(e) => setProntuario({ ...prontuario, diagnosis: e.target.value.split(',').map(diag => diag.trim()) })}
+              className="border rounded-md px-2 py-1"
+              placeholder="Diagnósticos (separe por vírgulas)"
+            />
+            <div className="flex gap-2 mt-4">
+              <SaveButton onClick={handleSave} />
+              <CancelButton onClick={() => router.push('/Medico/Pacientes/Prontuario')} />
+            </div>
           </div>
-        </div>
-      ) : (
-        <div>Prontuário não encontrado.</div>
-      )}
-    </div>
+        ) : (
+          <div>Prontuário não encontrado.</div>
+        )}
+      </div>
+    </PrivateRoute>
   );
 }

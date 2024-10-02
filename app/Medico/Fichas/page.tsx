@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { GoPlus } from "react-icons/go";
 
 
-export default function Prontuarios() {
+export default function Fichas() {
 
   const router = useRouter();
 

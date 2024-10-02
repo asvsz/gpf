@@ -7,21 +7,6 @@ import SaveButton from '@/app/components/SaveButton';
 import CancelButton from '@/app/components/CancelButton';
 import axios from 'axios';
 
-interface Patient {
-  birthDate: string;
-  cpf: string;
-  createdAt: string;
-  email: string;
-  gender: string;
-  id: string;
-  name: string;
-  password: string; // Se necessário, considere esconder ou tratar a senha
-  phoneNumber: string;
-  slug: string;
-  surname: string;
-  universalMedicalRecordId: string;
-  updatedAt: string;
-}
 
 interface Prontuario {
   profession: string;

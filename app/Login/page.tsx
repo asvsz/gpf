@@ -7,10 +7,12 @@ import FooterBar from '../components/Footer';
 import HeaderBar from '../components/Header';
 import { useAuth } from '../context/AuthContext';
 import Input from '../components/InputText';
+import Link from 'next/link';
+
 
 const Login = () => {
   const router = useRouter();
-  const { user, login } = useAuth(); // Obtem o tipo de usuário do contexto
+  const { user} = useAuth(); // Obtem o tipo de usuário do contexto
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -75,6 +77,24 @@ const Login = () => {
           />
           {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         </form>
+        <div>
+          {user === 'clinician' && (
+            <span>
+              Se ainda não é cadastrado,{' '}
+              <Link href="/CadastrarMedico" className="text-green-500">
+                Cadastre-se
+              </Link>
+            </span>
+          )}
+          {user === 'patient' && (
+            <span>
+              Se ainda não é cadastrado,{' '}
+              <Link href="/CadastrarPaciente" className="text-green-500">
+                Cadastre-se
+              </Link>
+            </span>
+          )}
+        </div>
       </main>
       <FooterBar />
     </div>

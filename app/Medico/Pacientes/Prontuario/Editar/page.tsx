@@ -11,9 +11,6 @@ import PrivateRoute from '@/app/components/PrivateRoute';
 
 interface Prontuario {
   profession: string;
-  address: string;
-  city: string;
-  state: string;
   emergencyContactEmail: string;
   emergencyContactNumber: string;
   allergies: string;
@@ -112,27 +109,6 @@ export default function EditPage() {
               onChange={(e) => setProntuario({ ...prontuario, profession: e.target.value })}
               className="border rounded-md px-2 py-1"
               placeholder="Profissão"
-            />
-            <input
-              type="text"
-              value={prontuario.address || ''}
-              onChange={(e) => setProntuario({ ...prontuario, address: e.target.value })}
-              className="border rounded-md px-2 py-1"
-              placeholder="Endereço"
-            />
-            <input
-              type="text"
-              value={prontuario.city || ''}
-              onChange={(e) => setProntuario({ ...prontuario, city: e.target.value })}
-              className="border rounded-md px-2 py-1"
-              placeholder="Cidade"
-            />
-            <input
-              type="text"
-              value={prontuario.state || ''}
-              onChange={(e) => setProntuario({ ...prontuario, state: e.target.value })}
-              className="border rounded-md px-2 py-1"
-              placeholder="Estado"
             />
             <input
               type="text"

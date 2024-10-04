@@ -154,7 +154,10 @@ export default function ProntuarioPage (){
                 </div>
               )}
               <p><strong>Profissão:</strong> {prontuario.profession}</p>
-              <p><strong>Contato de Emergência:</strong> {prontuario.emergencyContactEmail}, {prontuario.emergencyContactNumber}</p>
+              <p className=''><strong>Contato de Emergência:</strong>
+                <br /><div className='pl-4 pt-4'><strong >Email:</strong>{prontuario.emergencyContactEmail}</div>
+                <br /><div className='pl-4'><strong >Número de Telefone:</strong>{prontuario.emergencyContactNumber}</div>
+              </p>
               <p><strong>Alergias:</strong> {prontuario.allergies}</p>
               <p><strong>Estado Civil:</strong> {prontuario.maritalStatus}</p>
               <p><strong>Altura:</strong> {prontuario.height} cm</p>

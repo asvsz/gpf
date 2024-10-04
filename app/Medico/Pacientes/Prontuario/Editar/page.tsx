@@ -13,7 +13,7 @@ interface Prontuario {
   profession: string;
   emergencyContactEmail: string;
   emergencyContactNumber: string;
-  allergies: string;
+  allergies: string[];
   maritalStatus: string;
   height: number; // em centímetros
   weight: number; // em quilogramas
@@ -126,18 +126,28 @@ export default function EditPage() {
             />
             <input
               type="text"
-              value={prontuario.allergies || ''}
-              onChange={(e) => setProntuario({ ...prontuario, allergies: e.target.value })}
+              value={prontuario.allergies.join(',') || ''}
+              onChange={(e) => setProntuario({ ...prontuario, allergies: e.target.value.split(',').map(diag => diag.trim()) })}
               className="border rounded-md px-2 py-1"
               placeholder="Alergias"
             />
-            <input
-              type="text"
-              value={prontuario.maritalStatus || ''}
-              onChange={(e) => setProntuario({ ...prontuario, maritalStatus: e.target.value })}
-              className="border rounded-md px-2 py-1"
-              placeholder="Estado Civil"
-            />
+            <div>
+              <label className="block text-gray-700">Estado Civil</label>
+              <select
+                value={prontuario.maritalStatus || ''}
+                onChange={(e) => setProntuario({ ...prontuario, maritalStatus: e.target.value })}
+                className="w-full px-3 py-2 border rounded-md"
+                required
+              >
+                <option value="" disabled>
+                  Selecione
+                </option>
+                <option value="single">Solteiro(a)</option>
+                <option value="married">Casado(a)</option>
+                <option value="divorced">Divociado(a)</option>
+                <option value="widowed">Viúvo(a)</option>
+              </select>
+            </div>
             <input
               type="number"
               value={prontuario.height || ''}
@@ -153,13 +163,13 @@ export default function EditPage() {
               placeholder="Peso (kg)"
             />
             <textarea
-              value={prontuario.medicationsInUse.join(', ') || ''}
+              value={prontuario.medicationsInUse.join(',') || ''}
               onChange={(e) => setProntuario({ ...prontuario, medicationsInUse: e.target.value.split(',').map(med => med.trim()) })}
               className="border rounded-md px-2 py-1"
               placeholder="Medicações em Uso (separe por vírgulas)"
             />
             <textarea
-              value={prontuario.diagnosis.join(', ') || ''}
+              value={prontuario.diagnosis.join(',') || ''}
               onChange={(e) => setProntuario({ ...prontuario, diagnosis: e.target.value.split(',').map(diag => diag.trim()) })}
               className="border rounded-md px-2 py-1"
               placeholder="Diagnósticos (separe por vírgulas)"

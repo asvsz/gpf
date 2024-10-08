@@ -23,7 +23,6 @@ const NavbarDoctor: React.FC = () => {
           <Perfil />
           <ImProfile/>
         </div>
-        <LogoutButton />
       </div>
     </nav>
   );

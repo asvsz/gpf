@@ -1,3 +1,4 @@
+import LogoutButton from '@/app/components/LogoutButton';
 import Modal from '@/app/components/Modal';
 import api from '@/app/services/api';
 import { useEffect, useState } from 'react';
@@ -97,12 +98,7 @@ export default function Perfil() {
               Nome: {clinician.name} {clinician.surname}
             </p>
             <p>Email: {clinician.email}</p>
-            <button
-              className="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg"
-              onClick={handleCloseModal}
-            >
-              Fechar Modal
-            </button>
+            <LogoutButton/>
           </Modal>
         </>
       ) : (

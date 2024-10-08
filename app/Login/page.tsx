@@ -34,6 +34,8 @@ const Login = () => {
       if (response.data.access_token) {
         // Armazena o token no localStorage
         localStorage.setItem('access_token', response.data.access_token);
+        // Armazene o e-mail no localStorage
+        localStorage.setItem('user_email', email);
         alert('Login bem-sucedido!');
 
         // Redireciona para a página inicial com base no tipo de usuário

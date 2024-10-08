@@ -52,8 +52,8 @@ const Login = () => {
   return (
     <div className="gap-8 grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 sm:p-20">
       <HeaderBar />
-      <main className="flex row-start-2 items-center sm:items-start z-0">
-        <h2>Login como {user === 'clinician' ? 'Clínico' : 'Paciente'}</h2>
+      <main className="flex flex-col row-start-2 items-center sm:items-start z-0">
+        <h2 className='text-3xl'>Login como {user === 'clinician' ? 'Clínico' : 'Paciente'}</h2>
         <form onSubmit={handleLogin}>
           <Input
             label="E-mail"

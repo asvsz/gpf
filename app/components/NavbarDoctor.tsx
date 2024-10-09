@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { ImProfile } from "react-icons/im";
 import Image from 'next/image';
 import Logo from '../assets/logo.svg';
-import LogoutButton from './LogoutButton';
 import Perfil from '../Medico/Perfil/page';
 
 const NavbarDoctor: React.FC = () => {
@@ -20,7 +19,7 @@ const NavbarDoctor: React.FC = () => {
           <Link href="/Medico/Sobre">Sobre</Link>
         </div>
         <div className='flex gap-4 justify-between items-center'>
-          <Perfil />
+          <Perfil id='"clinician_id_value'/>
           <ImProfile/>
         </div>
       </div>

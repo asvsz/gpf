@@ -9,7 +9,7 @@ import axios from 'axios';
 import PrivateRoute from '@/app/components/PrivateRoute';
 
 
-interface Prontuario {
+interface ProntuarioProps {
   profession: string;
   emergencyContactEmail: string;
   emergencyContactNumber: string;
@@ -22,10 +22,10 @@ interface Prontuario {
 }
 
 
-export default function EditPage() {
+export default function EditMedicalRecord() {
   const router = useRouter();
   const { prontuarioId } = useAuth();
-  const [prontuario, setProntuario] = useState<Prontuario | null>(null);
+  const [prontuario, setProntuario] = useState<ProntuarioProps | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

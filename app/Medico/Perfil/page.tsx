@@ -1,3 +1,4 @@
+'use client'
 import ButtonOne from '@/app/components/ButtonOne';
 import LogoutButton from '@/app/components/LogoutButton';
 import Modal from '@/app/components/Modal';

@@ -7,8 +7,9 @@ import { GoPlus } from "react-icons/go";
 import React, { useEffect, useState } from "react";
 import { useClinicians } from '@/app/hooks/useFetchClinico';
 import api from '@/app/services/api';
+import ButtonOne from "@/app/components/ButtonOne";
 
-interface Record {
+interface RecordProps {
     patientId: string;
     neurofunctionalRecordId: string;
     name: string;
@@ -20,7 +21,7 @@ interface Record {
 export default function Fichas() {
     const router = useRouter();
     const { clinicianId, loading } = useClinicians();
-    const [records, setRecords] = useState<Record[]>([]);
+    const [records, setRecords] = useState<RecordProps[]>([]);
     const [loadingRecords, setLoadingRecords] = useState(true);
 
     // Função para buscar os registros do clínico
@@ -48,6 +49,17 @@ export default function Fichas() {
     useEffect(() => {
         fetchRecords();
     }, [clinicianId]);
+
+    const handleClickEdit = (neurofunctionalRecordId: string) => {
+        localStorage.setItem('currentRecordId', neurofunctionalRecordId);
+        router.push(`/Medico/Fichas/Editar`);
+    };
+
+    const handleClickView = (neurofunctionalRecordId: string) => {
+        localStorage.setItem('currentRecordId', neurofunctionalRecordId);
+        router.push(`/Medico/Fichas/Ficha`);
+    };
+
 
     return (
         <div className="flex flex-col min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -93,6 +105,14 @@ export default function Fichas() {
                                 <td className="py-2 px-4 border-b">{record.surname}</td>
                                 <td className="py-2 px-4 border-b">{new Date(record.createdAt).toLocaleDateString()}</td>
                                 <td className="py-2 px-4 border-b">{new Date(record.updatedAt).toLocaleDateString()}</td>
+                                <ButtonOne
+                                    texto="Editar"
+                                    onClick={() => handleClickEdit(record.neurofunctionalRecordId)}
+                                />
+                                <ButtonOne
+                                    texto="Visualizar"
+                                    onClick={() => handleClickView(record.neurofunctionalRecordId)}
+                                />
                             </tr>
                         ))}
                         </tbody>

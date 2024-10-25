@@ -7,7 +7,7 @@ interface PatientProps {
   name: string;
   email: string;
   cpf: string;
-  id: string; // Adiciona a propriedade id
+  id: string;
 }
 
 export default function PatientCell({ name, email, cpf, id }: PatientProps) {

@@ -25,7 +25,6 @@ export default function EditProfile() {
   const [clinician, setClinician] = useState<ClinicianProps | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-   const [showPassword, setShowPassword] = useState(false);
 
   // Função para buscar os dados do clínico
   const fetchClinicianData = async () => {
@@ -55,7 +54,6 @@ export default function EditProfile() {
       setLoading(false);
     }
   };
-
 
   const handleSave = async () => {
     if (clinician) {
@@ -94,7 +92,6 @@ export default function EditProfile() {
       }
     }
   };
-
 
   // Carregar os dados quando o componente for montado
   useEffect(() => {

@@ -151,22 +151,25 @@ export default function EditNeurofunctionalRecord() {
         fetchRecordData();
     }, []);
 
-    // Exibição de estado de carregamento
-    if (loading) return <div>Carregando...</div>;
 
     // Exibição do formulário para edição do registro neurofuncional
     return (
         <PrivateRoute requiredUserType='clinician'>
-            <div className="p-8">
+            <div className="flex flex-col min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
                 <NavbarDoctor/>
-                <h2 className="text-lg font-bold">Editar Registro Neurofuncional</h2>
+                <h2 className=" text-3xl font-bold">Editar Registro Neurofuncional</h2>
 
                 {error && <div className="text-red-500 mb-4">{error}</div>}
 
-                {record ? (
-                    <div className="flex flex-col gap-4">
-            <textarea
-                value={record.medicalDiagnosis}
+                {/* Loader e mensagem quando não há dados */}
+                {loading  ? (
+                    <div className="flex justify-center items-center h-64">
+                        <span>Carregando...</span>
+                    </div>
+                ) : record ? (
+                    <div className="flex flex-col gap-4 mb-10">
+                    <textarea
+                    value={record.medicalDiagnosis}
                 onChange={(e) => setRecord({ ...record, medicalDiagnosis: e.target.value })}
                 className="border rounded-md p-2"
                 placeholder="Diagnóstico Médico"
@@ -346,12 +349,12 @@ export default function EditNeurofunctionalRecord() {
 
                         <div className="flex gap-2 mt-4">
                             <SaveButton onClick={handleSave} />
-                            <CancelButton onClick={() => router.push('/Neurofuncional/Registros')} />
+                            <CancelButton onClick={() => router.push('/Medico/Fichas')} />
                         </div>
                     </div>
                 ) : (
                     <div>Registro não encontrado.</div>
-                )}
+    )}
                 <Footer/>
             </div>
         </PrivateRoute>

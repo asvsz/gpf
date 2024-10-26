@@ -7,6 +7,8 @@ import SaveButton from '@/app/components/SaveButton';
 import CancelButton from '@/app/components/CancelButton';
 import axios from 'axios';
 import PrivateRoute from '@/app/components/PrivateRoute';
+import NavbarDoctor from "@/app/components/NavbarDoctor";
+import FooterBar from "@/app/components/Footer";
 
 interface ClinicianProps {
   name: string;
@@ -45,7 +47,6 @@ export default function EditProfile() {
       }
 
       const clinicianData = response.data.clinician;
-      console.log('Dados do clínico:', clinicianData);
       setClinician(clinicianData);
     } catch (error) {
       console.error('Erro ao buscar clínico:', error);
@@ -109,80 +110,85 @@ export default function EditProfile() {
   // Exibição do formulário para edição do perfil
   return (
     <PrivateRoute requiredUserType='clinician'>
-      <div className="p-8">
-        <h2 className="text-lg font-bold">Editar Perfil do Clínico</h2>
+      <div className="flex flex-col min-h-screen p-8 pb-20 sm:p-20 font-[var(--font-geist-sans)] gap-4">
+        <NavbarDoctor/>
+        <h2 className="text-3xl font-bold">Editar Perfil do Clínico</h2>
 
         {error && <div className="text-red-500 mb-4">{error}</div>}
 
         {clinician ? (
-          <div className="flex flex-col gap-4">
-            <input
-              type="text"
-              value={clinician.name || ''}
-              onChange={(e) => setClinician({ ...clinician, name: e.target.value })}
-              className="border rounded-md px-2 py-1"
-              placeholder="Nome"
-            />
-            <input
-              type="text"
-              value={clinician.surname || ''}
-              onChange={(e) => setClinician({ ...clinician, surname: e.target.value })}
-              className="border rounded-md px-2 py-1"
-              placeholder="Sobrenome"
-            />
-            <input
-              type="text"
-              value={clinician.occupation || ''}
-              onChange={(e) => setClinician({ ...clinician, occupation: e.target.value })}
-              className="border rounded-md px-2 py-1"
-              placeholder="Especialização"
-            />
-            <div>
-              <label className="block text-gray-700">Gênero</label>
-              <select
-                value={clinician.gender || ''}
-                onChange={(e) => setClinician({ ...clinician, gender: e.target.value })}
-                className="w-full px-3 py-2 border rounded-md"
-                required
-              >
-                <option value="" disabled>Selecione</option>
-                <option value="female">Feminino</option>
-                <option value="male">Masculino</option>
-              </select>
+            <div className="flex flex-col gap-4">
+              <label className="block text-gray-700">Nome</label>
+              <input
+                  type="text"
+                  value={clinician.name || ''}
+                  onChange={(e) => setClinician({...clinician, name: e.target.value})}
+                  className="border rounded-md px-2 py-1"
+              />
+              <label className="block text-gray-700">Sobrenome</label>
+              <input
+                  type="text"
+                  value={clinician.surname || ''}
+                  onChange={(e) => setClinician({...clinician, surname: e.target.value})}
+                  className="border rounded-md px-2 py-1"
+              />
+              <label className="block text-gray-700">Especialização</label>
+              <input
+                  type="text"
+                  value={clinician.occupation || ''}
+                  onChange={(e) => setClinician({...clinician, occupation: e.target.value})}
+                  className="border rounded-md px-2 py-1"
+              />
+              <div>
+                <label className="block text-gray-700">Gênero</label>
+                <select
+                    value={clinician.gender || ''}
+                    onChange={(e) => setClinician({...clinician, gender: e.target.value})}
+                    className="w-full px-3 py-2 border rounded-md"
+                    required
+                >
+                  <option value="" disabled>Selecione</option>
+                  <option value="female">Feminino</option>
+                  <option value="male">Masculino</option>
+                </select>
+              </div>
+
+              <label className="block text-gray-700">Número de Telefone</label>
+              <input
+                  type="text"
+                  value={clinician.phoneNumber || ''}
+                  onChange={(e) => setClinician({...clinician, phoneNumber: e.target.value})}
+                  className="border rounded-md px-2 py-1"
+                  placeholder="Número de Telefone"
+              />
+
+              <label className="block text-gray-700">Email</label>
+              <input
+                  type="email"
+                  value={clinician.email || ''}
+                  onChange={(e) => setClinician({...clinician, email: e.target.value})}
+                  className="border rounded-md px-2 py-1"
+                  placeholder="Email"
+              />
+
+              <label className="block text-gray-700">Senha</label>
+              <input
+                  type="text"
+                  value={clinician.password || ''}
+                  onChange={(e) => setClinician({...clinician, password: e.target.value})}
+                  className="border rounded-md px-2 py-1"
+                  placeholder="Senha"
+              />
+
+              <div className="flex gap-2 mt-4">
+                <SaveButton onClick={handleSave}/>
+                <CancelButton onClick={() => router.push('/Medico/Pacientes')}/>
+              </div>
             </div>
-
-            <input
-              type="text"
-              value={clinician.phoneNumber || ''}
-              onChange={(e) => setClinician({ ...clinician, phoneNumber: e.target.value })}
-              className="border rounded-md px-2 py-1"
-              placeholder="Número de Telefone"
-            />
-
-            <input
-              type="email"
-              value={clinician.email || ''}
-              onChange={(e) => setClinician({ ...clinician, email: e.target.value })}
-              className="border rounded-md px-2 py-1"
-              placeholder="Email"
-            />
-
-            <input
-              type="text"
-              value={clinician.password || ''}
-              onChange={(e) => setClinician({ ...clinician, password: e.target.value })}
-              className="border rounded-md px-2 py-1"
-              placeholder="Senha"
-            />
-
-            <div className="flex gap-2 mt-4">
-              <SaveButton onClick={handleSave} />
-              <CancelButton onClick={() => router.push('/Medico/Pacientes')} />
-            </div>
-          </div>
         ) : (
-          <div>Perfil do clínico não encontrado.</div>
+            <div>Perfil do clínico não encontrado.</div>
         )}
+        <FooterBar/>
       </div>
     </PrivateRoute>
   );

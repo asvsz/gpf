@@ -73,7 +73,7 @@ export default function Home() {
     <PrivateRoute requiredUserType="clinician">
       <div className="gap-8 grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
         <Navbar />
-        <main className=" flex row-start-2 items-center sm:items-start z-0">
+        <div className="flex row-start-2 items-center sm:items-start z-0">
           <div className="flex flex-col gap-8 pt-10">
             {/* Passar a função de busca para o componente de busca */}
             <SearchEngine onSearch={handleSearch} />
@@ -93,7 +93,7 @@ export default function Home() {
             )}
           </div>
 
-        </main>
+        </div>
 
         <FooterBar />
       </div>

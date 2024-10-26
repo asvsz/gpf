@@ -7,6 +7,7 @@ import api from '@/app/services/api';
 import NavbarDoctor from "@/app/components/NavbarDoctor";
 import Footer from "@/app/components/Footer";
 import {useRouter} from "next/navigation";
+import ButtonOne from "@/app/components/ButtonOne";
 
 interface Paciente {
     id: string;
@@ -199,7 +200,7 @@ const CriarNeurofuncional = () => {
         <div className="flex flex-col min-h-screen p-8 pb-20 sm:p-20 font-[var(--font-geist-sans)]">
             <NavbarDoctor/>
             <div className="flex-grow flex flex-col gap-8 sm:items-start">
-                <h1 className='text-2xl'>Criar Ficha Neurofuncional</h1>
+                <h1 className='text-3xl'>Criar Ficha Neurofuncional</h1>
                 {error && <p style={{color: 'red'}}>{error}</p>}
 
                 <div className=''>
@@ -212,7 +213,10 @@ const CriarNeurofuncional = () => {
                             placeholder="Digite o CPF do paciente"
                         />
                     </label>
-                    <button onClick={handleCpfSubmit}>Buscar Paciente</button>
+                    <ButtonOne
+                        texto={'Buscar Paciente'}
+                        onClick={handleCpfSubmit}
+                    />
                 </div>
 
                 {paciente && (

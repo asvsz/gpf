@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import { useClinicians } from '@/app/hooks/useFetchClinico';
 import api from '@/app/services/api';
 import ButtonOne from "@/app/components/ButtonOne";
+import DayFilter from "@/app/components/DayFilter";
 
 interface RecordProps {
     patientId: string;
@@ -17,12 +18,20 @@ interface RecordProps {
     createdAt: string; // Supondo que a data venha como string
     updatedAt: string; // Supondo que você queira exibir também
 }
+const options = [7, 14, 30, 60, 90, 180];
 
 export default function Fichas() {
     const router = useRouter();
     const { clinicianId, loading } = useClinicians();
     const [records, setRecords] = useState<RecordProps[]>([]);
     const [loadingRecords, setLoadingRecords] = useState(true);
+    const [days, setDays] = useState(7);
+
+    const handleFilter = () => {
+        // Função para lidar com a lógica de filtragem usando o valor de "days"
+        console.log(`Filtrando dados dos últimos ${days} dias`);
+        // Aqui você pode adicionar a lógica para buscar os dados com base na quantidade de dias
+    };
 
     // Função para buscar os registros do clínico
     const fetchRecords = async () => {
@@ -60,18 +69,38 @@ export default function Fichas() {
         router.push(`/Medico/Fichas/Ficha`);
     };
 
+    React.useEffect(() => {
+        handleFilter();
+    }, [days]);
+
+
 
     return (
         <div className="flex flex-col min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
             <NavbarDoctor />
 
-            <ButtonIcon
-                icon={<GoPlus className="text-3xl" />}
-                texto="Fichas Avaliativas"
-                onClick={() => {
-                    router.push(`/Medico/Fichas/CriarNeurofuncional`);
-                }}
-            />
+
+            <div className="flex justify-between">
+                <div className="flex space-x-2">
+                    {options.map(option => (
+                        <DayFilter
+                            key={option}
+                            texto={`${option} dias`}
+                            days={days}
+                            option={option}
+                            onClick={setDays}
+                        />
+                    ))}
+                </div>
+
+                <ButtonIcon
+                    icon={<GoPlus className="text-3xl"/>}
+                    texto="Neurofuncional"
+                    onClick={() => {
+                        router.push(`/Medico/Fichas/CriarNeurofuncional`);
+                    }}
+                />
+            </div>
             <h1 className="text-2xl font-bold mb-4">Registros Neurofuncionais</h1>
 
             {/* Loader e mensagem quando não há dados */}
@@ -92,34 +121,41 @@ export default function Fichas() {
                     <table className="min-w-full bg-white border border-gray-200">
                         <thead>
                         <tr className="bg-gray-200">
-                            <th className="py-2 px-4 border-b">Nome</th>
-                            <th className="py-2 px-4 border-b">Sobrenome</th>
-                            <th className="py-2 px-4 border-b">Data de Criação</th>
-                            <th className="py-2 px-4 border-b">Data de Atualização</th>
+                            <th className="py-2 px-7 border-b text-center w-[150px]">Nome</th>
+                            <th className="py-2 px-7 border-b text-center w-[150px]">Sobrenome</th>
+                            <th className="py-2 px-7 border-b text-center w-[180px]">Data de Criação</th>
+                            <th className="py-2 px-7 border-b text-center w-[180px]">Data de Atualização</th>
+                            <th className="py-2 px-7 border-b text-center w-[100px]"></th>
+                            <th className="py-2 px-7 border-b text-center w-[100px]"></th>
                         </tr>
                         </thead>
                         <tbody>
                         {records.map((record) => (
                             <tr key={record.neurofunctionalRecordId} className="hover:bg-gray-100">
-                                <td className="py-2 px-4 border-b">{record.name}</td>
-                                <td className="py-2 px-4 border-b">{record.surname}</td>
-                                <td className="py-2 px-4 border-b">{new Date(record.createdAt).toLocaleDateString()}</td>
-                                <td className="py-2 px-4 border-b">{new Date(record.updatedAt).toLocaleDateString()}</td>
-                                <ButtonOne
-                                    texto="Editar"
-                                    onClick={() => handleClickEdit(record.neurofunctionalRecordId)}
-                                />
-                                <ButtonOne
-                                    texto="Visualizar"
-                                    onClick={() => handleClickView(record.neurofunctionalRecordId)}
-                                />
+                                <td className="py-2 px-8 border-b text-center w-[150px]">{record.name}</td>
+                                <td className="py-2 px-8 border-b text-center w-[150px]">{record.surname}</td>
+                                <td className="py-2 px-8 border-b text-center w-[180px]">{new Date(record.createdAt).toLocaleDateString()}</td>
+                                <td className="py-2 px-8 border-b text-center w-[180px]">{new Date(record.updatedAt).toLocaleDateString()}</td>
+                                <td className="py-2 px-8 border-b text-center text-center w-[100px]">
+                                    <ButtonOne
+                                        texto="Editar"
+                                        onClick={() => handleClickEdit(record.neurofunctionalRecordId)}
+                                    />
+                                </td>
+                                <td className="py-2 px-8 border-b text-center w-[100px]">
+                                    <ButtonOne
+                                        texto="Visualizar"
+                                        onClick={() => handleClickView(record.neurofunctionalRecordId)}
+                                    />
+                                </td>
                             </tr>
                         ))}
-                        </tbody>
-                    </table>
+                    </tbody>
+                </table>
                 </div>
-            )}
-            <FooterBar />
-        </div>
-    );
+                )}
+<FooterBar/>
+</div>
+)
+;
 }

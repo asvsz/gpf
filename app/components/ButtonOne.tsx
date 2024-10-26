@@ -10,7 +10,7 @@ export default function ButtonOne({ texto, onClick, type = "button" }: ButtonPro
   return (
     <button
       type={type}
-      className="container rounded h-14 hover:bg-green-700 text-white text-xl bg-green-800 w-64 py-2"
+      className="inline-flex items-center rounded hover:bg-green-700 text-white text-lg bg-green-800 py-2 px-4"
       onClick={onClick}
     >
       {texto}

@@ -18,7 +18,7 @@ interface ClinicianProps {
   password?: string;
 }
 
-export default function Perfil({id}: ClinicianProps ) {
+export default function Perfil({}: ClinicianProps ) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clinician, setClinician] = useState<ClinicianProps | null>(null);
   const [clinicians, setClinicians] = useState<ClinicianProps[]>([]);
@@ -39,7 +39,6 @@ export default function Perfil({id}: ClinicianProps ) {
     if (clinician) {
       setClinicianId(clinician.id)
       router.push('/Medico/Perfil/Editar')
-      console.log(id)
     } else {
       console.error('Clinician não definido');
     }

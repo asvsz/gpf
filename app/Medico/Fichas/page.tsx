@@ -103,7 +103,7 @@ export default function Fichas() {
             // Verificação para o tipo de ficha Neurofuncional
             if (recordTypes.neurofunctionalRecord === neurofunctionalRecordId) {
                 localStorage.setItem('currentRecordId', neurofunctionalRecordId);
-                router.push(`/Medico/Fichas/Editar`);
+                router.push(`/Medico/Fichas/EditarNeuro`);
             }
             // Verificação para o tipo de ficha Cardiorespiratória
             else if (recordTypes.cardiorespiratoryRecord === neurofunctionalRecordId) {
@@ -134,7 +134,7 @@ export default function Fichas() {
             // Verificação para o tipo de ficha Neurofuncional
             if (recordTypes.neurofunctionalRecord === neurofunctionalRecordId) {
                 localStorage.setItem('currentRecordId', neurofunctionalRecordId);
-                router.push(`/Medico/Fichas/FichaNeurofuncional`);
+                router.push(`/Medico/Fichas/FichaNeuro`);
             }
             // Verificação para o tipo de ficha Cardiorespiratória
             else if (recordTypes.cardiorespiratoryRecord === neurofunctionalRecordId) {

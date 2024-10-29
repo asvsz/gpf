@@ -17,7 +17,7 @@ interface Paciente {
 }
 
 const CriarNeurofuncional = () => {
-    const { clinicianId, fetchClinicianIdByEmail } = useClinicians(); // Usando o novo hook
+    const { clinicianId, fetchClinicianIdByEmail } = useClinicians();
     const [pacientes, setPacientes] = useState<Paciente[]>([]);
     const [cpf, setCpf] = useState('');
     const [patientId, setPatientId] = useState<string | null>(null);
@@ -199,18 +199,20 @@ const CriarNeurofuncional = () => {
     return (
         <div className="flex flex-col min-h-screen p-8 pb-20 sm:p-20 font-[var(--font-geist-sans)]">
             <NavbarDoctor/>
-            <div className="flex-grow flex flex-col gap-8 sm:items-start">
-                <h1 className='text-3xl'>Criar Ficha Neurofuncional</h1>
+            <div className="flex flex-col gap-8">
+                <h1 className='text-3xl font-bold mb-4'>Criar Ficha Neurofuncional</h1>
                 {error && <p style={{color: 'red'}}>{error}</p>}
 
-                <div className=''>
-                    <label>
+                {/* Input for Patient CPF */}
+                <div>
+                    <label className="block mb-2">
                         CPF do Paciente:
                         <input
                             type="text"
                             value={cpf}
                             onChange={(e) => setCpf(e.target.value)}
                             placeholder="Digite o CPF do paciente"
+                            className="border rounded w-full py-2 px-3 mt-1"
                         />
                     </label>
                     <ButtonOne
@@ -219,14 +221,16 @@ const CriarNeurofuncional = () => {
                     />
                 </div>
 
+                {/* Patient Details */}
                 {paciente && (
-                    <div>
-                        <p>Nome do Paciente: {paciente.name} {paciente.surname}</p>
+                    <div className="border p-4 rounded bg-gray-100">
+                        <h2 className='text-2xl'>Dados do Paciente</h2>
+                        <p>Nome: {paciente.name} {paciente.surname}</p>
                         <p>CPF: {paciente.cpf}</p>
 
                         {registroMedico && (
-                            <div>
-                                <h2 className='text-2xl'>Dados do Registro Médico Universal</h2>
+                            <div className="mt-4">
+                                <h3 className='text-xl'>Registro Médico Universal</h3>
                                 <p>Profissão: {registroMedico.profession}</p>
                                 <p>Email de Contato de Emergência: {registroMedico.emergencyContactEmail}</p>
                                 <p>Número de Contato de Emergência: {registroMedico.emergencyContactNumber}</p>
@@ -239,48 +243,56 @@ const CriarNeurofuncional = () => {
                             </div>
                         )}
 
-                        {/* Campos do formulário para criar a ficha neurofuncional */}
-                        <div className='flex flex-col gap-8'>
-                            <label>
+                        {/* Form Fields */}
+                        <div className='mt-6'>
+                            <h3 className='text-xl font-semibold'>Dados da Ficha Neurofuncional</h3>
+
+                            <label className="block mb-2">
                                 Diagnóstico Médico:
                                 <input
                                     type="text"
                                     value={medicalDiagnosis}
                                     onChange={(e) => setMedicalDiagnosis(e.target.value)}
                                     placeholder="Digite o diagnóstico médico"
+                                    className="border rounded w-full py-2 px-3 mt-1"
                                 />
                             </label>
-                            <label>
+
+                            <label className="block mb-2">
                                 Anamnese:
                                 <textarea
                                     value={anamnesis}
                                     onChange={(e) => setAnamnesis(e.target.value)}
                                     placeholder="Digite a anamnese"
+                                    className="border rounded w-full py-2 px-3 mt-1"
                                 />
                             </label>
-                            <label>
+
+                            <label className="block mb-2">
                                 Exame Físico:
                                 <textarea
                                     value={physicalExamination}
                                     onChange={(e) => setPhysicalExamination(e.target.value)}
                                     placeholder="Digite o exame físico"
+                                    className="border rounded w-full py-2 px-3 mt-1"
                                 />
                             </label>
-                            <label>
+
+                            <label className="block mb-2">
                                 Triage:
                                 <input
                                     type="text"
                                     value={triage}
                                     onChange={(e) => setTriage(e.target.value)}
                                     placeholder="Digite a triagem"
+                                    className="border rounded w-full py-2 px-3 mt-1"
                                 />
                             </label>
-                            {/* Adicione outros campos como hábitos de vida, sinais vitais, etc. conforme necessário */}
 
                             {/* Lifestyle Habits */}
-                            <h3>Hábitos de Vida</h3>
+                            <h3 className='mt-4 text-lg font-semibold'>Hábitos de Vida</h3>
                             {Object.keys(lifestyleHabits).map((key) => (
-                                <label key={key}>
+                                <label className="block mb-2" key={key}>
                                     <input
                                         type="checkbox"
                                         checked={lifestyleHabits[key as keyof typeof lifestyleHabits]}
@@ -296,9 +308,9 @@ const CriarNeurofuncional = () => {
                             ))}
 
                             {/* Vital Signs */}
-                            <h3>Sinais Vitais</h3>
+                            <h3 className='mt-4 text-lg font-semibold'>Sinais Vitais</h3>
                             {Object.keys(vitalSigns).map((key) => (
-                                <label key={key}>
+                                <label className="block mb-2" key={key}>
                                     {key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}:
                                     <input
                                         type="number"
@@ -309,14 +321,15 @@ const CriarNeurofuncional = () => {
                                                 [key]: Number(e.target.value),
                                             })
                                         }
+                                        className="border rounded w-full py-2 px-3 mt-1"
                                     />
                                 </label>
                             ))}
 
                             {/* Physical Inspection */}
-                            <h3>Inspeção Física</h3>
+                            <h3 className='mt-4 text-lg font-semibold'>Inspeção Física</h3>
                             {Object.keys(physicalInspection).map((key) => (
-                                <label key={key}>
+                                <label className="block mb-2" key={key}>
                                     <input
                                         type="checkbox"
                                         checked={physicalInspection[key as keyof typeof physicalInspection]}
@@ -332,75 +345,103 @@ const CriarNeurofuncional = () => {
                             ))}
 
                             {/* Sensory Assessment */}
-                            <h3>Avaliação Sensorial</h3>
-                            <label>
+                            <h3 className='mt-4 text-lg font-semibold'>Avaliação Sensorial</h3>
+                            <label className="block mb-2">
                                 Superficial:
                                 <select
                                     value={sensoryAssessment.superficial}
-                                    onChange={(e) => setSensoryAssessment({ ...sensoryAssessment, superficial: e.target.value })}
+                                    onChange={(e) => setSensoryAssessment({
+                                        ...sensoryAssessment,
+                                        superficial: e.target.value
+                                    })}
+                                    className="border rounded w-full py-2 px-3 mt-1"
                                 >
                                     <option value="Tactile">Tátil</option>
                                     <option value="Pain">Dor</option>
                                 </select>
                             </label>
-                            <label>
+                            <label className="block mb-2">
                                 Profundo:
                                 <select
                                     value={sensoryAssessment.deep}
-                                    onChange={(e) => setSensoryAssessment({ ...sensoryAssessment, deep: e.target.value })}
+                                    onChange={(e) => setSensoryAssessment({...sensoryAssessment, deep: e.target.value})}
+                                    className="border rounded w-full py-2 px-3 mt-1"
                                 >
                                     <option value="PositionSense">Sentido de Posição</option>
                                     <option value="Vibration">Vibração</option>
                                 </select>
                             </label>
 
-                            <h3>Avaliação de Mobilidade do Paciente</h3>
-                            <label>
+                            {/* Patient Mobility */}
+                            <h3 className='mt-4 text-lg font-semibold'>Avaliação de Mobilidade do Paciente</h3>
+                            <label className="block mb-2">
                                 Tempo de Caminhada de 3 Metros (segundos):
                                 <input
                                     type="number"
                                     value={patientMobility.threeMeterWalkTimeInSeconds}
-                                    onChange={(e) => setPatientMobility({ ...patientMobility, threeMeterWalkTimeInSeconds: Number(e.target.value) })}
+                                    onChange={(e) => setPatientMobility({
+                                        ...patientMobility,
+                                        threeMeterWalkTimeInSeconds: Number(e.target.value)
+                                    })}
+                                    className="border rounded w-full py-2 px-3 mt-1"
                                 />
                             </label>
-
-                            <label>
+                            <label className="block mb-2">
                                 Risco de Queda:
                                 <input
                                     type="checkbox"
                                     checked={patientMobility.hasFallRisk}
-                                    onChange={(e) => setPatientMobility({ ...patientMobility, hasFallRisk: e.target.checked })}
+                                    onChange={(e) => setPatientMobility({
+                                        ...patientMobility,
+                                        hasFallRisk: e.target.checked
+                                    })}
                                 />
                             </label>
 
-                            <h3>Avaliação Fisioterapêutica</h3>
-                            <label>
+                            {/* Physiotherapy Assessment */}
+                            <h3 className='mt-4 text-lg font-semibold'>Avaliação Fisioterapêutica</h3>
+                            <label className="block mb-2">
                                 Diagnóstico:
                                 <input
                                     type="text"
                                     value={physiotherapyAssessment.diagnosis}
-                                    onChange={(e) => setPhysiotherapyAssessment({ ...physiotherapyAssessment, diagnosis: e.target.value })}
+                                    onChange={(e) => setPhysiotherapyAssessment({
+                                        ...physiotherapyAssessment,
+                                        diagnosis: e.target.value
+                                    })}
+                                    className="border rounded w-full py-2 px-3 mt-1"
                                 />
                             </label>
-                            <label>
+                            <label className="block mb-2">
                                 Objetivos do Tratamento:
                                 <textarea
                                     value={physiotherapyAssessment.treatmentGoals}
-                                    onChange={(e) => setPhysiotherapyAssessment({ ...physiotherapyAssessment, treatmentGoals: e.target.value })}
+                                    onChange={(e) => setPhysiotherapyAssessment({
+                                        ...physiotherapyAssessment,
+                                        treatmentGoals: e.target.value
+                                    })}
+                                    className="border rounded w-full py-2 px-3 mt-1"
                                 />
                             </label>
-                            <label>
+                            <label className="block mb-2">
                                 Conduta Fisioterapêutica:
                                 <textarea
                                     value={physiotherapyAssessment.physiotherapeuticConduct}
-                                    onChange={(e) => setPhysiotherapyAssessment({ ...physiotherapyAssessment, physiotherapeuticConduct: e.target.value })}
+                                    onChange={(e) => setPhysiotherapyAssessment({
+                                        ...physiotherapyAssessment,
+                                        physiotherapeuticConduct: e.target.value
+                                    })}
+                                    className="border rounded w-full py-2 px-3 mt-1"
                                 />
-                                </label>
-                            <button onClick={handleCreateFicha}>Criar Ficha Neurofuncional</button>
+                            </label>
+
+                            {/* Submit Button */}
+                            <ButtonOne texto="Criar Ficha Neurofuncional" onClick={handleCreateFicha}/>
                         </div>
                     </div>
                 )}
             </div>
+
             <Footer/>
         </div>
     );

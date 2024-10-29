@@ -20,8 +20,7 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
 
   return (
     <div className="fixed top-0 right-0 z-50 flex items-start justify-end bg-black bg-opacity-50 h-screen w-screen">
-      <div className="bg-white text-black rounded-lg shadow-lg w-full max-w-lg p-6 relative mt-20 mr-4">
-        {/* Close button */}
+      <div className="bg-gray-100 text-black rounded-lg shadow-lg w-full max-w-lg p-6 relative mt-20 mr-4">
         <button
           className="absolute top-3 right-3 text-gray-600 hover:text-gray-800"
           onClick={onClose}

@@ -71,18 +71,17 @@ export default function Home() {
 
   return (
     <PrivateRoute requiredUserType="clinician">
-      <div className="gap-8 grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <div className="gap-4 grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
         <Navbar />
         <div className="flex row-start-2 items-center sm:items-start z-0">
-          <div className="flex flex-col gap-8 pt-10">
-            {/* Passar a função de busca para o componente de busca */}
+          <div className="flex flex-col gap-8">
             <SearchEngine onSearch={handleSearch} />
-            {/* Exibir apenas o paciente filtrado */}
             {patientsToDisplay.length > 0 ? (
               patientsToDisplay.map((patient) => (
                 <PatientCell
                   key={patient.universalMedicalRecordId}
                   name={patient.name}
+                  surname={patient.surname}
                   email={patient.email}
                   cpf={patient.cpf}
                   id={patient.universalMedicalRecordId}

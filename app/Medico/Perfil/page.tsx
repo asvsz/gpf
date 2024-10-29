@@ -102,7 +102,7 @@ export default function Perfil({}: ClinicianProps ) {
   }, [clinicians, loading]);
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center ">
       {clinician ? (
         <>
           <button
@@ -123,11 +123,14 @@ export default function Perfil({}: ClinicianProps ) {
               <p>Especialização: {clinician.occupation}</p>
               <p>Número de Telefone: {clinician.phoneNumber}</p>
             </div>
-            <ButtonOne
-              texto='Editar'
-              type='button'
-              onClick={handleEditButton} />
-            <LogoutButton/>
+            <div className="flex gap-4 ">
+              <ButtonOne
+                  texto='Editar'
+                  type='button'
+                  onClick={handleEditButton} />
+              <LogoutButton/>
+            </div>
+
           </Modal>
         </>
       ) : (

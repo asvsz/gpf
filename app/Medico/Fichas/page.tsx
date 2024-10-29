@@ -28,7 +28,6 @@ export default function Fichas() {
     const [days, setDays] = useState(7);
 
     const handleFilter = () => {
-        // Função para lidar com a lógica de filtragem usando o valor de "days"
         console.log(`Filtrando dados dos últimos ${days} dias`);
         // Aqui você pode adicionar a lógica para buscar os dados com base na quantidade de dias
     };
@@ -39,14 +38,36 @@ export default function Fichas() {
 
         setLoadingRecords(true);
         const token = localStorage.getItem('access_token');
+
         try {
-            const response = await api.get(`/neurofunctional-record/fetch-ids-by-clinician-id/${clinicianId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            setRecords(response.data.records); // Verifique se a estrutura é correta
-            console.log("Records fetched:", response.data.records);
+            // Buscando registros de três rotas diferentes
+            const [response1, response2, response3] = await Promise.all([
+                api.get(`/neurofunctional-record/fetch-ids-by-clinician-id/${clinicianId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }),
+                api.get(`/cardiorespiratory-record/fetch-ids-by-clinician-id/${clinicianId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }),
+                api.get(`/trauma-orthopedic-record/fetch-ids-by-clinician-id/${clinicianId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }),
+            ]);
+
+            // Combina os registros das diferentes rotas
+            const allRecords = [
+                ...response1.data.records,
+                ...response2.data.records,
+                ...response3.data.records,
+            ];
+
+            setRecords(allRecords); // Verifique se a estrutura é correta
+            console.log("Records fetched:", allRecords);
         } catch (error) {
             console.error('Erro ao buscar os registros:', error);
         } finally {
@@ -54,32 +75,99 @@ export default function Fichas() {
         }
     };
 
+    // Função para buscar o tipo de ficha com base no patientId
+    const fetchRecordTypeByPatientId = async (patientId: string) => {
+        const token = localStorage.getItem('access_token');
+        try {
+            const response = await api.get(`/universal-medical-record/by-patient-id/${patientId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data.universalMedicalRecord.specificMedicalRecordsIds; // Retorna apenas os IDs dos registros
+        } catch (error) {
+            console.error('Erro ao buscar tipos de registro:', error);
+            return null; // Retorna null em caso de erro
+        }
+    };
+
+
+
+    const handleClickEdit = async (neurofunctionalRecordId: string, patientId: string) => {
+        console.log("ID do Registro:", neurofunctionalRecordId);
+        console.log("ID do Paciente:", patientId);
+
+        const recordTypes = await fetchRecordTypeByPatientId(patientId);
+
+        if (recordTypes) {
+            // Verificação para o tipo de ficha Neurofuncional
+            if (recordTypes.neurofunctionalRecord === neurofunctionalRecordId) {
+                localStorage.setItem('currentRecordId', neurofunctionalRecordId);
+                router.push(`/Medico/Fichas/Editar`);
+            }
+            // Verificação para o tipo de ficha Cardiorespiratória
+            else if (recordTypes.cardiorespiratoryRecord === neurofunctionalRecordId) {
+                localStorage.setItem('currentRecordId', neurofunctionalRecordId);
+                router.push(`/Medico/Fichas/EditarCardio`);
+            }
+            // Verificação para o tipo de ficha Traumatológica/Ortopédica
+            else if (recordTypes.traumatoOrthopedicRecord === neurofunctionalRecordId) {
+                localStorage.setItem('currentRecordId', neurofunctionalRecordId);
+                router.push(`/Medico/Fichas/EditarTrauma`);
+            }
+            else {
+                console.log('Tipo de ficha não corresponde.');
+                alert("Este registro não corresponde a nenhum tipo de ficha que você pode editar.");
+            }
+        } else {
+            console.error('Não foi possível verificar o tipo de registro.');
+        }
+    };
+
+    const handleClickView = async (neurofunctionalRecordId: string, patientId: string) => {
+        console.log("ID do Registro:", neurofunctionalRecordId);
+        console.log("ID do Paciente:", patientId);
+
+        const recordTypes = await fetchRecordTypeByPatientId(patientId);
+
+        if (recordTypes) {
+            // Verificação para o tipo de ficha Neurofuncional
+            if (recordTypes.neurofunctionalRecord === neurofunctionalRecordId) {
+                localStorage.setItem('currentRecordId', neurofunctionalRecordId);
+                router.push(`/Medico/Fichas/FichaNeurofuncional`);
+            }
+            // Verificação para o tipo de ficha Cardiorespiratória
+            else if (recordTypes.cardiorespiratoryRecord === neurofunctionalRecordId) {
+                localStorage.setItem('currentRecordId', neurofunctionalRecordId);
+                router.push(`/Medico/Fichas/FichaCardio`);
+            }
+            // Verificação para o tipo de ficha Traumatológica/Ortopédica
+            else if (recordTypes.traumatoOrthopedicRecord === neurofunctionalRecordId) {
+                localStorage.setItem('currentRecordId', neurofunctionalRecordId);
+                router.push(`/Medico/Fichas/FichaTrauma`);
+            }
+            else {
+                console.log('Tipo de ficha não corresponde.');
+                alert("Este registro não corresponde a nenhum tipo de ficha que você pode visualizar.");
+            }
+        } else {
+            console.error('Não foi possível verificar o tipo de registro.');
+        }
+    };
+
+
     // UseEffect para buscar registros quando clinicianId mudar
     useEffect(() => {
         fetchRecords();
     }, [clinicianId]);
 
-    const handleClickEdit = (neurofunctionalRecordId: string) => {
-        localStorage.setItem('currentRecordId', neurofunctionalRecordId);
-        router.push(`/Medico/Fichas/Editar`);
-    };
-
-    const handleClickView = (neurofunctionalRecordId: string) => {
-        localStorage.setItem('currentRecordId', neurofunctionalRecordId);
-        router.push(`/Medico/Fichas/Ficha`);
-    };
-
     React.useEffect(() => {
         handleFilter();
     }, [days]);
 
-
-
     return (
         <div className="flex flex-col min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
             <NavbarDoctor />
-
-
             <div className="flex justify-between">
                 <div className="flex space-x-2">
                     {options.map(option => (
@@ -101,7 +189,7 @@ export default function Fichas() {
                     }}
                 />
             </div>
-            <h1 className="text-2xl font-bold mb-4">Registros Neurofuncionais</h1>
+            <h1 className="text-3xl font-bold mb-4">Fichas Avaliativas</h1>
 
             {/* Loader e mensagem quando não há dados */}
             {(loading || loadingRecords) && (
@@ -118,44 +206,48 @@ export default function Fichas() {
 
             {!loading && !loadingRecords && records.length > 0 && (
                 <div className="flex-grow">
-                    <table className="min-w-full bg-white border border-gray-200">
+                    <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
                         <thead>
                         <tr className="bg-gray-200">
-                            <th className="py-2 px-7 border-b text-center w-[150px]">Nome</th>
-                            <th className="py-2 px-7 border-b text-center w-[150px]">Sobrenome</th>
-                            <th className="py-2 px-7 border-b text-center w-[180px]">Data de Criação</th>
-                            <th className="py-2 px-7 border-b text-center w-[180px]">Data de Atualização</th>
-                            <th className="py-2 px-7 border-b text-center w-[100px]"></th>
-                            <th className="py-2 px-7 border-b text-center w-[100px]"></th>
+                            <th className="py-2 px-7 border-b border-gray-200 text-center w-[150px]">Nome</th>
+                            <th className="py-2 px-7 border-b border-gray-200 text-center w-[150px]">Sobrenome</th>
+                            <th className="py-2 px-7 border-b border-gray-200 text-center w-[180px]">Data de Criação
+                            </th>
+                            <th className="py-2 px-7 border-b border-gray-200 text-center w-[180px]">Data de
+                                Atualização
+                            </th>
+                            <th className="py-2 px-7 border-b border-gray-200 text-center w-[100px]"></th>
+                            <th className="py-2 px-7 border-b border-gray-200 text-center w-[100px]"></th>
                         </tr>
                         </thead>
                         <tbody>
-                        {records.map((record) => (
-                            <tr key={record.neurofunctionalRecordId} className="hover:bg-gray-100">
-                                <td className="py-2 px-8 border-b text-center w-[150px]">{record.name}</td>
-                                <td className="py-2 px-8 border-b text-center w-[150px]">{record.surname}</td>
-                                <td className="py-2 px-8 border-b text-center w-[180px]">{new Date(record.createdAt).toLocaleDateString()}</td>
-                                <td className="py-2 px-8 border-b text-center w-[180px]">{new Date(record.updatedAt).toLocaleDateString()}</td>
-                                <td className="py-2 px-8 border-b text-center text-center w-[100px]">
+                        {records.map((record, index) => (
+                            <tr key={record.neurofunctionalRecordId}
+                                className={`hover:bg-gray-100 ${index > 0 ? 'border-t border-gray-200' : ''}`}>
+                                <td className="py-4 px-8 text-center w-[150px]">{record.name}</td>
+                                <td className="py-4 px-8 text-center w-[150px]">{record.surname}</td>
+                                <td className="py-4 px-8 text-center w-[180px]">{new Date(record.createdAt).toLocaleDateString()}</td>
+                                <td className="py-4 px-8 text-center w-[180px]">{new Date(record.updatedAt).toLocaleDateString()}</td>
+                                <td className="py-4 px-8 text-center w-[100px]">
                                     <ButtonOne
                                         texto="Editar"
-                                        onClick={() => handleClickEdit(record.neurofunctionalRecordId)}
+                                        onClick={() => handleClickEdit(record.neurofunctionalRecordId, record.patientId)}
                                     />
                                 </td>
-                                <td className="py-2 px-8 border-b text-center w-[100px]">
+                                <td className="py-4 px-8 text-center w-[100px]">
                                     <ButtonOne
                                         texto="Visualizar"
-                                        onClick={() => handleClickView(record.neurofunctionalRecordId)}
+                                        onClick={() => handleClickView(record.neurofunctionalRecordId, record.patientId)}
                                     />
                                 </td>
                             </tr>
                         ))}
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+
                 </div>
-                )}
-<FooterBar/>
-</div>
-)
-;
+            )}
+            <FooterBar/>
+        </div>
+    );
 }

@@ -188,6 +188,13 @@ export default function Fichas() {
                         router.push(`/Medico/Fichas/CriarNeurofuncional`);
                     }}
                 />
+                <ButtonIcon
+                    icon={<GoPlus className="text-3xl"/>}
+                    texto="Cardiorespiratório"
+                    onClick={() => {
+                        router.push(`/Medico/Fichas/CriarCardio`);
+                    }}
+                />
             </div>
             <h1 className="text-3xl font-bold mb-4">Fichas Avaliativas</h1>
 

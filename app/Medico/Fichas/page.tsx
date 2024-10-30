@@ -12,7 +12,9 @@ import DayFilter from "@/app/components/DayFilter";
 
 interface RecordProps {
     patientId: string;
-    neurofunctionalRecordId: string;
+    neurofunctionalRecordId: string; // Coloque o '?' se o ID pode ser undefined
+    cardiorespiratoryRecordId: string; // Adicionando o ID de Cardiorespiratório
+    traumatoOrthopedicRecordId: string; // Adicionando o ID de Traumatológico/Ortopédico
     name: string;
     surname: string;
     createdAt: string; // Supondo que a data venha como string
@@ -75,7 +77,7 @@ export default function Fichas() {
         }
     };
 
-    // Função para buscar o tipo de ficha com base no patientId
+// Função para buscar o tipo de ficha com base no patientId
     const fetchRecordTypeByPatientId = async (patientId: string) => {
         const token = localStorage.getItem('access_token');
         try {
@@ -84,35 +86,38 @@ export default function Fichas() {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            return response.data.universalMedicalRecord.specificMedicalRecordsIds; // Retorna apenas os IDs dos registros
+
+            // Retorna todos os registros específicos como um objeto
+            return response.data.universalMedicalRecord.specificMedicalRecordsIds; // Confirme a estrutura aqui
         } catch (error) {
             console.error('Erro ao buscar tipos de registro:', error);
             return null; // Retorna null em caso de erro
         }
     };
 
-
-
-    const handleClickEdit = async (neurofunctionalRecordId: string, patientId: string) => {
-        console.log("ID do Registro:", neurofunctionalRecordId);
+    const handleClickEdit = async (recordId: string, patientId: string) => {
+        console.log("ID do Registro:", recordId);
         console.log("ID do Paciente:", patientId);
 
         const recordTypes = await fetchRecordTypeByPatientId(patientId);
 
         if (recordTypes) {
+            // Verifique a estrutura do objeto recordTypes
+            console.log("Tipos de Registro:", recordTypes);
+
             // Verificação para o tipo de ficha Neurofuncional
-            if (recordTypes.neurofunctionalRecord === neurofunctionalRecordId) {
-                localStorage.setItem('currentRecordId', neurofunctionalRecordId);
+            if (recordTypes.neurofunctionalRecord === recordId) {
+                localStorage.setItem('currentRecordId', recordId);
                 router.push(`/Medico/Fichas/EditarNeuro`);
             }
             // Verificação para o tipo de ficha Cardiorespiratória
-            else if (recordTypes.cardiorespiratoryRecord === neurofunctionalRecordId) {
-                localStorage.setItem('currentRecordId', neurofunctionalRecordId);
+            else if (recordTypes.cardiorespiratoryRecord === recordId) {
+                localStorage.setItem('currentRecordId', recordId);
                 router.push(`/Medico/Fichas/EditarCardio`);
             }
             // Verificação para o tipo de ficha Traumatológica/Ortopédica
-            else if (recordTypes.traumatoOrthopedicRecord === neurofunctionalRecordId) {
-                localStorage.setItem('currentRecordId', neurofunctionalRecordId);
+            else if (recordTypes.traumatoOrthopedicRecord === recordId) {
+                localStorage.setItem('currentRecordId', recordId);
                 router.push(`/Medico/Fichas/EditarTrauma`);
             }
             else {
@@ -123,6 +128,8 @@ export default function Fichas() {
             console.error('Não foi possível verificar o tipo de registro.');
         }
     };
+
+
 
     const handleClickView = async (neurofunctionalRecordId: string, patientId: string) => {
         console.log("ID do Registro:", neurofunctionalRecordId);
@@ -246,18 +253,24 @@ export default function Fichas() {
                                 <td className="py-4 px-8 text-center w-[100px]">
                                     <ButtonOne
                                         texto="Editar"
-                                        onClick={() => handleClickEdit(record.neurofunctionalRecordId, record.patientId)}
+                                        onClick={() => {
+                                            // Use o ID correto com base no tipo de registro
+                                            handleClickEdit(record.neurofunctionalRecordId || record.cardiorespiratoryRecordId || record.traumatoOrthopedicRecordId, record.patientId);
+                                        }}
                                     />
                                 </td>
                                 <td className="py-4 px-8 text-center w-[100px]">
                                     <ButtonOne
                                         texto="Visualizar"
-                                        onClick={() => handleClickView(record.neurofunctionalRecordId, record.patientId)}
+                                        onClick={() => {
+                                            handleClickView(record.neurofunctionalRecordId || record.cardiorespiratoryRecordId || record.traumatoOrthopedicRecordId, record.patientId);
+                                        }}
                                     />
                                 </td>
                             </tr>
                         ))}
                         </tbody>
+
                     </table>
 
                 </div>

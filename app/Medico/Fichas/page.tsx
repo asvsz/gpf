@@ -14,7 +14,7 @@ interface RecordProps {
     patientId: string;
     neurofunctionalRecordId: string; // Coloque o '?' se o ID pode ser undefined
     cardiorespiratoryRecordId: string; // Adicionando o ID de Cardiorespiratório
-    traumatoOrthopedicRecordId: string; // Adicionando o ID de Traumatológico/Ortopédico
+    traumaOrthopedicRecordId: string; // Adicionando o ID de Traumatológico/Ortopédico
     name: string;
     surname: string;
     createdAt: string; // Supondo que a data venha como string
@@ -95,32 +95,30 @@ export default function Fichas() {
         }
     };
 
-    const handleClickEdit = async (recordId: string, patientId: string) => {
+    const handleClickEdit = async (recordId: string | undefined, patientId: string) => {
+        if (!recordId) {
+            console.error("Erro: recordId está indefinido");
+            alert("Erro interno: registro não encontrado.");
+            return;
+        }
         console.log("ID do Registro:", recordId);
         console.log("ID do Paciente:", patientId);
 
         const recordTypes = await fetchRecordTypeByPatientId(patientId);
 
         if (recordTypes) {
-            // Verifique a estrutura do objeto recordTypes
             console.log("Tipos de Registro:", recordTypes);
 
-            // Verificação para o tipo de ficha Neurofuncional
             if (recordTypes.neurofunctionalRecord === recordId) {
                 localStorage.setItem('currentRecordId', recordId);
                 router.push(`/Medico/Fichas/EditarNeuro`);
-            }
-            // Verificação para o tipo de ficha Cardiorespiratória
-            else if (recordTypes.cardiorespiratoryRecord === recordId) {
+            } else if (recordTypes.cardiorespiratoryRecord === recordId) {
                 localStorage.setItem('currentRecordId', recordId);
                 router.push(`/Medico/Fichas/EditarCardio`);
-            }
-            // Verificação para o tipo de ficha Traumatológica/Ortopédica
-            else if (recordTypes.traumatoOrthopedicRecord === recordId) {
+            } else if (recordTypes.traumatoOrthopedicRecord === recordId) {
                 localStorage.setItem('currentRecordId', recordId);
                 router.push(`/Medico/Fichas/EditarTrauma`);
-            }
-            else {
+            } else {
                 console.log('Tipo de ficha não corresponde.');
                 alert("Este registro não corresponde a nenhum tipo de ficha que você pode editar.");
             }
@@ -128,6 +126,7 @@ export default function Fichas() {
             console.error('Não foi possível verificar o tipo de registro.');
         }
     };
+
 
 
 
@@ -229,33 +228,38 @@ export default function Fichas() {
             {!loading && !loadingRecords && records.length > 0 && (
                 <div className="flex-grow">
                     <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+
                         <thead>
                         <tr className="bg-gray-200">
                             <th className="py-2 px-7 border-b border-gray-200 text-center w-[150px]">Nome</th>
                             <th className="py-2 px-7 border-b border-gray-200 text-center w-[150px]">Sobrenome</th>
-                            <th className="py-2 px-7 border-b border-gray-200 text-center w-[180px]">Data de Criação
-                            </th>
-                            <th className="py-2 px-7 border-b border-gray-200 text-center w-[180px]">Data de
-                                Atualização
-                            </th>
+                            <th className="py-2 px-7 border-b border-gray-200 text-center w-[180px]">Data de Criação</th>
+                            <th className="py-2 px-7 border-b border-gray-200 text-center w-[180px]">Data de Atualização</th>
+                            <th className="py-2 px-7 border-b border-gray-200 text-center w-[150px]">Tipo de Ficha</th> {/* Nova coluna */}
                             <th className="py-2 px-7 border-b border-gray-200 text-center w-[100px]"></th>
                             <th className="py-2 px-7 border-b border-gray-200 text-center w-[100px]"></th>
                         </tr>
                         </thead>
                         <tbody>
                         {records.map((record, index) => (
-                            <tr key={record.neurofunctionalRecordId}
-                                className={`hover:bg-gray-100 ${index > 0 ? 'border-t border-gray-200' : ''}`}>
+                            <tr key={record.patientId} className={`hover:bg-gray-100 ${index > 0 ? 'border-t border-gray-200' : ''}`}>
                                 <td className="py-4 px-8 text-center w-[150px]">{record.name}</td>
                                 <td className="py-4 px-8 text-center w-[150px]">{record.surname}</td>
                                 <td className="py-4 px-8 text-center w-[180px]">{new Date(record.createdAt).toLocaleDateString()}</td>
                                 <td className="py-4 px-8 text-center w-[180px]">{new Date(record.updatedAt).toLocaleDateString()}</td>
+
+                                {/* Defina o tipo de ficha com base nos IDs */}
+                                <td className="py-4 px-8 text-center w-[150px]">
+                                    {record.neurofunctionalRecordId ? 'Neurofuncional' :
+                                        record.cardiorespiratoryRecordId ? 'Cardiorespiratório' :
+                                            record.traumaOrthopedicRecordId ? 'Trauma Ortopédico' : 'Desconhecido'}
+                                </td>
+
                                 <td className="py-4 px-8 text-center w-[100px]">
                                     <ButtonOne
                                         texto="Editar"
                                         onClick={() => {
-                                            // Use o ID correto com base no tipo de registro
-                                            handleClickEdit(record.neurofunctionalRecordId || record.cardiorespiratoryRecordId || record.traumatoOrthopedicRecordId, record.patientId);
+                                            handleClickEdit(record.neurofunctionalRecordId || record.cardiorespiratoryRecordId || record.traumaOrthopedicRecordId, record.patientId);
                                         }}
                                     />
                                 </td>
@@ -263,13 +267,14 @@ export default function Fichas() {
                                     <ButtonOne
                                         texto="Visualizar"
                                         onClick={() => {
-                                            handleClickView(record.neurofunctionalRecordId || record.cardiorespiratoryRecordId || record.traumatoOrthopedicRecordId, record.patientId);
+                                            handleClickView(record.neurofunctionalRecordId || record.cardiorespiratoryRecordId || record.traumaOrthopedicRecordId, record.patientId);
                                         }}
                                     />
                                 </td>
                             </tr>
                         ))}
                         </tbody>
+
 
                     </table>
 

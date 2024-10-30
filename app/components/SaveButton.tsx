@@ -9,7 +9,7 @@ export default function SaveButton ({ onClick, label = "Salvar" }: SaveButtonPro
   return (
     <button
       onClick={onClick}
-      className="bg-green-800 text-white px-4 py-2 rounded-md hover:bg-green-600 transition"
+      className="bg-custom-green text-white px-4 py-2 rounded-md hover:bg-custom-ligh-green transition"
     >
       {label}
     </button>

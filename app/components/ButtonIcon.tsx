@@ -11,7 +11,7 @@ export default function ButtonIcon({icon, texto, onClick, type="button" }: Butto
   return (
     <button
       type={type}
-      className="container flex rounded h-14 hover:bg-green-700 text-white text-xl bg-green-800 w-64 p-2 
+      className="container flex rounded h-14 hover:bg-custom-ligh-green text-white text-xl bg-custom-green w-64 p-2
     justify-center items-center"
       onClick={onClick}>
       {icon && <span className="mr-2">{icon}</span>}

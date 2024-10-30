@@ -17,7 +17,7 @@ export default function DayFilter({ onClick, texto, days, option, type = "button
                     onClick={() => onClick(option)} // Atualiza os dias ao clicar no botão
                     className={`border rounded-md px-4 py-2 text-sm ${
                         days === option
-                            ? 'bg-green-800 text-white' // Cor do botão selecionado
+                            ? 'bg-custom-green text-white' // Cor do botão selecionado
                             : 'bg-gray-200 text-gray-800 hover:bg-blue-100' // Estilo padrão dos botões
                     }`}
                 >

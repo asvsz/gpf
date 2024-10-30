@@ -91,7 +91,7 @@ const Login = () => {
           {user === 'patient' && (
             <span>
               Se ainda não é cadastrado,{' '}
-              <Link href="/CadastrarPaciente" className="text-green-500">
+              <Link href="/CadastrarPaciente" className="text-custom-green">
                 Cadastre-se
               </Link>
             </span>

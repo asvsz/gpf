@@ -10,82 +10,40 @@ import PrivateRoute from '@/app/components/PrivateRoute';
 import NavbarDoctor from "@/app/components/NavbarDoctor";
 import Footer from "@/app/components/Footer";
 
-interface NeurofunctionalRecordProps {
+interface TraumaRecordProps {
     medicalDiagnosis: string;
     anamnesis: string;
     physicalExamination: string;
     triage: string;
-    lifestyleHabits: {
-        alcoholConsumption: boolean;
-        smoker: boolean;
-        obesity: boolean;
-        diabetes: boolean;
-        drugUser: boolean;
-        physicalActivity: boolean;
+    palpation: string;
+    edema: boolean;
+    pittingTest: boolean;
+    fingerPressureTest: boolean;
+    perimetry: {
+        rightArm: number;
+        leftArm: number;
+        upperRightThigh: number;
+        upperLeftThigh: number;
+        lowerRightThigh: number;
+        lowerLeftThigh: number;
+        rightKnee: number;
+        leftKnee: number;
     };
-    vitalSigns: {
-        bloodPressure: number;
-        heartRate: number;
-        respiratoryRate: number;
-        oxygenSaturation: number;
-        bodyTemperature: number;
+    subjectivePainAssessment: {
+        intensity: number;
+        location: string;
+        characteristic: string;
     };
-    physicalInspection: {
-        independentMobility: boolean;
-        usesCrutches: boolean;
-        usesWalker: boolean;
-        wheelchairUser: boolean;
-        hasScar: boolean;
-        hasBedsore: boolean;
-        cooperative: boolean;
-        nonCooperative: boolean;
-        hydrated: boolean;
-        hasHematoma: boolean;
-        hasEdema: boolean;
-        hasDeformity: boolean;
-    };
-    sensoryAssessment: {
-        superficial: string;
-        deep: string;
-        combinedSensations: {
-            graphesthesia: boolean;
-            barognosis: boolean;
-            stereognosis: boolean;
-        };
-    };
-    patientMobility: {
-        threeMeterWalkTimeInSeconds: number;
-        hasFallRisk: boolean;
-        postureChanges: {
-            bridge: string;
-            semiRollRight: string;
-            semiRollLeft: string;
-            fullRoll: string;
-            drag: string;
-            proneToForearmSupport: string;
-            forearmSupportToAllFours: string;
-            allFours: string;
-            allFoursToKneeling: string;
-            kneelingToHalfKneelingRight: string;
-            kneelingToHalfKneelingLeft: string;
-            halfKneelingRightToStanding: string;
-            halfKneelingLeftToStanding: string;
-        };
-    };
-    physiotherapyAssessment: {
-        diagnosis: string;
-        treatmentGoals: string;
-        physiotherapeuticConduct: string;
-    };
+    specialOrthopedicTest: string;
 }
 
-export default function EditNeurofunctionalRecord() {
+export default function EditTraumaRecord() {
     const router = useRouter();
-    const [record, setRecord] = useState<NeurofunctionalRecordProps | null>(null);
+    const [record, setRecord] = useState<TraumaRecordProps | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // Função para buscar os dados do registro neurofuncional
+    // Função para buscar os dados do registro de trauma
     const fetchRecordData = async () => {
         const recordId = localStorage.getItem('currentRecordId');
         if (!recordId) {
@@ -98,7 +56,7 @@ export default function EditNeurofunctionalRecord() {
                 throw new Error("Token não encontrado");
             }
 
-            const response = await api.get(`/neurofunctional-record/by-id/${recordId}`, {
+            const response = await api.get(`/trauma-orthopedic-record/by-id/${recordId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -122,11 +80,10 @@ export default function EditNeurofunctionalRecord() {
             const dataToSend = {
                 ...record,
             };
-
             try {
                 const token = localStorage.getItem("access_token");
                 const recordId = localStorage.getItem('currentRecordId');
-                await api.put(`/neurofunctional-record/${recordId}`, dataToSend, {
+                await api.put(`/trauma-orthopedic-record/${recordId}`, dataToSend, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -151,30 +108,30 @@ export default function EditNeurofunctionalRecord() {
         fetchRecordData();
     }, []);
 
-
-    // Exibição do formulário para edição do registro neurofuncional
     return (
         <PrivateRoute requiredUserType='clinician'>
             <div className="flex flex-col min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
                 <NavbarDoctor/>
-                <h2 className=" text-3xl font-bold">Editar Registro Neurofuncional</h2>
+                <h2 className="text-3xl font-bold">Editar Registro de Trauma</h2>
 
                 {error && <div className="text-red-500 mb-4">{error}</div>}
 
                 {/* Loader e mensagem quando não há dados */}
-                {loading  ? (
+                {loading ? (
                     <div className="flex justify-center items-center h-64">
                         <span>Carregando...</span>
                     </div>
                 ) : record ? (
                     <div className="flex flex-col gap-4 mb-10">
-                    <textarea
-                    value={record.medicalDiagnosis}
-                onChange={(e) => setRecord({ ...record, medicalDiagnosis: e.target.value })}
-                className="border rounded-md p-2"
-                placeholder="Diagnóstico Médico"
-            />
+                        <label className="block text-gray-700 font-semibold">Diagnóstico Médico</label>
+                        <textarea
+                            value={record.medicalDiagnosis}
+                            onChange={(e) => setRecord({ ...record, medicalDiagnosis: e.target.value })}
+                            className="border rounded-md p-2"
+                            placeholder="Diagnóstico Médico"
+                        />
 
+                        <label className="block text-gray-700 font-semibold">Anamnese</label>
                         <textarea
                             value={record.anamnesis}
                             onChange={(e) => setRecord({ ...record, anamnesis: e.target.value })}
@@ -182,6 +139,7 @@ export default function EditNeurofunctionalRecord() {
                             placeholder="Anamnese"
                         />
 
+                        <label className="block text-gray-700 font-semibold">Exame Físico</label>
                         <textarea
                             value={record.physicalExamination}
                             onChange={(e) => setRecord({ ...record, physicalExamination: e.target.value })}
@@ -190,7 +148,7 @@ export default function EditNeurofunctionalRecord() {
                         />
 
                         <div>
-                            <label className="block text-gray-700">Triage</label>
+                            <label className="block text-gray-700 font-semibold">Triage</label>
                             <select
                                 value={record.triage}
                                 onChange={(e) => setRecord({ ...record, triage: e.target.value })}
@@ -201,162 +159,175 @@ export default function EditNeurofunctionalRecord() {
                                 <option value="green">Verde</option>
                                 <option value="yellow">Amarelo</option>
                                 <option value="red">Vermelho</option>
+                                <option value="blue">Azul</option>
                             </select>
                         </div>
 
-                        {/* Campos de Hábitos de Vida */}
+                        {/* Campo de Palpação */}
+                        <label className="block text-gray-700 font-semibold">Palpação</label>
+                        <textarea
+                            value={record.palpation}
+                            onChange={(e) => setRecord({ ...record, palpation: e.target.value })}
+                            className="border rounded-md p-2"
+                            placeholder="Palpação"
+                        />
+
+                        {/* Teste de Edema e Pressão Digital */}
                         <div className="flex gap-4">
                             <label>
                                 <input
                                     type="checkbox"
-                                    checked={record.lifestyleHabits.alcoholConsumption}
-                                    onChange={(e) => setRecord({
-                                        ...record,
-                                        lifestyleHabits: { ...record.lifestyleHabits, alcoholConsumption: e.target.checked }
-                                    })}
+                                    checked={record.edema}
+                                    onChange={(e) => setRecord({ ...record, edema: e.target.checked })}
                                 />
-                                Consome Álcool
+                                Edema
                             </label>
                             <label>
                                 <input
                                     type="checkbox"
-                                    checked={record.lifestyleHabits.smoker}
-                                    onChange={(e) => setRecord({
-                                        ...record,
-                                        lifestyleHabits: { ...record.lifestyleHabits, smoker: e.target.checked }
-                                    })}
+                                    checked={record.pittingTest}
+                                    onChange={(e) => setRecord({ ...record, pittingTest: e.target.checked })}
                                 />
-                                Fumante
+                                Teste de Edema
                             </label>
-                            {/* Adicione outros hábitos de vida conforme necessário */}
-                        </div>
-
-                        {/* Campos de Sinais Vitais */}
-                        <div className="flex flex-col">
-                            <h3 className="font-semibold">Sinais Vitais</h3>
-                            <input
-                                type="number"
-                                value={record.vitalSigns.bloodPressure}
-                                onChange={(e) => setRecord({
-                                    ...record,
-                                    vitalSigns: { ...record.vitalSigns, bloodPressure: +e.target.value }
-                                })}
-                                className="border rounded-md px-2 py-1"
-                                placeholder="Pressão Arterial"
-                            />
-                            <input
-                                type="number"
-                                value={record.vitalSigns.heartRate}
-                                onChange={(e) => setRecord({
-                                    ...record,
-                                    vitalSigns: { ...record.vitalSigns, heartRate: +e.target.value }
-                                })}
-                                className="border rounded-md px-2 py-1"
-                                placeholder="Frequência Cardíaca"
-                            />
-                            {/* Adicione outros sinais vitais conforme necessário */}
-                        </div>
-
-                        {/* Campos de Inspeção Física */}
-                        <div className="flex flex-col">
-                            <h3 className="font-semibold">Inspeção Física</h3>
                             <label>
                                 <input
                                     type="checkbox"
-                                    checked={record.physicalInspection.independentMobility}
-                                    onChange={(e) => setRecord({
-                                        ...record,
-                                        physicalInspection: { ...record.physicalInspection, independentMobility: e.target.checked }
-                                    })}
+                                    checked={record.fingerPressureTest}
+                                    onChange={(e) => setRecord({ ...record, fingerPressureTest: e.target.checked })}
                                 />
-                                Mobilidade Independente
+                                Teste de Pressão Digital
                             </label>
-                            {/* Adicione outros campos de inspeção física conforme necessário */}
                         </div>
 
-                        {/* Campos de Avaliação Sensória */}
-                        <div className="flex flex-col">
-                            <h3 className="font-semibold">Avaliação Sensória</h3>
-                            <input
-                                type="text"
-                                value={record.sensoryAssessment.superficial}
-                                onChange={(e) => setRecord({
-                                    ...record,
-                                    sensoryAssessment: { ...record.sensoryAssessment, superficial: e.target.value }
-                                })}
-                                className="border rounded-md px-2 py-1"
-                                placeholder="Avaliação Superficial"
-                            />
-                            <input
-                                type="text"
-                                value={record.sensoryAssessment.deep}
-                                onChange={(e) => setRecord({
-                                    ...record,
-                                    sensoryAssessment: { ...record.sensoryAssessment, deep: e.target.value }
-                                })}
-                                className="border rounded-md px-2 py-1"
-                                placeholder="Avaliação Profunda"
-                            />
-                        </div>
-
-                        {/* Campos de Mobilidade do Paciente */}
-                        <div className="flex flex-col">
-                            <h3 className="font-semibold">Mobilidade do Paciente</h3>
+                        {/* Campos de Perimetria */}
+                        <div className="flex flex-col gap-2">
+                            <h3 className="font-semibold">Perimetria</h3>
+                            <label className="block text-gray-700 font-semibold">Braço Direito</label>
                             <input
                                 type="number"
-                                value={record.patientMobility.threeMeterWalkTimeInSeconds}
-                                onChange={(e) => setRecord({
-                                    ...record,
-                                    patientMobility: { ...record.patientMobility, threeMeterWalkTimeInSeconds: +e.target.value }
-                                })}
+                                value={record.perimetry.rightArm}
+                                onChange={(e) => setRecord({ ...record, perimetry: { ...record.perimetry, rightArm: +e.target.value } })}
                                 className="border rounded-md px-2 py-1"
-                                placeholder="Tempo de Caminhada de 3 Metros (s)"
                             />
-                            {/* Adicione outros campos de mobilidade conforme necessário */}
+                            <label className="block text-gray-700 font-semibold">Braço Esquerdo</label>
+                            <input
+                                type="number"
+                                value={record.perimetry.leftArm}
+                                onChange={(e) => setRecord({ ...record, perimetry: { ...record.perimetry, leftArm: +e.target.value } })}
+                                className="border rounded-md px-2 py-1"
+                            />
+                            <label className="block text-gray-700 font-semibold">Coxa Direita (Superior)</label>
+                            <input
+                                type="number"
+                                value={record.perimetry.upperRightThigh}
+                                onChange={(e) => setRecord({ ...record, perimetry: { ...record.perimetry, upperRightThigh: +e.target.value } })}
+                                className="border rounded-md px-2 py-1"
+                            />
+                            <label className="block text-gray-700 font-semibold">Coxa Esquerda (Superior)</label>
+                            <input
+                                type="number"
+                                value={record.perimetry.upperLeftThigh}
+                                onChange={(e) => setRecord({ ...record, perimetry: { ...record.perimetry, upperLeftThigh: +e.target.value } })}
+                                className="border rounded-md px-2 py-1"
+                            />
+                            <label className="block text-gray-700 font-semibold">Coxa Direita (Inferior)</label>
+                            <input
+                                type="number"
+                                value={record.perimetry.lowerRightThigh}
+                                onChange={(e) => setRecord({ ...record, perimetry: { ...record.perimetry, lowerRightThigh: +e.target.value } })}
+                                className="border rounded-md px-2 py-1"
+                            />
+                            <label className="block text-gray-700 font-semibold">Coxa Esquerda (Inferior)</label>
+                            <input
+                                type="number"
+                                value={record.perimetry.lowerLeftThigh}
+                                onChange={(e) => setRecord({ ...record, perimetry: { ...record.perimetry, lowerLeftThigh: +e.target.value } })}
+                                className="border rounded-md px-2 py-1"
+                            />
+                            <label className="block text-gray-700 font-semibold">Joelho Direito</label>
+                            <input
+                                type="number"
+                                value={record.perimetry.rightKnee}
+                                onChange={(e) => setRecord({ ...record, perimetry: { ...record.perimetry, rightKnee: +e.target.value } })}
+                                className="border rounded-md px-2 py-1"
+                            />
+                            <label className="block text-gray-700 font-semibold">Joelho Esquerdo</label>
+                            <input
+                                type="number"
+                                value={record.perimetry.leftKnee}
+                                onChange={(e) => setRecord({ ...record, perimetry: { ...record.perimetry, leftKnee: +e.target.value } })}
+                                className="border rounded-md px-2 py-1"
+                            />
                         </div>
 
-                        {/* Campos de Avaliação Fisioterapêutica */}
-                        <div className="flex flex-col">
-                            <h3 className="font-semibold">Avaliação Fisioterapêutica</h3>
-                            <textarea
-                                value={record.physiotherapyAssessment.diagnosis}
+                        {/* Avaliação de Dor Subjetiva */}
+                        <div className="flex flex-col gap-2">
+                            <h3 className="font-semibold">Avaliação de Dor Subjetiva</h3>
+                            <label className="block text-gray-700 font-semibold">Intensidade da Dor</label>
+                            <input
+                                type="number"
+                                value={record.subjectivePainAssessment.intensity}
                                 onChange={(e) => setRecord({
                                     ...record,
-                                    physiotherapyAssessment: { ...record.physiotherapyAssessment, diagnosis: e.target.value }
+                                    subjectivePainAssessment: {
+                                        ...record.subjectivePainAssessment,
+                                        intensity: +e.target.value
+                                    }
                                 })}
-                                className="border rounded-md p-2"
-                                placeholder="Diagnóstico"
+                                className="border rounded-md px-2 py-1"
                             />
-                            <textarea
-                                value={record.physiotherapyAssessment.treatmentGoals}
+                            <label className="block text-gray-700 font-semibold">Localização da Dor</label>
+                            <input
+                                type="text"
+                                value={record.subjectivePainAssessment.location}
                                 onChange={(e) => setRecord({
                                     ...record,
-                                    physiotherapyAssessment: { ...record.physiotherapyAssessment, treatmentGoals: e.target.value }
+                                    subjectivePainAssessment: {
+                                        ...record.subjectivePainAssessment,
+                                        location: e.target.value
+                                    }
                                 })}
-                                className="border rounded-md p-2"
-                                placeholder="Objetivos do Tratamento"
+                                className="border rounded-md px-2 py-1"
                             />
-                            <textarea
-                                value={record.physiotherapyAssessment.physiotherapeuticConduct}
+                            <label className="block text-gray-700 font-semibold">Característica da Dor</label>
+                            <input
+                                type="text"
+                                value={record.subjectivePainAssessment.characteristic}
                                 onChange={(e) => setRecord({
                                     ...record,
-                                    physiotherapyAssessment: { ...record.physiotherapyAssessment, physiotherapeuticConduct: e.target.value }
+                                    subjectivePainAssessment: {
+                                        ...record.subjectivePainAssessment,
+                                        characteristic: e.target.value
+                                    }
                                 })}
-                                className="border rounded-md p-2"
-                                placeholder="Conduta Fisioterapêutica"
+                                className="border rounded-md px-2 py-1"
+                            />
+                            <label className="block text-gray-700 font-semibold">Teste Ortopédico Especial</label>
+                            <input
+                                type="text"
+                                value={record.specialOrthopedicTest}
+                                onChange={(e) => setRecord({
+                                    ...record,
+                                    specialOrthopedicTest: e.target.value
+                                })}
+                                className="border rounded-md px-2 py-1"
                             />
                         </div>
 
                         <div className="flex gap-2 mt-4">
-                            <SaveButton onClick={handleSave} />
-                            <CancelButton onClick={() => router.push('/Medico/Fichas')} />
+                            <SaveButton onClick={handleSave}/>
+                            <CancelButton onClick={() => router.push('/Medico/Fichas')}/>
                         </div>
                     </div>
                 ) : (
                     <div>Registro não encontrado.</div>
-    )}
+                )}
                 <Footer/>
             </div>
         </PrivateRoute>
     );
+
+
+
 }

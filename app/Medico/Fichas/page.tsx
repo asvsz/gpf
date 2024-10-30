@@ -112,9 +112,11 @@ export default function Fichas() {
             if (recordTypes.neurofunctionalRecord === recordId) {
                 localStorage.setItem('currentRecordId', recordId);
                 router.push(`/Medico/Fichas/EditarNeuro`);
+
             } else if (recordTypes.cardiorespiratoryRecord === recordId) {
                 localStorage.setItem('currentRecordId', recordId);
                 router.push(`/Medico/Fichas/EditarCardio`);
+
             } else if (recordTypes.traumatoOrthopedicRecord === recordId) {
                 localStorage.setItem('currentRecordId', recordId);
                 router.push(`/Medico/Fichas/EditarTrauma`);
@@ -130,29 +132,29 @@ export default function Fichas() {
 
 
 
-    const handleClickView = async (neurofunctionalRecordId: string, patientId: string) => {
-        console.log("ID do Registro:", neurofunctionalRecordId);
+    const handleClickView = async (recordId: string | undefined, patientId: string) => {
+        if (!recordId) {
+            console.error("Erro: recordId está indefinido");
+            alert("Erro interno: registro não encontrado.");
+            return;
+        }
+        console.log("ID do Registro:", recordId);
         console.log("ID do Paciente:", patientId);
 
         const recordTypes = await fetchRecordTypeByPatientId(patientId);
+        console.log("Tipos de Registro:", recordTypes);
 
         if (recordTypes) {
-            // Verificação para o tipo de ficha Neurofuncional
-            if (recordTypes.neurofunctionalRecord === neurofunctionalRecordId) {
-                localStorage.setItem('currentRecordId', neurofunctionalRecordId);
+            if (recordTypes.neurofunctionalRecord === recordId) {
+                localStorage.setItem('currentRecordId', recordId);
                 router.push(`/Medico/Fichas/FichaNeuro`);
-            }
-            // Verificação para o tipo de ficha Cardiorespiratória
-            else if (recordTypes.cardiorespiratoryRecord === neurofunctionalRecordId) {
-                localStorage.setItem('currentRecordId', neurofunctionalRecordId);
+            } else if (recordTypes.cardiorespiratoryRecord === recordId) {
+                localStorage.setItem('currentRecordId', recordId);
                 router.push(`/Medico/Fichas/FichaCardio`);
-            }
-            // Verificação para o tipo de ficha Traumatológica/Ortopédica
-            else if (recordTypes.traumatoOrthopedicRecord === neurofunctionalRecordId) {
-                localStorage.setItem('currentRecordId', neurofunctionalRecordId);
+            } else if (recordTypes.traumatoOrthopedicRecord === recordId) {
+                localStorage.setItem('currentRecordId', recordId);
                 router.push(`/Medico/Fichas/FichaTrauma`);
-            }
-            else {
+            } else {
                 console.log('Tipo de ficha não corresponde.');
                 alert("Este registro não corresponde a nenhum tipo de ficha que você pode visualizar.");
             }

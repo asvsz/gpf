@@ -11,6 +11,9 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        'custom-green': '#2A5C4E', // Adicione suas cores aqui
+        'custom-light-green': '#6EA85E',
+        'custom-yellow': '#E6B52B',
       },
     },
   },

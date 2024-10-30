@@ -26,25 +26,6 @@ interface LifestyleHabits {
     physicalActivity: boolean;
 }
 
-interface CardioFicha {
-    medicalDiagnosis: string;
-    anamnesis: string;
-    physicalExamination: string;
-    triage: string;
-    lifestyleHabits: LifestyleHabits;
-    physicalInspection: any; // Defina a estrutura adequada
-    vitalSigns: {
-        heartRate: number;
-        respiratoryRate: number;
-        bloodPressure: { systolic: number; diastolic: number };
-        temperature: number;
-        oxygenSaturation: number;
-    };
-    pneumofunctionalAssessment: any; // Defina a estrutura adequada
-    cardiofunctionalAssessment: any; // Defina a estrutura adequada
-}
-
-
 const CriarCardio = () => {
     const { clinicianId, fetchClinicianIdByEmail } = useClinicians();
     const [pacientes, setPacientes] = useState<Paciente[]>([]);

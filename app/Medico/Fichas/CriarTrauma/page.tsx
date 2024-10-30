@@ -2,12 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { useFetchPaciente } from '@/app/hooks/useFetchPaciente';
 import { useFetchRegistroMedicoUniversal } from '@/app/hooks/useFetchRegistroMedicoUniversal';
-import { useClinicians } from '@/app/hooks/useFetchClinico'; // Importe o novo hook
+import { useClinicians } from '@/app/hooks/useFetchClinico';
 import api from '@/app/services/api';
 import NavbarDoctor from "@/app/components/NavbarDoctor";
 import Footer from "@/app/components/Footer";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import ButtonOne from "@/app/components/ButtonOne";
+import axios from 'axios';
 
 interface Paciente {
     id: string;
@@ -16,8 +17,8 @@ interface Paciente {
     cpf: string;
 }
 
-const CriarNeurofuncional = () => {
-    const { clinicianId, fetchClinicianIdByEmail } = useClinicians();
+const CriarTrauma = () => {
+    const {clinicianId, fetchClinicianIdByEmail} = useClinicians();
     const [pacientes, setPacientes] = useState<Paciente[]>([]);
     const [cpf, setCpf] = useState('');
     const [patientId, setPatientId] = useState<string | null>(null);
@@ -29,78 +30,27 @@ const CriarNeurofuncional = () => {
     const [physicalExamination, setPhysicalExamination] = useState('');
     const [triage, setTriage] = useState('blue');
 
-    // Lifestyle Habits
-    const [lifestyleHabits, setLifestyleHabits] = useState({
-        alcoholConsumption: false,
-        smoker: false,
-        obesity: false,
-        diabetes: false,
-        drugUser: false,
-        physicalActivity: false,
+    // Palpação
+    const [palpation, setPalpation] = useState('');
+    const [edema, setEdema] = useState('');
+    const [pittingTest, setPittingTest] = useState('');
+    const [fingerPressureTest, setFingerPressureTest] = useState('');
+    const [perimetry, setPerimetry] = useState({
+        rightArm: 0,
+        leftArm: 0,
+        upperRightThigh: 0,
+        upperLeftThigh: 0,
+        lowerRightThigh: 0,
+        lowerLeftThigh: 0,
+        rightKnee: 0,
+        leftKnee: 0,
     });
 
-    // Vital Signs
-    const [vitalSigns, setVitalSigns] = useState({
-        bloodPressure: 0,
-        heartRate: 0,
-        respiratoryRate: 0,
-        oxygenSaturation: 0,
-        bodyTemperature: 0,
-    });
-
-    // Physical Inspection
-    const [physicalInspection, setPhysicalInspection] = useState({
-        independentMobility: false,
-        usesCrutches: false,
-        usesWalker: false,
-        wheelchairUser: false,
-        hasScar: false,
-        hasBedsore: false,
-        cooperative: false,
-        nonCooperative: false,
-        hydrated: false,
-        hasHematoma: false,
-        hasEdema: false,
-        hasDeformity: false,
-    });
-
-    // Sensory Assessment
-    const [sensoryAssessment, setSensoryAssessment] = useState({
-        superficial: 'Tactile',
-        deep: 'PositionSense',
-        combinedSensations: {
-            graphesthesia: false,
-            barognosis: false,
-            stereognosis: false,
-        },
-    });
-
-    // Patient Mobility
-    const [patientMobility, setPatientMobility] = useState({
-        threeMeterWalkTimeInSeconds: 5,
-        hasFallRisk: false,
-        postureChanges: {
-            bridge: 'Independent',
-            semiRollRight: 'Independent',
-            semiRollLeft: 'Independent',
-            fullRoll: 'Independent',
-            drag: 'Independent',
-            proneToForearmSupport: 'Independent',
-            forearmSupportToAllFours: 'Independent',
-            allFours: 'Independent',
-            allFoursToKneeling: 'Independent',
-            kneelingToHalfKneelingRight: 'Independent',
-            kneelingToHalfKneelingLeft: 'Independent',
-            halfKneelingRightToStanding: 'Independent',
-            halfKneelingLeftToStanding: 'Independent',
-        },
-    });
-
-    // Physiotherapy Assessment
-    const [physiotherapyAssessment, setPhysiotherapyAssessment] = useState({
-        diagnosis: '',
-        treatmentGoals: '',
-        physiotherapeuticConduct: '',
+    // Avaliação de dor subjetiva
+    const [subjectivePainAssessment, setSubjectivePainAssessment] = useState({
+        intensity: 0,
+        location: '',
+        characteristic: '',
     });
 
     useEffect(() => {
@@ -120,33 +70,22 @@ const CriarNeurofuncional = () => {
         };
 
         const fetchClinicianId = async () => {
-            const email = localStorage.getItem('email'); // Recupera o e-mail do localStorage
+            const email = localStorage.getItem('email');
             if (email) {
-                await fetchClinicianIdByEmail(email); // Chama a função para buscar clinicianId pelo e-mail
+                await fetchClinicianIdByEmail(email);
             }
         };
 
-        // Chama as funções de fetch apenas uma vez quando o componente é montado
         fetchClinicianId();
         fetchPacientes();
-    }, []); // Use um array vazio para que o efeito seja executado apenas uma vez na montagem
-
+    }, []);
 
     const paciente = useFetchPaciente(patientId);
     const registroMedico = useFetchRegistroMedicoUniversal(patientId);
 
     const handleCpfSubmit = () => {
-        if (pacientes.length > 0) {
-            const matchedPatient = pacientes.find((p) => p.cpf === cpf);
-            if (matchedPatient) {
-                setPatientId(matchedPatient.id);
-            } else {
-                alert('Paciente não encontrado!');
-            }
-        } else {
-            console.error('Lista de pacientes está vazia:', pacientes);
-            setError('Lista de pacientes não carregada.');
-        }
+        const matchedPatient = pacientes.find((p) => p.cpf === cpf);
+        matchedPatient ? setPatientId(matchedPatient.id) : alert('Paciente não encontrado!');
     };
 
     const handleCreateFicha = async () => {
@@ -155,24 +94,37 @@ const CriarNeurofuncional = () => {
             return;
         }
 
-        const url = `/neurofunctional-record/patient-id/${patientId}/clinician-id/${clinicianId}`;
+        const url = `/trauma-orthopedic-record/patient-id/${patientId}/clinician-id/${clinicianId}`;
 
         const body = {
-            medicalDiagnosis: medicalDiagnosis,
-            anamnesis: anamnesis,
-            physicalExamination: physicalExamination,
-            triage: triage,
-            lifestyleHabits: lifestyleHabits,
-            vitalSigns: vitalSigns,
-            physicalInspection: physicalInspection,
-            sensoryAssessment: sensoryAssessment,
-            patientMobility: patientMobility,
-            physiotherapyAssessment: physiotherapyAssessment,
+            medicalDiagnosis: medicalDiagnosis || "Nothing. No diagnosis whatsoever.",
+            anamnesis: anamnesis || "Paciente anamnesis. An history of the disease and other things.",
+            physicalExamination: physicalExamination || "The physical state of the patient. Important information about the situation will be included here.",
+            triage: triage || "blue",
+            palpation: palpation || "Palpation of the patient.",
+            edema: edema === "true", // Certifique-se de que seja um booleano
+            pittingTest: pittingTest === "true", // Certifique-se de que seja um booleano
+            fingerPressureTest: fingerPressureTest === "true", // Certifique-se de que seja um booleano
+            perimetry: {
+                rightArm: perimetry.rightArm || 0, // Use 0 como fallback se não houver valor
+                leftArm: perimetry.leftArm || 0,
+                upperRightThigh: perimetry.upperRightThigh || 0,
+                upperLeftThigh: perimetry.upperLeftThigh || 0,
+                lowerRightThigh: perimetry.lowerRightThigh || 0,
+                lowerLeftThigh: perimetry.lowerLeftThigh || 0,
+                rightKnee: perimetry.rightKnee || 0,
+                leftKnee: perimetry.leftKnee || 0,
+            },
+            subjectivePainAssessment: {
+                intensity: subjectivePainAssessment.intensity || 0, // Valor padrão
+                location: subjectivePainAssessment.location || "N/A", // Valor padrão
+                characteristic: subjectivePainAssessment.characteristic || "N/A", // Valor padrão
+            },
+            specialOrthopedicTest: "Special orthopedic test", // Adicione o valor adequado
         };
 
         try {
-            const token = localStorage.getItem('access_token'); // Obtenha o token do localStorage
-
+            const token = localStorage.getItem('access_token');
             const response = await api.post(url, body, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -180,17 +132,22 @@ const CriarNeurofuncional = () => {
                 },
             });
 
-            if (response.status === 200) {
-                alert('Ficha neurofuncional criada com sucesso!');
-                // Resetar os campos do formulário após o sucesso
-                router.push('/Medico/Fichas'); // Você pode implementar uma função para redefinir os campos
+            console.log("Resposta da API:", response); // Log da resposta para debug
+
+            if (response.status === 201 || response.status === 200) {
+                alert('Ficha de trauma criada com sucesso!');
+                router.push('/Medico/Fichas');
             } else {
-                console.error('Erro ao criar ficha neurofuncional:', response.statusText);
-                alert('Erro ao criar ficha neurofuncional.');
+                alert('Erro ao criar ficha de trauma.');
             }
         } catch (error) {
-            console.error('Erro ao criar ficha neurofuncional:', error);
-            alert('Erro ao criar ficha neurofuncional.');
+            if (axios.isAxiosError(error) && error.response) {
+                console.error('Erro ao criar ficha de trauma:', error.response.data);
+                alert(`Erro: ${error.response.data.message || 'Erro ao criar ficha de trauma.'}`);
+            } else {
+                console.error('Erro inesperado:', error);
+                alert('Erro ao criar ficha de trauma.');
+            }
         }
     };
 
@@ -200,10 +157,9 @@ const CriarNeurofuncional = () => {
         <div className="flex flex-col min-h-screen p-8 pb-20 sm:p-20 font-[var(--font-geist-sans)]">
             <NavbarDoctor/>
             <div className="flex flex-col gap-8">
-                <h1 className='text-3xl font-bold mb-4'>Criar Ficha Neurofuncional</h1>
+                <h1 className='text-3xl font-bold mb-4'>Criar Ficha de Trauma</h1>
                 {error && <p style={{color: 'red'}}>{error}</p>}
 
-                {/* Input for Patient CPF */}
                 <div>
                     <label className="block mb-2">
                         CPF do Paciente:
@@ -215,38 +171,19 @@ const CriarNeurofuncional = () => {
                             className="border rounded w-full py-2 px-3 mt-1"
                         />
                     </label>
-                    <ButtonOne
-                        texto={'Buscar Paciente'}
-                        onClick={handleCpfSubmit}
-                    />
+                    <ButtonOne texto={'Buscar Paciente'} onClick={handleCpfSubmit}/>
                 </div>
 
-                {/* Patient Details */}
                 {paciente && (
                     <div className="border p-4 rounded bg-gray-100">
                         <h2 className='text-2xl'>Dados do Paciente</h2>
                         <p>Nome: {paciente.name} {paciente.surname}</p>
                         <p>CPF: {paciente.cpf}</p>
 
-                        {registroMedico && (
-                            <div className="mt-4">
-                                <h3 className='text-xl'>Registro Médico Universal</h3>
-                                <p>Profissão: {registroMedico.profession}</p>
-                                <p>Email de Contato de Emergência: {registroMedico.emergencyContactEmail}</p>
-                                <p>Número de Contato de Emergência: {registroMedico.emergencyContactNumber}</p>
-                                <p>Estado Civil: {registroMedico.maritalStatus}</p>
-                                <p>Altura: {registroMedico.height} cm</p>
-                                <p>Peso: {registroMedico.weight} kg</p>
-                                <p>Alergias: {registroMedico.allergies.join(', ')}</p>
-                                <p>Medicamentos em Uso: {registroMedico.medicationsInUse.join(', ')}</p>
-                                <p>Diagnóstico: {registroMedico.diagnosis.join(', ')}</p>
-                            </div>
-                        )}
-
-                        {/* Form Fields */}
                         <div className='mt-6'>
-                            <h3 className='text-xl font-semibold'>Dados da Ficha Neurofuncional</h3>
+                            <h3 className='text-xl font-semibold'>Dados da Ficha de Trauma</h3>
 
+                            {/* Diagnóstico Médico */}
                             <label className="block mb-2">
                                 Diagnóstico Médico:
                                 <input
@@ -258,6 +195,7 @@ const CriarNeurofuncional = () => {
                                 />
                             </label>
 
+                            {/* Anamnese */}
                             <label className="block mb-2">
                                 Anamnese:
                                 <textarea
@@ -268,6 +206,7 @@ const CriarNeurofuncional = () => {
                                 />
                             </label>
 
+                            {/* Exame Físico */}
                             <label className="block mb-2">
                                 Exame Físico:
                                 <textarea
@@ -278,10 +217,10 @@ const CriarNeurofuncional = () => {
                                 />
                             </label>
 
+                            {/* Triagem */}
                             <label className="block mb-2">
-                                Triage:
-                                <input
-                                    type="text"
+                                Triagem:
+                                <textarea
                                     value={triage}
                                     onChange={(e) => setTriage(e.target.value)}
                                     placeholder="Digite a triagem"
@@ -289,162 +228,70 @@ const CriarNeurofuncional = () => {
                                 />
                             </label>
 
-                            {/* Lifestyle Habits */}
-                            <h3 className='mt-4 text-lg font-semibold'>Hábitos de Vida</h3>
-                            {Object.keys(lifestyleHabits).map((key) => (
-                                <label className="block mb-2" key={key}>
-                                    <input
-                                        type="checkbox"
-                                        checked={lifestyleHabits[key as keyof typeof lifestyleHabits]}
-                                        onChange={(e) =>
-                                            setLifestyleHabits({
-                                                ...lifestyleHabits,
-                                                [key]: e.target.checked,
-                                            })
-                                        }
-                                    />
-                                    {key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}
-                                </label>
-                            ))}
-
-                            {/* Vital Signs */}
-                            <h3 className='mt-4 text-lg font-semibold'>Sinais Vitais</h3>
-                            {Object.keys(vitalSigns).map((key) => (
-                                <label className="block mb-2" key={key}>
-                                    {key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}:
-                                    <input
-                                        type="number"
-                                        value={vitalSigns[key as keyof typeof vitalSigns]}
-                                        onChange={(e) =>
-                                            setVitalSigns({
-                                                ...vitalSigns,
-                                                [key]: Number(e.target.value),
-                                            })
-                                        }
-                                        className="border rounded w-full py-2 px-3 mt-1"
-                                    />
-                                </label>
-                            ))}
-
-                            {/* Physical Inspection */}
-                            <h3 className='mt-4 text-lg font-semibold'>Inspeção Física</h3>
-                            {Object.keys(physicalInspection).map((key) => (
-                                <label className="block mb-2" key={key}>
-                                    <input
-                                        type="checkbox"
-                                        checked={physicalInspection[key as keyof typeof physicalInspection]}
-                                        onChange={(e) =>
-                                            setPhysicalInspection({
-                                                ...physicalInspection,
-                                                [key]: e.target.checked,
-                                            })
-                                        }
-                                    />
-                                    {key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}
-                                </label>
-                            ))}
-
-                            {/* Sensory Assessment */}
-                            <h3 className='mt-4 text-lg font-semibold'>Avaliação Sensorial</h3>
+                            {/* Palpação */}
                             <label className="block mb-2">
-                                Superficial:
-                                <select
-                                    value={sensoryAssessment.superficial}
-                                    onChange={(e) => setSensoryAssessment({
-                                        ...sensoryAssessment,
-                                        superficial: e.target.value
-                                    })}
+                                Palpação:
+                                <textarea
+                                    value={palpation}
+                                    onChange={(e) => setPalpation(e.target.value)}
+                                    placeholder="Digite a palpação"
                                     className="border rounded w-full py-2 px-3 mt-1"
-                                >
-                                    <option value="Tactile">Tátil</option>
-                                    <option value="Pain">Dor</option>
-                                </select>
-                            </label>
-                            <label className="block mb-2">
-                                Profundo:
-                                <select
-                                    value={sensoryAssessment.deep}
-                                    onChange={(e) => setSensoryAssessment({...sensoryAssessment, deep: e.target.value})}
-                                    className="border rounded w-full py-2 px-3 mt-1"
-                                >
-                                    <option value="PositionSense">Sentido de Posição</option>
-                                    <option value="Vibration">Vibração</option>
-                                </select>
+                                />
                             </label>
 
-                            {/* Patient Mobility */}
-                            <h3 className='mt-4 text-lg font-semibold'>Avaliação de Mobilidade do Paciente</h3>
+                            {/* Edema */}
                             <label className="block mb-2">
-                                Tempo de Caminhada de 3 Metros (segundos):
+                                Edema:
+                                <textarea
+                                    value={edema}
+                                    onChange={(e) => setEdema(e.target.value)}
+                                    placeholder="Digite as informações sobre edema"
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+
+                            {/* Teste de Pressão Digital */}
+                            <label className="block mb-2">
+                                Teste de Pressão Digital:
+                                <textarea
+                                    value={pittingTest}
+                                    onChange={(e) => setPittingTest(e.target.value)}
+                                    placeholder="Digite os resultados do teste de pressão digital"
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+
+                            {/* Perímetro */}
+                            <label className="block mb-2">
+                                Perímetro:
                                 <input
                                     type="number"
-                                    value={patientMobility.threeMeterWalkTimeInSeconds}
-                                    onChange={(e) => setPatientMobility({
-                                        ...patientMobility,
-                                        threeMeterWalkTimeInSeconds: Number(e.target.value)
-                                    })}
-                                    className="border rounded w-full py-2 px-3 mt-1"
-                                />
-                            </label>
-                            <label className="block mb-2">
-                                Risco de Queda:
-                                <input
-                                    type="checkbox"
-                                    checked={patientMobility.hasFallRisk}
-                                    onChange={(e) => setPatientMobility({
-                                        ...patientMobility,
-                                        hasFallRisk: e.target.checked
-                                    })}
-                                />
-                            </label>
-
-                            {/* Physiotherapy Assessment */}
-                            <h3 className='mt-4 text-lg font-semibold'>Avaliação Fisioterapêutica</h3>
-                            <label className="block mb-2">
-                                Diagnóstico:
-                                <input
-                                    type="text"
-                                    value={physiotherapyAssessment.diagnosis}
-                                    onChange={(e) => setPhysiotherapyAssessment({
-                                        ...physiotherapyAssessment,
-                                        diagnosis: e.target.value
-                                    })}
-                                    className="border rounded w-full py-2 px-3 mt-1"
-                                />
-                            </label>
-                            <label className="block mb-2">
-                                Objetivos do Tratamento:
-                                <textarea
-                                    value={physiotherapyAssessment.treatmentGoals}
-                                    onChange={(e) => setPhysiotherapyAssessment({
-                                        ...physiotherapyAssessment,
-                                        treatmentGoals: e.target.value
-                                    })}
-                                    className="border rounded w-full py-2 px-3 mt-1"
-                                />
-                            </label>
-                            <label className="block mb-2">
-                                Conduta Fisioterapêutica:
-                                <textarea
-                                    value={physiotherapyAssessment.physiotherapeuticConduct}
-                                    onChange={(e) => setPhysiotherapyAssessment({
-                                        ...physiotherapyAssessment,
-                                        physiotherapeuticConduct: e.target.value
-                                    })}
+                                    value={perimetry}
+                                    onChange={(e) => setPerimetry(parseFloat(e.target.value))}
+                                    placeholder="Digite o perímetro"
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
                             </label>
 
-                            {/* Submit Button */}
-                            <ButtonOne texto="Criar Ficha Neurofuncional" onClick={handleCreateFicha}/>
+                            {/* Avaliação de Dor Subjetiva */}
+                            <label className="block mb-2">
+                                Avaliação de Dor Subjetiva:
+                                <input
+                                    type="number"
+                                    value={subjectivePainAssessment}
+                                    onChange={(e) => setSubjectivePainAssessment(parseInt(e.target.value))}
+                                    placeholder="Avalie a dor de 0 a 10"
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+
+                            <ButtonOne texto="Criar Ficha de Trauma" onClick={handleCreateFicha}/>
                         </div>
                     </div>
                 )}
             </div>
-
             <Footer/>
         </div>
     );
-};
-
-export default CriarNeurofuncional;
+}
+export default CriarTrauma;

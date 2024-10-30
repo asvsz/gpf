@@ -181,20 +181,28 @@ export default function Fichas() {
                     ))}
                 </div>
 
-                <ButtonIcon
-                    icon={<GoPlus className="text-3xl"/>}
-                    texto="Neurofuncional"
-                    onClick={() => {
-                        router.push(`/Medico/Fichas/CriarNeurofuncional`);
-                    }}
-                />
-                <ButtonIcon
-                    icon={<GoPlus className="text-3xl"/>}
-                    texto="Cardiorespiratório"
-                    onClick={() => {
-                        router.push(`/Medico/Fichas/CriarCardio`);
-                    }}
-                />
+               <div className='flex justify-between gap-4'>
+                   <ButtonIcon
+                       icon={<GoPlus className="text-3xl"/>}
+                       texto="Neurofuncional"
+                       onClick={() => {
+                           router.push(`/Medico/Fichas/CriarNeurofuncional`);
+                       }}
+                   />
+                   <ButtonIcon
+                       icon={<GoPlus className="text-3xl"/>}
+                       texto="Cardiorespiratório"
+                       onClick={() => {
+                           router.push(`/Medico/Fichas/CriarCardio`);
+                       }}
+                   /><ButtonIcon
+                   icon={<GoPlus className="text-3xl"/>}
+                   texto="Trauma"
+                   onClick={() => {
+                       router.push(`/Medico/Fichas/CriarTrauma`);
+                   }}
+               />
+               </div>
             </div>
             <h1 className="text-3xl font-bold mb-4">Fichas Avaliativas</h1>
 

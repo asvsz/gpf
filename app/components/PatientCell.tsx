@@ -26,13 +26,13 @@ export default function PatientCell({ name, surname, email, cpf, id }: PatientPr
         {/* Contêiner maior com largura personalizada */}
         <div className="flex flex-col">
           <div className="flex gap-1">
-            <span className="text-xl font-bold text-black">{name}</span>
-            <span className="text-xl font-bold text-black">{surname}</span>
+            <span className="text-xl font-bold text-gray-700">{name}</span>
+            <span className="text-xl font-bold text-gray-700">{surname}</span>
           </div>
-          <span className="font-semibold text-gray-400">{cpf}</span>
+          <span className="font-light text-gray-400">{cpf}</span>
         </div>
         <div>
-          <span className="text-lg font-bold text-gray-600">{email}</span>
+          <span className="text-lg font-semibold text-gray-500">{email}</span>
         </div>
       </div>
 

@@ -3,7 +3,7 @@ import React from "react";
 type InputProps = {
   label: string;
   type: string;
-  value: string;
+  value?: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // Tipo do evento especificado aqui
   placeholder?: string;
   required?: boolean;
@@ -20,7 +20,7 @@ export default function Input({
 }: InputProps) {
   return (
     <div className="mb-4">
-      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={label}>
+      <label className="text-lg block text-gray-700 font-medium mb-2" htmlFor={label}>
         {label}
       </label>
       <input

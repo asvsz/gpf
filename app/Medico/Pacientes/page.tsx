@@ -19,21 +19,20 @@ interface Patient {
 }
 
 export default function Home() {
-
   const [patients, setPatients] = useState<Patient[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true); // Estado de carregamento
 
   useEffect(() => {
-
     const fetchPatients = async () => {
       const token = localStorage.getItem("access_token")
+      setLoading(true); // Inicia o carregamento
       try {
-        
         const response = await api.get(`/patients`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
-        })
+        });
 
         console.log("Pacientes retornados:", response.data);
         const mappedPatients = response.data.patients.map((patient: any) => ({
@@ -47,14 +46,14 @@ export default function Home() {
           gender: patient.gender,
           cpf: patient.cpf,
         }));
-        console.log(response.data)
-        setPatients(mappedPatients)
-
+        setPatients(mappedPatients);
       } catch (error) {
-        console.error('Erro ao buscar pacientes', error)
+        console.error('Erro ao buscar pacientes', error);
+      } finally {
+        setLoading(false); // Finaliza o carregamento
       }
-    }
-    fetchPatients()
+    };
+    fetchPatients();
   }, []);
 
   // Função para atualizar o termo de busca
@@ -76,22 +75,27 @@ export default function Home() {
         <div className="flex row-start-2 items-center sm:items-start z-0">
           <div className="flex flex-col gap-8">
             <SearchEngine onSearch={handleSearch} />
-            {patientsToDisplay.length > 0 ? (
-              patientsToDisplay.map((patient) => (
-                <PatientCell
-                  key={patient.universalMedicalRecordId}
-                  name={patient.name}
-                  surname={patient.surname}
-                  email={patient.email}
-                  cpf={patient.cpf}
-                  id={patient.universalMedicalRecordId}
-                />
-              ))
+            {loading ? ( // Exibe o carregando se true
+              <div className="flex justify-center items-center h-32 text-lg text-gray-500">
+                Carregando...
+              </div>
             ) : (
-              <div className="p-3 text-gray-500">Nenhum paciente encontrado</div>
+              patientsToDisplay.length > 0 ? (
+                patientsToDisplay.map((patient) => (
+                  <PatientCell
+                    key={patient.universalMedicalRecordId}
+                    name={patient.name}
+                    surname={patient.surname}
+                    email={patient.email}
+                    cpf={patient.cpf}
+                    id={patient.universalMedicalRecordId}
+                  />
+                ))
+              ) : (
+                <div className="p-3 text-gray-500">Nenhum paciente encontrado</div>
+              )
             )}
           </div>
-
         </div>
 
         <FooterBar />

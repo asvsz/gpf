@@ -15,10 +15,10 @@ export default function DayFilter({ onClick, texto, days, option, type = "button
                 <button
                     type={type}
                     onClick={() => onClick(option)} // Atualiza os dias ao clicar no botão
-                    className={`border rounded-md px-4 py-2 text-sm ${
+                    className={`border rounded-md px-4 py-2 text-sm font-medium ${
                         days === option
                             ? 'bg-custom-green text-white' // Cor do botão selecionado
-                            : 'bg-gray-200 text-gray-800 hover:bg-blue-100' // Estilo padrão dos botões
+                            : 'bg-gray-200 text-gray-600 hover:bg-blue-100' // Estilo padrão dos botões
                     }`}
                 >
                     {texto}

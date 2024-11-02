@@ -16,55 +16,76 @@ export default function ProntuarioPage() {
   const editRoute = '/Medico/Pacientes/Prontuario/Editar'; // Defina a rota de edição
 
   return (
-      <PrivateRoute requiredUserType="clinician">
-        <div className="gap-8 grid grid-rows-[20px_1fr_20px] min-h-screen p-8 pb-20 sm:p-20 font-[var(--font-geist-sans)]">
-          <NavbarDoctor />
-          <div className="flex row-start-2 items-center sm:items-start z-0">
-              <div className="flex flex-col p-4 gap-8 justify-between">
-                <div className="flex justify-between">
-                  <h2 className="text-3xl font-bold">Prontuário do Paciente</h2>
-                  <EditButton route={editRoute} id={String(prontuarioId)}/>
-                </div>
+    <PrivateRoute requiredUserType="clinician">
+      <div className="gap-8 grid grid-rows-[auto_1fr_auto] min-h-screen p-8 pb-20 sm:p-20 font-[var(--font-geist-sans)]">
+        <NavbarDoctor />
 
-                {/* Exibir "Carregando..." enquanto os dados estão sendo carregados */}
-                {(!prontuario || !paciente) ? (
-                    <div>Carregando...</div>
-                ) : (
-                    <>
-                      {paciente && (
-                          <div className="flex flex-col gap-8">
-                            <h2 className="text-lg font-bold">Informações do Paciente</h2>
-                            <p><strong>Nome:</strong> {paciente.name} {paciente.surname}</p>
-                            <p><strong>CPF:</strong> {paciente.cpf}</p>
-                            <p><strong>Gênero:</strong> {paciente.gender}</p>
-                            <p><strong>Data de Nascimento:</strong> {paciente.birthDate}</p>
-                            <p><strong>Telefone:</strong> {paciente.phoneNumber}</p>
-                            <p><strong>Email:</strong> {paciente.email}</p>
-                          </div>
-                      )}
-
-                      <p><strong>Profissão:</strong> {prontuario.profession}</p>
-                      <p><strong>Contato de Emergência:</strong>
-                        <br/>
-                        <div className="pl-4 pt-4"><strong>Email:</strong> {prontuario.emergencyContactEmail}</div>
-                        <br/>
-                        <div className="pl-4"><strong>Número de Telefone:</strong> {prontuario.emergencyContactNumber}
-                        </div>
-                      </p>
-                      <p><strong>Alergias:</strong> {prontuario.allergies}</p>
-                      <p><strong>Estado Civil:</strong> {prontuario.maritalStatus}</p>
-                      <p><strong>Altura:</strong> {prontuario.height} cm</p>
-                      <p><strong>Peso:</strong> {prontuario.weight} kg</p>
-                      <p><strong>Medicamentos em Uso:</strong> {prontuario.medicationsInUse.join(", ")}</p>
-                      <p><strong>Diagnósticos:</strong> {prontuario.diagnosis.join(", ")}</p>
-                      <p><strong>Data de Criação:</strong> {prontuario.createdAt}</p>
-                      <p><strong>Última Atualização:</strong> {prontuario.updatedAt}</p>
-                    </>
-                )}
-              </div>
-          </div>
-          <FooterBar/>
+        <div className="flex justify-between pt-10 items-center px-8">
+          <h2 className="text-4xl font-bold text-gray-700 mb-4">Prontuário do Paciente</h2>
+          <EditButton route={editRoute} id={String(prontuarioId)} />
         </div>
-      </PrivateRoute>
+
+        <div className="grid  gap-8 p-4">
+          {(!prontuario || !paciente) ? (
+            <div className="flex justify-center text-lg text-gray-500 items-center h-64">Carregando...</div>
+          ) : (
+            <>
+              {paciente && (
+                <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                  <h2 className="text-2xl font-semibold text-gray-700 mb-4">Dados Pessoais</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <p>
+                        <strong className=' text-gray-600 text-lg font-semibold'>Nome: </strong>
+                        <span className="font-sans">{paciente.name} {paciente.surname}</span>
+                      </p>
+                      <p>
+                        <strong className='text-gray-600 font-semibold '>CPF: </strong>
+                        <span className="font-sans">{paciente.cpf}</span>
+                      </p>
+                      <p>
+                        <strong className='text-gray-600 font-semibold'>Gênero: </strong>
+                        <span className="font-light">{paciente.gender}</span>
+                      </p>
+                      <p>
+                        <strong className='text-gray-600 font-semibold'>Data de Nascimento: </strong>
+                        <span className="font-sans">{paciente.birthDate}</span>
+                      </p>
+                      <p>
+                        <strong className='text-gray-600 font-semibold'>Telefone: </strong>
+                        <span className="font-sans">{paciente.phoneNumber}</span>
+                      </p>
+                      <p>
+                        <strong className='text-gray-600 font-semibold'>Email: </strong>
+                        <span className="font-sans">{paciente.email}</span>
+                      </p>
+                    </div>
+
+                </div>
+              )}
+
+              <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                <h2 className="text-2xl font-semibold text-gray-700 mb-4">Informações Adicionais</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <p><strong>Profissão:</strong> {prontuario.profession}</p>
+                  <p><strong>Alergias:</strong> {prontuario.allergies}</p>
+                  <p><strong>Estado Civil:</strong> {prontuario.maritalStatus}</p>
+                  <p><strong>Altura:</strong> {prontuario.height} cm</p>
+                  <p><strong>Peso:</strong> {prontuario.weight} kg</p>
+                  <p><strong>Medicamentos em Uso:</strong> {prontuario.medicationsInUse.join(", ")}</p>
+                  <p><strong>Diagnósticos:</strong> {prontuario.diagnosis.join(", ")}</p>
+                  <p><strong>Data de Criação:</strong> {prontuario.createdAt}</p>
+                  <p><strong>Última Atualização:</strong> {prontuario.updatedAt}</p>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+
+        <FooterBar />
+      </div>
+
+
+
+    </PrivateRoute>
   );
 }

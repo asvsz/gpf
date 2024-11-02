@@ -176,7 +176,7 @@ export default function Fichas() {
     return (
         <div className="flex flex-col min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
             <NavbarDoctor />
-            <div className="flex justify-between">
+            <div className="flex justify-between pt-4">
                 <div className="flex space-x-2">
                     {options.map(option => (
                         <DayFilter
@@ -212,11 +212,11 @@ export default function Fichas() {
                />
                </div>
             </div>
-            <h1 className="text-3xl font-bold mb-4">Fichas Avaliativas</h1>
+            <h1 className="text-4xl font-bold text-gray-700 mb-4">Fichas Avaliativas</h1>
 
             {/* Loader e mensagem quando não há dados */}
             {(loading || loadingRecords) && (
-                <div className="flex justify-center items-center h-64">
+                <div className="flex justify-center text-lg text-gray-500 items-center h-64">
                     <span>Carregando...</span>
                 </div>
             )}
@@ -229,10 +229,10 @@ export default function Fichas() {
 
             {!loading && !loadingRecords && records.length > 0 && (
                 <div className="flex-grow">
-                    <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+                    <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden ">
 
                         <thead>
-                        <tr className="bg-gray-200">
+                        <tr className="bg-gray-200 text-gray-600 font-medium">
                             <th className="py-2 px-7 border-b border-gray-200 text-center w-[150px]">Nome</th>
                             <th className="py-2 px-7 border-b border-gray-200 text-center w-[150px]">Sobrenome</th>
                             <th className="py-2 px-7 border-b border-gray-200 text-center w-[180px]">Data de Criação</th>
@@ -244,7 +244,7 @@ export default function Fichas() {
                         </thead>
                         <tbody>
                         {records.map((record, index) => (
-                            <tr key={record.patientId} className={`hover:bg-gray-100 ${index > 0 ? 'border-t border-gray-200' : ''}`}>
+                            <tr key={record.patientId} className={`text-gray-500 font-normal hover:bg-gray-100 ${index > 0 ? 'border-t border-gray-200' : ''}`}>
                                 <td className="py-4 px-8 text-center w-[150px]">{record.name}</td>
                                 <td className="py-4 px-8 text-center w-[150px]">{record.surname}</td>
                                 <td className="py-4 px-8 text-center w-[180px]">{new Date(record.createdAt).toLocaleDateString()}</td>

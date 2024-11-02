@@ -7,7 +7,9 @@ import SaveButton from '@/app/components/SaveButton';
 import CancelButton from '@/app/components/CancelButton';
 import axios from 'axios';
 import PrivateRoute from '@/app/components/PrivateRoute';
-
+import NavbarDoctor from '@/app/components/NavbarDoctor';
+import FooterBar from '@/app/components/Footer';
+import Input from '@/app/components/InputText';
 
 interface ProntuarioProps {
   profession: string;
@@ -20,7 +22,6 @@ interface ProntuarioProps {
   medicationsInUse: string[]; // Lista de medicamentos em uso
   diagnosis: string[]; // Lista de diagnósticos
 }
-
 
 export default function EditMedicalRecord() {
   const router = useRouter();
@@ -57,15 +58,14 @@ export default function EditMedicalRecord() {
     if (prontuario) {
       const dataToSend = {
         ...prontuario,
-        profession: prontuario.profession || '', // Garante que não esteja null
-        emergencyContactEmail: prontuario.emergencyContactEmail || '', // Garante que não esteja null
-        allergies: prontuario.allergies || '', // Garante que não esteja null
-        // Adicione outros campos obrigatórios, se necessário
+        profession: prontuario.profession || '',
+        emergencyContactEmail: prontuario.emergencyContactEmail || '',
+        allergies: prontuario.allergies || '',
       };
 
       try {
         const token = localStorage.getItem("access_token");
-        console.log('Prontuário a ser salvo:', dataToSend); // Para depuração
+        console.log('Prontuário a ser salvo:', dataToSend);
         await api.put(`/universal-medical-record/${prontuarioId}`, dataToSend, {
           headers: {
             Authorization: `Bearer ${token}`
@@ -94,41 +94,41 @@ export default function EditMedicalRecord() {
     }
   }, [prontuarioId]);
 
-  if (loading) return <div>Carregando...</div>;
-
   return (
-    <PrivateRoute requiredUserType='clinician' >
-      <div className="p-8">
-        <h2 className="text-lg font-bold">Editar Prontuário</h2>
+    <PrivateRoute requiredUserType='clinician'>
+      <div className="flex flex-col min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+        <NavbarDoctor />
+        <h2 className="text-4xl font-bold text-gray-700  pt-8">Editar Prontuário</h2>
+        {loading && <div className="text-lg text-gray-500">Carregando...</div>} {/* Carregando dentro da página */}
         {error && <div className="text-red-500">{error}</div>}
         {prontuario ? (
-          <div className="flex flex-col gap-4">
-            <input
+          <div className="flex flex-col gap-4 pb-8">
+            <Input
+              label='Profissão'
               type="text"
               value={prontuario.profession || ''}
               onChange={(e) => setProntuario({ ...prontuario, profession: e.target.value })}
-              className="border rounded-md px-2 py-1"
               placeholder="Profissão"
             />
-            <input
+            <Input
+              label='Email de Contato de Emergência'
               type="text"
               value={prontuario.emergencyContactEmail || ''}
               onChange={(e) => setProntuario({ ...prontuario, emergencyContactEmail: e.target.value })}
-              className="border rounded-md px-2 py-1"
               placeholder="Email de Contato de Emergência"
             />
-            <input
+            <Input
+              label='Número de Contato de Emergência'
               type="text"
               value={prontuario.emergencyContactNumber || ''}
               onChange={(e) => setProntuario({ ...prontuario, emergencyContactNumber: e.target.value })}
-              className="border rounded-md px-2 py-1"
               placeholder="Número de Contato de Emergência"
             />
-            <input
+            <Input
+              label='Alergias'
               type="text"
               value={prontuario.allergies.join(',') || ''}
               onChange={(e) => setProntuario({ ...prontuario, allergies: e.target.value.split(',').map(diag => diag.trim()) })}
-              className="border rounded-md px-2 py-1"
               placeholder="Alergias"
             />
             <div>
@@ -148,18 +148,18 @@ export default function EditMedicalRecord() {
                 <option value="widowed">Viúvo(a)</option>
               </select>
             </div>
-            <input
+            <Input
+              label="Altura (cm)"
               type="number"
               value={prontuario.height || ''}
               onChange={(e) => setProntuario({ ...prontuario, height: Number(e.target.value) })}
-              className="border rounded-md px-2 py-1"
               placeholder="Altura (cm)"
             />
-            <input
+            <Input
+              label="Peso (kg)"
               type="number"
               value={prontuario.weight || ''}
               onChange={(e) => setProntuario({ ...prontuario, weight: Number(e.target.value) })}
-              className="border rounded-md px-2 py-1"
               placeholder="Peso (kg)"
             />
             <textarea
@@ -182,6 +182,7 @@ export default function EditMedicalRecord() {
         ) : (
           <div>Prontuário não encontrado.</div>
         )}
+        <FooterBar />
       </div>
     </PrivateRoute>
   );

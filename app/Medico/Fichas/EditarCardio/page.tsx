@@ -185,9 +185,6 @@ export default function EditCardio() {
                 throw new Error("Dados do registro não encontrados");
             }
 
-            console.log(record);
-            console.log(record.VitalSigns);
-
 
             setRecord(response.data.record);
         } catch (error) {
@@ -212,7 +209,6 @@ export default function EditCardio() {
                 }
             });
 
-            alert("Registro salvo com sucesso!");
             router.push('/Medico/Fichas');
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
@@ -239,7 +235,7 @@ export default function EditCardio() {
                 {error && <div className="text-red-500 mb-4">{error}</div>}
 
                 {loading ? (
-                    <div className="flex justify-center items-center h-64">
+                    <div className="flex justify-center text-lg text-gray-500 items-center h-64">
                         <span>Carregando...</span>
                     </div>
                 ) : (

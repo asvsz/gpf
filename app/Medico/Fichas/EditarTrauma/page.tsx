@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import api from "@/app/services/api";
-import { useAuth } from '@/app/context/AuthContext';
 import SaveButton from '@/app/components/SaveButton';
 import CancelButton from '@/app/components/CancelButton';
 import axios from 'axios';
@@ -88,8 +87,7 @@ export default function EditTraumaRecord() {
                         Authorization: `Bearer ${token}`
                     }
                 });
-
-                alert("Registro salvo com sucesso!");
+                
                 router.push('/Medico/Fichas'); // Redirecionar após salvar
             } catch (error) {
                 if (axios.isAxiosError(error) && error.response) {
@@ -111,48 +109,58 @@ export default function EditTraumaRecord() {
     return (
         <PrivateRoute requiredUserType='clinician'>
             <div className="flex flex-col min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-                <NavbarDoctor/>
-                <h2 className="text-3xl font-bold">Editar Registro de Trauma</h2>
+                <NavbarDoctor />
+                <h2 className="font-bold text-4xl text-gray-700 pt-8">Editar Registro de Trauma</h2>
 
                 {error && <div className="text-red-500 mb-4">{error}</div>}
 
                 {/* Loader e mensagem quando não há dados */}
                 {loading ? (
-                    <div className="flex justify-center items-center h-64">
+                    <div className="flex justify-center text-lg text-gray-500 items-center h-64">
                         <span>Carregando...</span>
                     </div>
                 ) : record ? (
-                    <div className="flex flex-col gap-4 mb-10">
-                        <label className="block text-gray-700 font-semibold">Diagnóstico Médico</label>
-                        <textarea
-                            value={record.medicalDiagnosis}
-                            onChange={(e) => setRecord({ ...record, medicalDiagnosis: e.target.value })}
-                            className="border rounded-md p-2"
-                            placeholder="Diagnóstico Médico"
-                        />
+                    <div className="grid gap-8 pb-8">
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6" >
+                            <label className="text-2xl block text-gray-700 font-medium pb-6">Diagnóstico Médico</label>
+                            <textarea
+                                value={record.medicalDiagnosis}
+                                onChange={(e) => setRecord({ ...record, medicalDiagnosis: e.target.value })}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+                                leading-tight focus:outline-none focus:shadow-outline"
+                                placeholder="Diagnóstico Médico"
+                            />
+                        </div>
 
-                        <label className="block text-gray-700 font-semibold">Anamnese</label>
-                        <textarea
-                            value={record.anamnesis}
-                            onChange={(e) => setRecord({ ...record, anamnesis: e.target.value })}
-                            className="border rounded-md p-2"
-                            placeholder="Anamnese"
-                        />
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <label className="text-2xl block text-gray-700 font-medium pb-6">Anamnese</label>
+                            <textarea
+                                value={record.anamnesis}
+                                onChange={(e) => setRecord({ ...record, anamnesis: e.target.value })}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+                                leading-tight focus:outline-none focus:shadow-outline"
+                                placeholder="Anamnese"
+                            />
+                        </div>
 
-                        <label className="block text-gray-700 font-semibold">Exame Físico</label>
-                        <textarea
-                            value={record.physicalExamination}
-                            onChange={(e) => setRecord({ ...record, physicalExamination: e.target.value })}
-                            className="border rounded-md p-2"
-                            placeholder="Exame Físico"
-                        />
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <label className="text-2xl block text-gray-700 font-medium pb-6">Exame Físico</label>
+                            <textarea
+                                value={record.physicalExamination}
+                                onChange={(e) => setRecord({ ...record, physicalExamination: e.target.value })}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+                                leading-tight focus:outline-none focus:shadow-outline"
+                                placeholder="Exame Físico"
+                            />
+                        </div>
 
-                        <div>
-                            <label className="block text-gray-700 font-semibold">Triage</label>
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <label className="text-2xl block text-gray-700 font-medium pb-6">Triage</label>
                             <select
                                 value={record.triage}
                                 onChange={(e) => setRecord({ ...record, triage: e.target.value })}
-                                className="w-full px-3 py-2 border rounded-md"
+                                className="text-lg block text-gray-800 font-medium border 
+                                rounded-md mb-2 p-2"
                                 required
                             >
                                 <option value="" disabled>Selecione</option>
@@ -164,95 +172,103 @@ export default function EditTraumaRecord() {
                         </div>
 
                         {/* Campo de Palpação */}
-                        <label className="block text-gray-700 font-semibold">Palpação</label>
-                        <textarea
-                            value={record.palpation}
-                            onChange={(e) => setRecord({ ...record, palpation: e.target.value })}
-                            className="border rounded-md p-2"
-                            placeholder="Palpação"
-                        />
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <label className="text-2xl block text-gray-700 font-medium pb-6">Palpação</label>
+                            <textarea
+                                value={record.palpation}
+                                onChange={(e) => setRecord({ ...record, palpation: e.target.value })}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+                                leading-tight focus:outline-none focus:shadow-outline"
+                                placeholder="Palpação"
+                            />
+                        </div>
 
                         {/* Teste de Edema e Pressão Digital */}
-                        <div className="flex gap-4">
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checked={record.edema}
-                                    onChange={(e) => setRecord({ ...record, edema: e.target.checked })}
-                                />
-                                Edema
-                            </label>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checked={record.pittingTest}
-                                    onChange={(e) => setRecord({ ...record, pittingTest: e.target.checked })}
-                                />
-                                Teste de Edema
-                            </label>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checked={record.fingerPressureTest}
-                                    onChange={(e) => setRecord({ ...record, fingerPressureTest: e.target.checked })}
-                                />
-                                Teste de Pressão Digital
-                            </label>
+
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <label className="text-2xl block text-gray-700 font-medium pb-6">Teste de Edema e Pressão Digital</label>
+                            <div>
+
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.edema}
+                                        onChange={(e) => setRecord({ ...record, edema: e.target.checked })}
+                                    />
+                                    Edema
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.pittingTest}
+                                        onChange={(e) => setRecord({ ...record, pittingTest: e.target.checked })}
+                                    />
+                                    Teste de Edema
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.fingerPressureTest}
+                                        onChange={(e) => setRecord({ ...record, fingerPressureTest: e.target.checked })}
+                                    />
+                                    Teste de Pressão Digital
+                                </label>
+                            </div>
                         </div>
 
                         {/* Campos de Perimetria */}
-                        <div className="flex flex-col gap-2">
-                            <h3 className="font-semibold">Perimetria</h3>
-                            <label className="block text-gray-700 font-semibold">Braço Direito</label>
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Perimetria</h3>
+                            <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Braço Direito</label>
                             <input
                                 type="number"
                                 value={record.perimetry.rightArm}
                                 onChange={(e) => setRecord({ ...record, perimetry: { ...record.perimetry, rightArm: +e.target.value } })}
                                 className="border rounded-md px-2 py-1"
                             />
-                            <label className="block text-gray-700 font-semibold">Braço Esquerdo</label>
+                            <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Braço Esquerdo</label>
                             <input
                                 type="number"
                                 value={record.perimetry.leftArm}
                                 onChange={(e) => setRecord({ ...record, perimetry: { ...record.perimetry, leftArm: +e.target.value } })}
                                 className="border rounded-md px-2 py-1"
                             />
-                            <label className="block text-gray-700 font-semibold">Coxa Direita (Superior)</label>
+                            <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Coxa Direita (Superior)</label>
                             <input
                                 type="number"
                                 value={record.perimetry.upperRightThigh}
                                 onChange={(e) => setRecord({ ...record, perimetry: { ...record.perimetry, upperRightThigh: +e.target.value } })}
                                 className="border rounded-md px-2 py-1"
                             />
-                            <label className="block text-gray-700 font-semibold">Coxa Esquerda (Superior)</label>
+                            <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Coxa Esquerda (Superior)</label>
                             <input
                                 type="number"
                                 value={record.perimetry.upperLeftThigh}
                                 onChange={(e) => setRecord({ ...record, perimetry: { ...record.perimetry, upperLeftThigh: +e.target.value } })}
                                 className="border rounded-md px-2 py-1"
                             />
-                            <label className="block text-gray-700 font-semibold">Coxa Direita (Inferior)</label>
+                            <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Coxa Direita (Inferior)</label>
                             <input
                                 type="number"
                                 value={record.perimetry.lowerRightThigh}
                                 onChange={(e) => setRecord({ ...record, perimetry: { ...record.perimetry, lowerRightThigh: +e.target.value } })}
                                 className="border rounded-md px-2 py-1"
                             />
-                            <label className="block text-gray-700 font-semibold">Coxa Esquerda (Inferior)</label>
+                            <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Coxa Esquerda (Inferior)</label>
                             <input
                                 type="number"
                                 value={record.perimetry.lowerLeftThigh}
                                 onChange={(e) => setRecord({ ...record, perimetry: { ...record.perimetry, lowerLeftThigh: +e.target.value } })}
                                 className="border rounded-md px-2 py-1"
                             />
-                            <label className="block text-gray-700 font-semibold">Joelho Direito</label>
+                            <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Joelho Direito</label>
                             <input
                                 type="number"
                                 value={record.perimetry.rightKnee}
                                 onChange={(e) => setRecord({ ...record, perimetry: { ...record.perimetry, rightKnee: +e.target.value } })}
                                 className="border rounded-md px-2 py-1"
                             />
-                            <label className="block text-gray-700 font-semibold">Joelho Esquerdo</label>
+                            <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Joelho Esquerdo</label>
                             <input
                                 type="number"
                                 value={record.perimetry.leftKnee}
@@ -262,9 +278,9 @@ export default function EditTraumaRecord() {
                         </div>
 
                         {/* Avaliação de Dor Subjetiva */}
-                        <div className="flex flex-col gap-2">
-                            <h3 className="font-semibold">Avaliação de Dor Subjetiva</h3>
-                            <label className="block text-gray-700 font-semibold">Intensidade da Dor</label>
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Avaliação de Dor Subjetiva</h3>
+                            <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Intensidade da Dor</label>
                             <input
                                 type="number"
                                 value={record.subjectivePainAssessment.intensity}
@@ -277,7 +293,7 @@ export default function EditTraumaRecord() {
                                 })}
                                 className="border rounded-md px-2 py-1"
                             />
-                            <label className="block text-gray-700 font-semibold">Localização da Dor</label>
+                            <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Localização da Dor</label>
                             <input
                                 type="text"
                                 value={record.subjectivePainAssessment.location}
@@ -290,7 +306,7 @@ export default function EditTraumaRecord() {
                                 })}
                                 className="border rounded-md px-2 py-1"
                             />
-                            <label className="block text-gray-700 font-semibold">Característica da Dor</label>
+                            <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Característica da Dor</label>
                             <input
                                 type="text"
                                 value={record.subjectivePainAssessment.characteristic}
@@ -303,7 +319,7 @@ export default function EditTraumaRecord() {
                                 })}
                                 className="border rounded-md px-2 py-1"
                             />
-                            <label className="block text-gray-700 font-semibold">Teste Ortopédico Especial</label>
+                            <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Teste Ortopédico Especial</label>
                             <input
                                 type="text"
                                 value={record.specialOrthopedicTest}
@@ -315,15 +331,16 @@ export default function EditTraumaRecord() {
                             />
                         </div>
 
-                        <div className="flex gap-2 mt-4">
-                            <SaveButton onClick={handleSave}/>
-                            <CancelButton onClick={() => router.push('/Medico/Fichas')}/>
+                        <div className="flex w-full items-baseline justify-end gap-4 mt-4 pr-8">
+                            <CancelButton onClick={() => router.push('/Medico/Fichas')} />
+                            <SaveButton onClick={handleSave} />
+
                         </div>
                     </div>
                 ) : (
                     <div>Registro não encontrado.</div>
                 )}
-                <Footer/>
+                <Footer />
             </div>
         </PrivateRoute>
     );

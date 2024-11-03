@@ -163,7 +163,7 @@ export default function EditNeurofunctionalRecord() {
 
                 {/* Loader e mensagem quando não há dados */}
                 {loading ? (
-                    <div className="flex justify-center items-center h-64">
+                    <div className="flex justify-center text-lg text-gray-500 items-center h-64">
                         <span>Carregando...</span>
                     </div>
                 ) : record ? (
@@ -176,7 +176,8 @@ export default function EditNeurofunctionalRecord() {
                             <textarea
                                 value={record.medicalDiagnosis}
                                 onChange={(e) => setRecord({ ...record, medicalDiagnosis: e.target.value })}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+                                leading-tight focus:outline-none focus:shadow-outline"
                                 placeholder="Diagnóstico Médico"
                             />
                         </div>
@@ -213,7 +214,8 @@ export default function EditNeurofunctionalRecord() {
                             <select
                                 value={record.triage}
                                 onChange={(e) => setRecord({ ...record, triage: e.target.value })}
-                                className="text-lg block text-gray-800 font-medium border rounded-md mb-2 p-2"
+                                    className="text-lg block text-gray-800 font-medium border 
+                                rounded-md mb-2 p-2"
                                 required
                             >
 

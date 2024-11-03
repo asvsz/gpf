@@ -156,25 +156,32 @@ export default function EditNeurofunctionalRecord() {
     return (
         <PrivateRoute requiredUserType='clinician'>
             <div className="flex flex-col min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-                <NavbarDoctor/>
-                <h2 className=" text-3xl font-bold">Editar Registro Neurofuncional</h2>
+                <NavbarDoctor />
+                <h1 className="font-bold text-4xl text-gray-700 pt-8 ">Editar Registro Neurofuncional</h1>
 
                 {error && <div className="text-red-500 mb-4">{error}</div>}
 
                 {/* Loader e mensagem quando não há dados */}
-                {loading  ? (
+                {loading ? (
                     <div className="flex justify-center items-center h-64">
                         <span>Carregando...</span>
                     </div>
                 ) : record ? (
                     <div className="flex flex-col gap-4 mb-10">
-                    <textarea
-                    value={record.medicalDiagnosis}
-                onChange={(e) => setRecord({ ...record, medicalDiagnosis: e.target.value })}
-                className="border rounded-md p-2"
-                placeholder="Diagnóstico Médico"
-            />
+                        <label className="text-lg block text-gray-700 font-medium">
+                            Diagnóstico Médico
+                        </label>
+                        <textarea
+                            value={record.medicalDiagnosis}
+                            onChange={(e) => setRecord({ ...record, medicalDiagnosis: e.target.value })}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            placeholder="Diagnóstico Médico"
+                        />
 
+
+                        <label className="text-lg block text-gray-700 font-medium">
+                            Anamnese
+                        </label>
                         <textarea
                             value={record.anamnesis}
                             onChange={(e) => setRecord({ ...record, anamnesis: e.target.value })}
@@ -182,6 +189,10 @@ export default function EditNeurofunctionalRecord() {
                             placeholder="Anamnese"
                         />
 
+
+                        <label className="text-lg block text-gray-700 font-medium">
+                            Exame Físico
+                        </label>
                         <textarea
                             value={record.physicalExamination}
                             onChange={(e) => setRecord({ ...record, physicalExamination: e.target.value })}
@@ -190,13 +201,14 @@ export default function EditNeurofunctionalRecord() {
                         />
 
                         <div>
-                            <label className="block text-gray-700">Triage</label>
+                            <label className="text-lg block text-gray-700 font-medium">Triage</label>
                             <select
                                 value={record.triage}
                                 onChange={(e) => setRecord({ ...record, triage: e.target.value })}
-                                className="w-full px-3 py-2 border rounded-md"
+                                className="text-lg block text-gray-800 font-medium border rounded-md mb-2 p-2"
                                 required
                             >
+
                                 <option value="" disabled>Selecione</option>
                                 <option value="green">Verde</option>
                                 <option value="yellow">Amarelo</option>
@@ -205,8 +217,9 @@ export default function EditNeurofunctionalRecord() {
                         </div>
 
                         {/* Campos de Hábitos de Vida */}
-                        <div className="flex gap-4">
-                            <label>
+                        <label className="text-lg block text-gray-700 font-medium">Hábitos de Vida</label>
+                        <div className="flex gap-2">
+                            <label className="text-base font-normal block text-gray-800 mb-2">
                                 <input
                                     type="checkbox"
                                     checked={record.lifestyleHabits.alcoholConsumption}
@@ -217,7 +230,7 @@ export default function EditNeurofunctionalRecord() {
                                 />
                                 Consome Álcool
                             </label>
-                            <label>
+                            <label className="text-base font-normal block text-gray-800 mb-2">
                                 <input
                                     type="checkbox"
                                     checked={record.lifestyleHabits.smoker}
@@ -232,8 +245,11 @@ export default function EditNeurofunctionalRecord() {
                         </div>
 
                         {/* Campos de Sinais Vitais */}
-                        <div className="flex flex-col">
-                            <h3 className="font-semibold">Sinais Vitais</h3>
+                        <div className="flex flex-col gap-2">
+                            <h3 className="text-lg block text-gray-700 font-medium">Sinais Vitais</h3>
+                            <label className="text-base font-normal block text-gray-800 ">
+                                Pressão Arterial
+                            </label>
                             <input
                                 type="number"
                                 value={record.vitalSigns.bloodPressure}
@@ -244,6 +260,9 @@ export default function EditNeurofunctionalRecord() {
                                 className="border rounded-md px-2 py-1"
                                 placeholder="Pressão Arterial"
                             />
+                            <label className="text-base font-normal block text-gray-800">
+                                Frequência Cardíaca
+                            </label>
                             <input
                                 type="number"
                                 value={record.vitalSigns.heartRate}
@@ -258,9 +277,9 @@ export default function EditNeurofunctionalRecord() {
                         </div>
 
                         {/* Campos de Inspeção Física */}
-                        <div className="flex flex-col">
-                            <h3 className="font-semibold">Inspeção Física</h3>
-                            <label>
+                        <div className="flex flex-col gap-2">
+                            <h3 className="text-lg block text-gray-700 font-medium">Inspeção Física</h3>
+                            <label className="text-base font-normal block text-gray-800">
                                 <input
                                     type="checkbox"
                                     checked={record.physicalInspection.independentMobility}
@@ -275,8 +294,12 @@ export default function EditNeurofunctionalRecord() {
                         </div>
 
                         {/* Campos de Avaliação Sensória */}
-                        <div className="flex flex-col">
-                            <h3 className="font-semibold">Avaliação Sensória</h3>
+                        <div className="flex flex-col gap-2">
+                            <h3 className="text-lg block text-gray-700 font-medium">Avaliação Sensória</h3>
+
+                            <label className="text-base font-normal block text-gray-800">
+                                Avaliação Superficial
+                            </label>
                             <input
                                 type="text"
                                 value={record.sensoryAssessment.superficial}
@@ -287,6 +310,9 @@ export default function EditNeurofunctionalRecord() {
                                 className="border rounded-md px-2 py-1"
                                 placeholder="Avaliação Superficial"
                             />
+                            <label className="text-base font-normal block text-gray-800">
+                                Avaliação Profunda
+                            </label>
                             <input
                                 type="text"
                                 value={record.sensoryAssessment.deep}
@@ -300,8 +326,11 @@ export default function EditNeurofunctionalRecord() {
                         </div>
 
                         {/* Campos de Mobilidade do Paciente */}
-                        <div className="flex flex-col">
-                            <h3 className="font-semibold">Mobilidade do Paciente</h3>
+                        <div className="flex flex-col gap-2">
+                            <h3 className="text-lg block text-gray-700 font-medium">Mobilidade do Paciente</h3>
+                            <label className="text-base font-normal block text-gray-800">
+                                Tempo de Caminhada de 3 Metros(s)
+                            </label>
                             <input
                                 type="number"
                                 value={record.patientMobility.threeMeterWalkTimeInSeconds}
@@ -316,8 +345,11 @@ export default function EditNeurofunctionalRecord() {
                         </div>
 
                         {/* Campos de Avaliação Fisioterapêutica */}
-                        <div className="flex flex-col">
-                            <h3 className="font-semibold">Avaliação Fisioterapêutica</h3>
+                        <div className="flex flex-col gap-2">
+                            <h3 className="text-lg block text-gray-700 font-medium">Avaliação Fisioterapêutica</h3>
+                            <label className="text-base font-normal block text-gray-800">
+                                Diagnóstico
+                            </label>
                             <textarea
                                 value={record.physiotherapyAssessment.diagnosis}
                                 onChange={(e) => setRecord({
@@ -327,6 +359,9 @@ export default function EditNeurofunctionalRecord() {
                                 className="border rounded-md p-2"
                                 placeholder="Diagnóstico"
                             />
+                            <label className="text-base font-normal block text-gray-800">
+                                Objetivos do Tratamento
+                            </label>
                             <textarea
                                 value={record.physiotherapyAssessment.treatmentGoals}
                                 onChange={(e) => setRecord({
@@ -336,6 +371,9 @@ export default function EditNeurofunctionalRecord() {
                                 className="border rounded-md p-2"
                                 placeholder="Objetivos do Tratamento"
                             />
+                            <label className="text-base font-normal block text-gray-800">
+                                Conduta Fisioterapêutica
+                            </label>
                             <textarea
                                 value={record.physiotherapyAssessment.physiotherapeuticConduct}
                                 onChange={(e) => setRecord({
@@ -354,8 +392,8 @@ export default function EditNeurofunctionalRecord() {
                     </div>
                 ) : (
                     <div>Registro não encontrado.</div>
-    )}
-                <Footer/>
+                )}
+                <Footer />
             </div>
         </PrivateRoute>
     );

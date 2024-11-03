@@ -192,7 +192,7 @@ export default function ViewNeurofunctionalRecord() {
                         </div>
                         <div className="flex w-full items-baseline justify-end gap-4 mt-4 pr-8">
                             <ButtonOne
-                                texto='Voltar'
+                                texto="Voltar"
                                 onClick={() => router.back()} />
                         </div>
                     </div>

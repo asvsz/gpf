@@ -4,6 +4,8 @@ import api from "@/app/services/api";
 import PrivateRoute from '@/app/components/PrivateRoute';
 import NavbarDoctor from "@/app/components/NavbarDoctor";
 import Footer from "@/app/components/Footer";
+import ButtonOne from '@/app/components/ButtonOne';
+import { useRouter } from 'next/navigation';
 
 interface TraumaRecordProps {
     medicalDiagnosis: string;
@@ -36,6 +38,8 @@ export default function ViewNeurofunctionalRecord() {
     const [record, setRecord] = useState<TraumaRecordProps | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    const router = useRouter()
 
     // Função para buscar os dados do registro neurofuncional
     const fetchRecordData = async () => {
@@ -79,79 +83,84 @@ export default function ViewNeurofunctionalRecord() {
         <PrivateRoute requiredUserType='clinician'>
             <div className="flex flex-col min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
                 <NavbarDoctor />
-                <h2 className=" text-3xl font-bold">Visualizar Registro Neurofuncional</h2>
+                <h2 className="font-bold text-4xl text-gray-700 pt-8">Visualizar Trauma Ortopédico</h2>
 
                 {error && <div className="text-red-500 mb-4">{error}</div>}
 
                 {loading ? (
-                    <div className="flex justify-center items-center h-64">
+                    <div className="flex justify-center text-lg text-gray-500 items-center h-64">
                         <span>Carregando...</span>
                     </div>
                 ) : record ? (
-                    <div className="flex flex-col mb-10">
-                        <div>
-                            <h3 className="font-semibold">Diagnóstico Médico:</h3>
+                    <div className="grid gap-8 pb-8">
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Diagnóstico Médico:</h3>
                             <p>{record.medicalDiagnosis}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Anamnese:</h3>
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Anamnese:</h3>
                             <p>{record.anamnesis}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Exame Físico:</h3>
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Exame Físico:</h3>
                             <p>{record.physicalExamination}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Triagem:</h3>
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Triagem:</h3>
                             <p>{record.triage}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Palpação:</h3>
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Palpação:</h3>
                             <p>{record.palpation}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Edema:</h3>
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Edema:</h3>
                             <p>{record.edema ? 'Sim' : 'Não'}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Teste de Pitting:</h3>
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Teste de Pitting:</h3>
                             <p>{record.pittingTest ? 'Positivo' : 'Negativo'}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Teste de Pressão Digital:</h3>
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Teste de Pressão Digital:</h3>
                             <p>{record.fingerPressureTest ? 'Positivo' : 'Negativo'}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Perimetria:</h3>
-                            <p>Braço Direito: {record.perimetry.rightArm}</p>
-                            <p>Braço Esquerdo: {record.perimetry.leftArm}</p>
-                            <p>Parte Superior Coxa Direita: {record.perimetry.upperRightThigh}</p>
-                            <p>Parte Superior Coxa Esquerda: {record.perimetry.upperLeftThigh}</p>
-                            <p>Parte Inferior Coxa Direita: {record.perimetry.lowerRightThigh}</p>
-                            <p>Parte Inferior Coxa Esquerda: {record.perimetry.lowerLeftThigh}</p>
-                            <p>Joelho Direito: {record.perimetry.rightKnee}</p>
-                            <p>Joelho Esquerdo: {record.perimetry.leftKnee}</p>
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Perimetria:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Braço Direito: </h3>{record.perimetry.rightArm}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Braço Esquerdo: </h3>{record.perimetry.leftArm}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Parte Superior Coxa Direita: </h3>{record.perimetry.upperRightThigh}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Parte Superior Coxa Esquerda: </h3>{record.perimetry.upperLeftThigh}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Parte Inferior Coxa Direita: </h3>{record.perimetry.lowerRightThigh}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Parte Inferior Coxa Esquerda: </h3>{record.perimetry.lowerLeftThigh}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Joelho Direito: </h3>{record.perimetry.rightKnee}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Joelho Esquerdo: </h3>{record.perimetry.leftKnee}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Avaliação Subjetiva da Dor:</h3>
-                            <p>Intensidade: {record.subjectivePainAssessment.intensity}</p>
-                            <p>Localização: {record.subjectivePainAssessment.location}</p>
-                            <p>Característica: {record.subjectivePainAssessment.characteristic}</p>
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Avaliação Subjetiva da Dor:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Intensidade: </h3>{record.subjectivePainAssessment.intensity}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Localização: </h3>{record.subjectivePainAssessment.location}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Característica: </h3>{record.subjectivePainAssessment.characteristic}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Teste Ortopédico Especial:</h3>
+                            <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Teste Ortopédico Especial:</h3>
                             <p>{record.specialOrthopedicTest}</p>
-                        </div>
+                            </div>
+                            <div className="flex w-full items-baseline justify-end gap-4 mt-4 pr-8">
+                                <ButtonOne
+                                    texto="Voltar"
+                                    onClick={() => router.back()} />
+                            </div>
                     </div>
                 ) : (
                     <div>Registro não encontrado.</div>

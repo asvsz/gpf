@@ -170,7 +170,7 @@ export default function EditNeurofunctionalRecord() {
                     <div className="grid gap-8 pb-8">
                         {/* Campos de Diagnóstico Médico */}
                         <div className="bg-gray-100 shadow-lg rounded-lg p-6">
-                            <label className="text-lg block text-gray-700 font-medium">
+                            <label className="text-2xl block text-gray-700 font-medium pb-6">
                                 Diagnóstico Médico
                             </label>
                             <textarea
@@ -183,7 +183,7 @@ export default function EditNeurofunctionalRecord() {
 
                         {/* Campos de Anamnese */}
                         <div className="bg-gray-100 shadow-lg rounded-lg p-6">
-                            <label className="text-lg block text-gray-700 font-medium">
+                            <label className="text-2xl block text-gray-700 font-medium pb-6">
                                 Anamnese
                             </label>
                             <textarea
@@ -196,7 +196,7 @@ export default function EditNeurofunctionalRecord() {
 
                         {/* Campos de Exame Físico */}
                         <div className="bg-gray-100 shadow-lg rounded-lg p-6">
-                            <label className="text-lg block text-gray-700 font-medium">
+                            <label className="text-2xl block text-gray-700 font-medium pb-6">
                                 Exame Físico
                             </label>
                             <textarea
@@ -209,7 +209,7 @@ export default function EditNeurofunctionalRecord() {
 
                         {/* Campos de Triagem */}
                         <div className="bg-gray-100 shadow-lg rounded-lg p-6">
-                            <label className="text-lg block text-gray-700 font-medium">Triage</label>
+                            <label className="text-2xl block text-gray-700 font-medium pb-6">Triage</label>
                             <select
                                 value={record.triage}
                                 onChange={(e) => setRecord({ ...record, triage: e.target.value })}
@@ -226,9 +226,9 @@ export default function EditNeurofunctionalRecord() {
 
                         {/* Campos de Hábitos de Vida */}
                         <div className="bg-gray-100 shadow-lg rounded-lg p-6">
-                            <label className="text-lg block text-gray-700 font-medium">Hábitos de Vida</label>
-                            <div className="flex gap-2">
-                                <label className="text-base font-normal block text-gray-800 mb-2">
+                            <label className="text-2xl block text-gray-700 font-medium pb-6">Hábitos de Vida</label>
+                            <div className="flex gap-6">
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
                                     <input
                                         type="checkbox"
                                         checked={record.lifestyleHabits.alcoholConsumption}
@@ -239,7 +239,7 @@ export default function EditNeurofunctionalRecord() {
                                     />
                                     Consome Álcool
                                 </label>
-                                <label className="text-base font-normal block text-gray-800 mb-2">
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
                                     <input
                                         type="checkbox"
                                         checked={record.lifestyleHabits.smoker}
@@ -250,15 +250,58 @@ export default function EditNeurofunctionalRecord() {
                                     />
                                     Fumante
                                 </label>
-                                {/* Adicione outros hábitos de vida conforme necessário */}
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.lifestyleHabits.obesity}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            lifestyleHabits: { ...record.lifestyleHabits, obesity: e.target.checked }
+                                        })}
+                                    />
+                                    Obesidade
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.lifestyleHabits.diabetes}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            lifestyleHabits: { ...record.lifestyleHabits, diabetes: e.target.checked }
+                                        })}
+                                    />
+                                    Diabetes
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.lifestyleHabits.drugUser}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            lifestyleHabits: { ...record.lifestyleHabits, drugUser: e.target.checked }
+                                        })}
+                                    />
+                                    Usa Drogas
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.lifestyleHabits.physicalActivity}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            lifestyleHabits: { ...record.lifestyleHabits, physicalActivity: e.target.checked }
+                                        })}
+                                    />
+                                    Atividade Física
+                                </label>
                             </div>
                         </div>
 
                         {/* Campos de Sinais Vitais */}
                         <div className="bg-gray-100 shadow-lg rounded-lg p-6">
-                            <div className="flex flex-col gap-2">
-                                <h3 className="text-lg block text-gray-700 font-medium">Sinais Vitais</h3>
-                                <label className="text-base font-normal block text-gray-800 ">
+                            <div className="flex flex-col gap-4">
+                                <h3 className="text-2xl block text-gray-700 font-medium pb-6">Sinais Vitais</h3>
+                                    <label className="text-base font-semibold block text-gray-800 ">
                                     Pressão Arterial
                                 </label>
                                 <input
@@ -271,7 +314,7 @@ export default function EditNeurofunctionalRecord() {
                                     className="border rounded-md px-2 py-1"
                                     placeholder="Pressão Arterial"
                                 />
-                                <label className="text-base font-normal block text-gray-800">
+                                    <label className="text-base font-semibold block text-gray-800">
                                     Frequência Cardíaca
                                 </label>
                                 <input
@@ -284,15 +327,54 @@ export default function EditNeurofunctionalRecord() {
                                     className="border rounded-md px-2 py-1"
                                     placeholder="Frequência Cardíaca"
                                 />
-                                {/* Adicione outros sinais vitais conforme necessário */}
+
+                                    <label className="text-base font-semibold block text-gray-800">
+                                    Frequência Respiratória
+                                </label>
+                                <input
+                                    type="number"
+                                    value={record.vitalSigns.respiratoryRate}
+                                    onChange={(e) => setRecord({
+                                        ...record,
+                                        vitalSigns: { ...record.vitalSigns, respiratoryRate: +e.target.value }
+                                    })}
+                                    className="border rounded-md px-2 py-1"
+                                    placeholder="Frequência Cardíaca"
+                                />
+                                    <label className="text-base font-semibold block text-gray-800">
+                                    Saturação de Oxigênio
+                                </label>
+                                <input
+                                    type="number"
+                                    value={record.vitalSigns.oxygenSaturation}
+                                    onChange={(e) => setRecord({
+                                        ...record,
+                                        vitalSigns: { ...record.vitalSigns, oxygenSaturation: +e.target.value }
+                                    })}
+                                    className="border rounded-md px-2 py-1"
+                                    placeholder="Frequência Cardíaca"
+                                />
+                                    <label className="text-base font-semibold block text-gray-800">
+                                    Temperatura Corporal
+                                </label>
+                                <input
+                                    type="number"
+                                    value={record.vitalSigns.bodyTemperature}
+                                    onChange={(e) => setRecord({
+                                        ...record,
+                                        vitalSigns: { ...record.vitalSigns, bodyTemperature: +e.target.value }
+                                    })}
+                                    className="border rounded-md px-2 py-1"
+                                    placeholder="Frequência Cardíaca"
+                                />
                             </div>
                         </div>
 
                         {/* Campos de Inspeção Física */}
                         <div className="bg-gray-100 shadow-lg rounded-lg p-6">
-                            <div className="flex flex-col gap-2">
-                                <h3 className="text-lg block text-gray-700 font-medium">Inspeção Física</h3>
-                                <label className="text-base font-normal block text-gray-800">
+                            <div className="flex flex-col gap-4">
+                                <h3 className="text-2xl block text-gray-700 font-medium pb-6">Inspeção Física</h3>
+                                <label className="flex gap-2 text-base font-normal text-gray-800">
                                     <input
                                         type="checkbox"
                                         checked={record.physicalInspection.independentMobility}
@@ -303,16 +385,137 @@ export default function EditNeurofunctionalRecord() {
                                     />
                                     Mobilidade Independente
                                 </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.physicalInspection.usesCrutches}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            physicalInspection: { ...record.physicalInspection, usesCrutches: e.target.checked }
+                                        })}
+                                    />
+                                    Usa Muletas
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.physicalInspection.usesWalker}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            physicalInspection: { ...record.physicalInspection, usesWalker: e.target.checked }
+                                        })}
+                                    />
+                                    Usa Walker
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.physicalInspection.wheelchairUser}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            physicalInspection: { ...record.physicalInspection, wheelchairUser: e.target.checked }
+                                        })}
+                                    />
+                                    Usa Cadeiras de Rodas
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.physicalInspection.hasScar}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            physicalInspection: { ...record.physicalInspection, hasScar: e.target.checked }
+                                        })}
+                                    />
+                                    Tem Cicatriz
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.physicalInspection.hasBedsore}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            physicalInspection: { ...record.physicalInspection, hasBedsore: e.target.checked }
+                                        })}
+                                    />
+                                    Tem Escara
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.physicalInspection.cooperative}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            physicalInspection: { ...record.physicalInspection, cooperative: e.target.checked }
+                                        })}
+                                    />
+                                    Cooperativa
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.physicalInspection.nonCooperative}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            physicalInspection: { ...record.physicalInspection, nonCooperative: e.target.checked }
+                                        })}
+                                    />
+                                    Não Cooperativo
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.physicalInspection.hydrated}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            physicalInspection: { ...record.physicalInspection, hydrated: e.target.checked }
+                                        })}
+                                    />
+                                    Hidratado
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.physicalInspection.hasHematoma}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            physicalInspection: { ...record.physicalInspection, hasHematoma: e.target.checked }
+                                        })}
+                                    />
+                                    Tem Hematoma
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.physicalInspection.hasEdema}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            physicalInspection: { ...record.physicalInspection, hasEdema: e.target.checked }
+                                        })}
+                                    />
+                                    Tem Edema
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.physicalInspection.hasDeformity}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            physicalInspection: { ...record.physicalInspection, hasDeformity: e.target.checked }
+                                        })}
+                                    />
+                                    Tem Deformidade
+                                </label>
                                 {/* Adicione outros campos de inspeção física conforme necessário */}
                             </div>
                         </div>
 
                         {/* Campos de Avaliação Sensória */}
                         <div className="bg-gray-100 shadow-lg rounded-lg p-6">
-                            <div className="flex flex-col gap-2">
-                                <h3 className="text-lg block text-gray-700 font-medium">Avaliação Sensória</h3>
+                            <div className="flex flex-col gap-4">
+                                <h3 className="text-2xl block text-gray-700 font-medium pb-6">Avaliação Sensória</h3>
 
-                                <label className="text-base font-normal block text-gray-800">
+                                <label className="text-base font-semibold block text-gray-800">
                                     Avaliação Superficial
                                 </label>
                                 <input
@@ -325,7 +528,8 @@ export default function EditNeurofunctionalRecord() {
                                     className="border rounded-md px-2 py-1"
                                     placeholder="Avaliação Superficial"
                                 />
-                                <label className="text-base font-normal block text-gray-800">
+
+                                <label className="text-base font-semibold block text-gray-800">
                                     Avaliação Profunda
                                 </label>
                                 <input
@@ -338,14 +542,72 @@ export default function EditNeurofunctionalRecord() {
                                     className="border rounded-md px-2 py-1"
                                     placeholder="Avaliação Profunda"
                                 />
+
+                                <label className="text-base font-semibold block text-gray-800">
+                                    Combinação de Sensações
+                                </label>
+                                <div className="flex gap-6">
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                        <input
+                                            type="checkbox"
+                                            checked={record.sensoryAssessment.combinedSensations.graphesthesia}
+                                            onChange={(e) => setRecord({
+                                                ...record,
+                                                sensoryAssessment: {
+                                                    ...record.sensoryAssessment,
+                                                    combinedSensations: {
+                                                        ...record.sensoryAssessment.combinedSensations,
+                                                        graphesthesia: e.target.checked
+                                                    }
+                                                }
+                                            })}
+                                        />
+                                        Grafestesia
+                                    </label>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                        <input
+                                            type="checkbox"
+                                            checked={record.sensoryAssessment.combinedSensations.barognosis}
+                                            onChange={(e) => setRecord({
+                                                ...record,
+                                                sensoryAssessment: {
+                                                    ...record.sensoryAssessment,
+                                                    combinedSensations: {
+                                                        ...record.sensoryAssessment.combinedSensations,
+                                                        barognosis: e.target.checked
+                                                    }
+                                                }
+                                            })}
+                                        />
+                                        Barognose
+                                    </label>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                        <input
+                                            type="checkbox"
+                                            checked={record.sensoryAssessment.combinedSensations.stereognosis}
+                                            onChange={(e) => setRecord({
+                                                ...record,
+                                                sensoryAssessment: {
+                                                    ...record.sensoryAssessment,
+                                                    combinedSensations: {
+                                                        ...record.sensoryAssessment.combinedSensations,
+                                                        stereognosis: e.target.checked
+                                                    }
+                                                }
+                                            })}
+                                        />
+                                        Estereognosia
+                                    </label>
+                                </div>
+
                             </div>
                         </div>
 
                         {/* Campos de Mobilidade do Paciente */}
                         <div className="bg-gray-100 shadow-lg rounded-lg p-6">
-                            <div className="flex flex-col gap-2">
-                                <h3 className="text-lg block text-gray-700 font-medium">Mobilidade do Paciente</h3>
-                                <label className="text-base font-normal block text-gray-800">
+                            <div className="flex flex-col gap-4">
+                                <h3 className="text-2xl block text-gray-700 font-medium pb-6">Mobilidade do Paciente</h3>
+                                <label className="text-base font-semibold block text-gray-800">
                                     Tempo de Caminhada de 3 Metros(s)
                                 </label>
                                 <input
@@ -357,16 +619,67 @@ export default function EditNeurofunctionalRecord() {
                                     })}
                                     className="border rounded-md px-2 py-1"
                                     placeholder="Tempo de Caminhada de 3 Metros (s)"
-                                />
-                                {/* Adicione outros campos de mobilidade conforme necessário */}
+                                    />
+
+                                    <label className="flex gap-2 text-base font-semibold text-gray-800 mb-2">
+                                        <input
+                                            type="checkbox"
+                                            checked={record.patientMobility.hasFallRisk}
+                                            onChange={(e) => setRecord({
+                                                ...record,
+                                                patientMobility: { ...record.patientMobility, hasFallRisk: e.target.checked }
+                                            })}
+                                        />
+                                        Tem Risco de Queda
+                                    </label>
+
+                                    <label className="text-base font-semibold block text-gray-800">
+                                       Mudanças de Postura
+                                    </label>
+                                    {Object.keys(record.patientMobility.postureChanges).map((key) => (
+                                        <label key={key} className="flex flex-col mb-2">
+                                            {key
+                                                .replace(/([A-Z])/g, ' $1')
+                                                .replace(/^./, (str) => str.toUpperCase())
+                                                .replace('Bridge', 'Ponte')
+                                                .replace('Semi Roll Right', 'Rolar para Direita')
+                                                .replace('Semi Roll Left', 'Rolar para Esquerda')
+                                                .replace('Full Roll', 'Rolar Completo')
+                                                .replace('Drag', 'Arrastar')
+                                                .replace('Prone To Forearm Support', 'Prono para Apoio de Antebraço')
+                                                .replace('Forearm Support To All Fours', 'Apoio de Antebraço para Quatro Apoios')
+                                                .replace('All Fours', 'Quatro Apoios')
+                                                .replace('All Fours To Kneeling', 'Quatro Apoios para Ajoelhar')
+                                                .replace('Kneeling To Half Kneeling Right', 'Ajoelhar para Meio Ajoelhar Direito')
+                                                .replace('Kneeling To Half Kneeling Left', 'Ajoelhar para Meio Ajoelhar Esquerdo')
+                                                .replace('Half Kneeling Right To Standing', 'Meio Ajoelhar Direito para Ficar em Pé')
+                                                .replace('Half Kneeling Left To Standing', 'Meio Ajoelhar Esquerdo para Ficar em Pé')}
+                                            :
+                                            <input
+                                                type="text"
+                                                value={record.patientMobility.postureChanges[key as keyof typeof record.patientMobility.postureChanges]}
+                                                onChange={(e) => setRecord({
+                                                    ...record,
+                                                    patientMobility: {
+                                                        ...record.patientMobility,
+                                                        postureChanges: {
+                                                            ...record.patientMobility.postureChanges,
+                                                            [key]: e.target.value
+                                                        }
+                                                    }
+                                                })}
+                                                className="border rounded p-1 mt-1"
+                                            />
+                                        </label>
+                                    ))}
                             </div>
                         </div>
 
                         {/* Campos de Avaliação Fisioterapêutica */}
                         <div className="bg-gray-100 shadow-lg rounded-lg p-6">
-                            <div className="flex flex-col gap-2">
-                                <h3 className="text-lg block text-gray-700 font-medium">Avaliação Fisioterapêutica</h3>
-                                <label className="text-base font-normal block text-gray-800">
+                            <div className="flex flex-col gap-4">
+                                <h3 className="text-2xl block text-gray-700 font-medium pb-6">Avaliação Fisioterapêutica</h3>
+                                <label className="text-base font-semibold block text-gray-800">
                                     Diagnóstico
                                 </label>
                                 <textarea
@@ -377,8 +690,9 @@ export default function EditNeurofunctionalRecord() {
                                     })}
                                     className="border rounded-md p-2"
                                     placeholder="Diagnóstico"
-                                />
-                                <label className="text-base font-normal block text-gray-800">
+                                    />
+                                    
+                                <label className="text-base font-semibold block text-gray-800">
                                     Objetivos do Tratamento
                                 </label>
                                 <textarea
@@ -389,8 +703,9 @@ export default function EditNeurofunctionalRecord() {
                                     })}
                                     className="border rounded-md p-2"
                                     placeholder="Objetivos do Tratamento"
-                                />
-                                <label className="text-base font-normal block text-gray-800">
+                                    />
+                                    
+                                <label className="text-base font-semibold block text-gray-800">
                                     Conduta Fisioterapêutica
                                 </label>
                                 <textarea
@@ -405,10 +720,10 @@ export default function EditNeurofunctionalRecord() {
                             </div>
                         </div>
 
-                            <div className="flex w-full items-baseline justify-end gap-4 mt-4 pr-8">
-                                <CancelButton onClick={() => router.push('/Medico/Fichas')} />
+                        <div className="flex w-full items-baseline justify-end gap-4 mt-4 pr-8">
+                            <CancelButton onClick={() => router.push('/Medico/Fichas')} />
                             <SaveButton onClick={handleSave} />
-                            
+
                         </div>
 
                     </div>

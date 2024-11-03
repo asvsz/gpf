@@ -174,7 +174,7 @@ export default function Fichas() {
     }, [days]);
 
     return (
-        <div className="flex flex-col min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+        <div className="flex flex-col min-h-screen p-8 pb-20 gap-10 sm:p-20 font-[family-name:var(--font-geist-sans)]">
             <NavbarDoctor />
             <div className="flex justify-between pt-4">
                 <div className="flex space-x-2">
@@ -212,7 +212,7 @@ export default function Fichas() {
                />
                </div>
             </div>
-            <h1 className="text-4xl font-bold text-gray-700 mb-4">Fichas Avaliativas</h1>
+            <h1 className="text-4xl font-bold text-gray-700">Fichas Avaliativas</h1>
 
             {/* Loader e mensagem quando não há dados */}
             {(loading || loadingRecords) && (
@@ -229,7 +229,7 @@ export default function Fichas() {
 
             {!loading && !loadingRecords && records.length > 0 && (
                 <div className="flex-grow">
-                    <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden ">
+                    <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden  ">
 
                         <thead>
                         <tr className="bg-gray-200 text-gray-600 font-medium">

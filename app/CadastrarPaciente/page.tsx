@@ -4,6 +4,9 @@ import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import ButtonOne from '../components/ButtonOne';
 import { useRouter } from 'next/navigation';
+import HeaderBar from '../components/Header';
+import FooterBar from '../components/Footer';
+import Input from "@/app/components/InputText";
 
 export default function CadastrarPaciente() {
   const { user } = useAuth();
@@ -66,35 +69,34 @@ export default function CadastrarPaciente() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Registrar Paciente</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="h-screen p-8 pb-20 sm:p-20 bg-gray-100 mx-auto overflow-y-auto">
+      <HeaderBar/>
+      <h1 className="font-bold text-4xl text-gray-700 pb-6 mb-6">Registrar Paciente</h1>
+      <form onSubmit={handleSubmit} className="space-y-4 pb-8">
         <div>
-          <label className="block text-gray-700">Nome</label>
-          <input
+          <Input
+            label="Nome"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
             required
           />
         </div>
         <div>
-          <label className="block text-gray-700">Sobrenome</label>
-          <input
+          <Input
+            label="Sobrenome"
             type="text"
             value={surname}
             onChange={(e) => setSurname(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
             required
           />
         </div>
         <div>
-          <label className="block text-gray-700">Gênero</label>
+          <label className="text-lg block text-gray-700 font-medium mb-2">Gênero</label>
           <select
+            className="text-lg block text-gray-800 font-medium mb-2 p-2"
             value={gender}
             onChange={(e) => setGender(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
             required
           >
             <option value="" disabled>
@@ -107,89 +109,82 @@ export default function CadastrarPaciente() {
           </select>
         </div>
         <div>
-          <label className="block text-gray-700">Data de Nascimento</label>
-          <input
+          <Input
+            label="Data de Nascimento"
             type="date"
             value={birthDate}
             onChange={(e) => setBirthDate(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
             required
           />
         </div>
         <div>
-          <label className="block text-gray-700">CPF</label>
-          <input
+          <Input
+            label="CPF"
             type="text"
             value={cpf}
             onChange={(e) => setCpf(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
             required
           />
         </div>
         <div>
-          <label className="block text-gray-700">Número de Telefone</label>
-          <input
+          <Input
+            label="Número de Telefone"
             type="text"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
             required
           />
         </div>
         <div>
-          <label className="block text-gray-700">Endereço</label>
-          <input
+          <Input
+            label="Endereço"
             type="text"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
             required
           />
         </div>
         <div>
-          <label className="block text-gray-700">Cidade</label>
-          <input
+          <Input
+            label="Cidade"
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
             required
           />
         </div>
         <div>
-          <label className="block text-gray-700">Estado</label>
-          <input
+          <Input
+            label="Estado"
             type="text"
             value={state}
             onChange={(e) => setState(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
             required
           />
         </div>
 
         <div>
-          <label className="block text-gray-700">E-mail</label>
-          <input
+          <Input
+            label="E-mail"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
             required
           />
         </div>
         <div>
-          <label className="block text-gray-700">Senha</label>
-          <input
+          <Input
+            label="Senha"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
             required
           />
         </div>
         <ButtonOne texto='Registrar' type='submit' />
         {message && <p className="mt-4 text-center">{message}</p>}
       </form>
+      <FooterBar/>
     </div>
   );
 }

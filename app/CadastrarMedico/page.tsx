@@ -4,9 +4,9 @@ import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import ButtonOne from '../components/ButtonOne';
 import { useRouter } from 'next/navigation';
-import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import Input from "@/app/components/InputText";
+import HeaderBar from '@/app/components/Header';
 
 export default function CadastrarMedico() {
   const { user } = useAuth();
@@ -56,8 +56,8 @@ export default function CadastrarMedico() {
   };
 
   return (
-    <div className="min-h-screen p-8 pb-20 sm:p-20 flex flex-col bg-gray-100 mx-auto">
-      <Header />
+    <div className="h-screen p-8 pb-20 sm:p-20 bg-gray-100 mx-auto overflow-y-auto">
+      <HeaderBar/>
       <h1 className="font-bold text-4xl text-gray-700 pb-6 mb-6">Registrar Fisioterapeuta</h1>
       <form onSubmit={handleSubmit} className="space-y-4 pb-8">
         <div>
@@ -136,5 +136,7 @@ export default function CadastrarMedico() {
       </form>
       <Footer />
     </div>
+
+
   );
 }

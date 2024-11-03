@@ -110,7 +110,7 @@ export default function EditCardio() {
             sneezing: '',
             chestType: '',
             respiratoryOrCardiacSigns: '',
-            nasalInspection: '',  // Inicializando nasalInspection
+            nasalInspection: '',  
         },
         VitalSigns: {
             heartRate: 0,
@@ -185,6 +185,10 @@ export default function EditCardio() {
                 throw new Error("Dados do registro não encontrados");
             }
 
+            console.log(record);
+            console.log(record.VitalSigns);
+
+
             setRecord(response.data.record);
         } catch (error) {
             console.error('Erro ao buscar registro:', error);
@@ -219,7 +223,7 @@ export default function EditCardio() {
                 console.error('Erro ao salvar registro:', error);
                 setError('Erro ao salvar as alterações.');
             }
-    }
+        }
     };
 
     useEffect(() => {
@@ -230,7 +234,7 @@ export default function EditCardio() {
         <PrivateRoute requiredUserType='clinician'>
             <div className="flex flex-col min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
                 <NavbarDoctor />
-                <h2 className="text-3xl font-bold">Editar Registro Cardio</h2>
+                <h2 className="font-bold text-4xl text-gray-700 pt-8">Editar Registro Cardio</h2>
 
                 {error && <div className="text-red-500 mb-4">{error}</div>}
 
@@ -239,48 +243,51 @@ export default function EditCardio() {
                         <span>Carregando...</span>
                     </div>
                 ) : (
-                    <div className="flex flex-col gap-4 mb-10">
+                    <div className="grid gap-8 pb-8">
 
                         {/* Diagnóstico Médico */}
-                        <div>
-                            <label className="block font-semibold">Diagnóstico Médico</label>
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <label className="text-2xl block text-gray-700 font-medium pb-6">Diagnóstico Médico</label>
                             <textarea
                                 value={record.medicalDiagnosis}
                                 onChange={(e) => setRecord({ ...record, medicalDiagnosis: e.target.value })}
-                                className="border rounded-md p-2"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 placeholder="Digite o Diagnóstico Médico"
                             />
                         </div>
 
                         {/* Anamnese */}
-                        <div>
-                            <label className="block font-semibold">Anamnese</label>
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <label className="text-2xl block text-gray-700 font-medium pb-6">
+                                Anamnese
+                            </label>
                             <textarea
                                 value={record.anamnesis}
                                 onChange={(e) => setRecord({ ...record, anamnesis: e.target.value })}
-                                className="border rounded-md p-2"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 placeholder="Digite a Anamnese"
                             />
                         </div>
 
                         {/* Exame Físico */}
-                        <div>
-                            <label className="block font-semibold">Exame Físico</label>
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <label className="text-2xl block text-gray-700 font-medium pb-6">Exame Físico</label>
                             <textarea
                                 value={record.physicalExamination}
                                 onChange={(e) => setRecord({ ...record, physicalExamination: e.target.value })}
-                                className="border rounded-md p-2"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight 
+                                focus:outline-none focus:shadow-outline"
                                 placeholder="Digite o Exame Físico"
                             />
                         </div>
 
                         {/* Triage */}
-                        <div>
-                            <label className="block font-semibold">Triage</label>
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <label className="text-2xl block text-gray-700 font-medium pb-6">Triage</label>
                             <select
                                 value={record.triage}
                                 onChange={(e) => setRecord({ ...record, triage: e.target.value })}
-                                className="w-full px-3 py-2 border rounded-md"
+                                className="text-lg block text-gray-800 font-medium border rounded-md mb-2 p-2"
                                 required
                             >
                                 <option value="" disabled>Selecione</option>
@@ -290,30 +297,84 @@ export default function EditCardio() {
                             </select>
                         </div>
 
-                        {/* Hábitos de Vida */}
-                        <div className="flex gap-4">
-                            {Object.entries(record.lifestyleHabits).map(([key, value]) => (
-                                <label key={key}>
+                        {/* Campos de Hábitos de Vida */}
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <label className="text-2xl block text-gray-700 font-medium pb-6">Hábitos de Vida</label>
+                            <div className="flex gap-6">
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
                                     <input
                                         type="checkbox"
-                                        checked={value}
+                                        checked={record.lifestyleHabits.alcoholConsumption}
                                         onChange={(e) => setRecord({
                                             ...record,
-                                            lifestyleHabits: {
-                                                ...record.lifestyleHabits,
-                                                [key]: e.target.checked
-                                            }
+                                            lifestyleHabits: { ...record.lifestyleHabits, alcoholConsumption: e.target.checked }
                                         })}
                                     />
-                                    {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
+                                    Consome Álcool
                                 </label>
-                            ))}
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.lifestyleHabits.smoker}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            lifestyleHabits: { ...record.lifestyleHabits, smoker: e.target.checked }
+                                        })}
+                                    />
+                                    Fumante
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.lifestyleHabits.obesity}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            lifestyleHabits: { ...record.lifestyleHabits, obesity: e.target.checked }
+                                        })}
+                                    />
+                                    Obesidade
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.lifestyleHabits.diabetes}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            lifestyleHabits: { ...record.lifestyleHabits, diabetes: e.target.checked }
+                                        })}
+                                    />
+                                    Diabetes
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.lifestyleHabits.drugUser}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            lifestyleHabits: { ...record.lifestyleHabits, drugUser: e.target.checked }
+                                        })}
+                                    />
+                                    Usa Drogas
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={record.lifestyleHabits.physicalActivity}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            lifestyleHabits: { ...record.lifestyleHabits, physicalActivity: e.target.checked }
+                                        })}
+                                    />
+                                    Atividade Física
+                                </label>
+                            </div>
                         </div>
 
                         {/* Inspeção Física */}
-                        <div>
-                            <h3 className="font-semibold">Inspeção Física</h3>
-                            <label>
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Inspeção Física</h3>
+
+                            <label className="flex gap-4 text-base font-normal text-gray-800">
                                 <input
                                     type="checkbox"
                                     checked={record.physicalInspection.isFaceSinusPalpationHurtful}
@@ -327,24 +388,7 @@ export default function EditCardio() {
                                 />
                                 Palpação Facial dolorosa
                             </label>
-                            <div>
-                                <label className="block font-semibold">Inspeção Nasal</label>
-                                <textarea
-                                    value={record.physicalInspection.nasalInspection}
-                                    onChange={(e) => setRecord({
-                                        ...record,
-                                        physicalInspection: {
-                                            ...record.physicalInspection,
-                                            nasalInspection: e.target.value
-                                        }
-                                    })}
-                                    className="border rounded-md p-2"
-                                    placeholder="Inspeção Nasal"
-                                />
-                            </div>
-
-                            {/* Campos adicionais de Inspeção Física */}
-                            <label className="block font-semibold">Secreção Nasal</label>
+                            <label className="flex gap-2 text-base font-normal text-gray-800">Secreção Nasal</label>
                             <input
                                 type="text"
                                 value={record.physicalInspection.nasalSecretion.type}
@@ -361,22 +405,25 @@ export default function EditCardio() {
                                 placeholder="Tipo de Secreção Nasal"
                                 className="border rounded-md p-2"
                             />
-                            <label className="block font-semibold">Secreção Fetida?</label>
-                            <input
-                                type="checkbox"
-                                checked={record.physicalInspection.nasalSecretion.isFetid}
-                                onChange={(e) => setRecord({
-                                    ...record,
-                                    physicalInspection: {
-                                        ...record.physicalInspection,
-                                        nasalSecretion: {
-                                            ...record.physicalInspection.nasalSecretion,
-                                            isFetid: e.target.checked
+                            <label className="flex gap-2 text-base font-normal text-gray-800">
+                                <input
+                                    type="checkbox"
+                                    checked={record.physicalInspection.nasalSecretion.isFetid}
+                                    onChange={(e) => setRecord({
+                                        ...record,
+                                        physicalInspection: {
+                                            ...record.physicalInspection,
+                                            nasalSecretion: {
+                                                ...record.physicalInspection.nasalSecretion,
+                                                isFetid: e.target.checked
+                                            }
                                         }
-                                    }
-                                })}
-                            />
-                            <label className="block">Quantidade de Secreção</label>
+                                    })}
+                                />
+                                Secreção Fetida
+                            </label>
+
+                            <label className="flex gap-2 text-base font-normal text-gray-800">Quantidade de Secreção</label>
                             <input
                                 type="text"
                                 value={record.physicalInspection.nasalSecretion.quantity}
@@ -393,7 +440,7 @@ export default function EditCardio() {
                                 placeholder="Quantidade de Secreção Nasal"
                                 className="border rounded-md p-2"
                             />
-                            <label className="block">Coceira Nasal</label>
+                            <label className="flex gap-2 text-base font-normal text-gray-800">Coceira Nasal</label>
                             <input
                                 type="text"
                                 value={record.physicalInspection.nasalItching}
@@ -407,7 +454,7 @@ export default function EditCardio() {
                                 placeholder="Coceira Nasal"
                                 className="border rounded-md p-2"
                             />
-                            <label className="block">Espirros</label>
+                            <label className="flex gap-2 text-base font-normal text-gray-800">Espirros</label>
                             <input
                                 type="text"
                                 value={record.physicalInspection.sneezing}
@@ -421,7 +468,7 @@ export default function EditCardio() {
                                 placeholder="Espirros"
                                 className="border rounded-md p-2"
                             />
-                            <label className="block">Tipo de Tórax</label>
+                            <label className="flex gap-2 text-base font-normal text-gray-800">Tipo de Tórax</label>
                             <input
                                 type="text"
                                 value={record.physicalInspection.chestType}
@@ -435,7 +482,7 @@ export default function EditCardio() {
                                 placeholder="Tipo de Tórax"
                                 className="border rounded-md p-2"
                             />
-                            <label className="block">Sinais Respiratórios ou Cardíacos</label>
+                            <label className="flex gap-2 text-base font-normal text-gray-800">Sinais Respiratórios ou Cardíacos</label>
                             <input
                                 type="text"
                                 value={record.physicalInspection.respiratoryOrCardiacSigns}
@@ -452,10 +499,10 @@ export default function EditCardio() {
                         </div>
 
                         {/* Sinais Vitais */}
-                        <div>
-                            <h3 className="font-semibold">Sinais Vitais</h3>
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Sinais Vitais</h3>
                             <div>
-                                <label className="block">Frequência Cardíaca</label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Frequência Cardíaca</label>
                                 <input
                                     type="number"
                                     value={record.VitalSigns?.heartRate || ''}
@@ -471,7 +518,7 @@ export default function EditCardio() {
                                 />
                             </div>
                             <div>
-                                <label className="block">Frequência Respiratória</label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Frequência Respiratória</label>
                                 <input
                                     type="number"
                                     value={record.VitalSigns?.respiratoryRate || ''}
@@ -487,7 +534,7 @@ export default function EditCardio() {
                                 />
                             </div>
                             <div>
-                                <label className="block">Pressão Arterial (Sistólica)</label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Pressão Arterial (Sistólica)</label>
                                 <input
                                     type="number"
                                     value={record.VitalSigns?.bloodPressure?.systolic || ''} // Verificação adicionada
@@ -506,7 +553,7 @@ export default function EditCardio() {
                                 />
                             </div>
                             <div>
-                                <label className="block">Pressão Arterial (Diastólica)</label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Pressão Arterial (Diastólica)</label>
                                 <input
                                     type="number"
                                     value={record.VitalSigns?.bloodPressure?.diastolic || ''}
@@ -525,10 +572,10 @@ export default function EditCardio() {
                                 />
                             </div>
                             <div>
-                                <label className="block">Temperatura Corporal</label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Temperatura Corporal</label>
                                 <input
                                     type="number"
-                                    value={record.VitalSigns?.temperature|| ''}
+                                    value={record.VitalSigns?.temperature || ''}
                                     onChange={(e) => setRecord({
                                         ...record,
                                         VitalSigns: {
@@ -539,16 +586,17 @@ export default function EditCardio() {
                                     placeholder="Digite a Temperatura Corporal"
                                     className="border rounded-md p-2"
                                 />
-                            </div>                 <div>
-                                <label className="block">Saturação do Oxigênio</label>
+                            </div>
+                            <div>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Saturação do Oxigênio</label>
                                 <input
                                     type="number"
-                                    value={record.VitalSigns?.oxygenSaturation|| ''}
+                                    value={record.VitalSigns?.oxygenSaturation || ''}
                                     onChange={(e) => setRecord({
                                         ...record,
                                         VitalSigns: {
                                             ...record.VitalSigns,
-                                            oxygenSaturation    : e.target.value ? Number(e.target.value) : 0
+                                            oxygenSaturation: e.target.value ? Number(e.target.value) : 0
                                         }
                                     })}
                                     placeholder="Digite a Temperatura Corporal"
@@ -559,10 +607,12 @@ export default function EditCardio() {
                         </div>
 
                         {/* Avaliação Pneumofuncional */}
-                        <div>
-                            <h3 className="font-semibold">Avaliação Pneumofuncional</h3>
-                            <div>
-                                <label className="block">Primeira Medida do Fluxo Pic</label>
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Avaliação Pneumofuncional</h3>
+                            
+                                <label className="flex gap-2 text-base font-semibold text-gray-800 mb-2">Fluxo Pic</label>
+                                <div>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Primeira Medida do Fluxo Pic</label>
                                 <input
                                     type="number"
                                     value={record.pneumofunctionalAssessment.peakFlow.firstMeasurement || ''}
@@ -581,7 +631,7 @@ export default function EditCardio() {
                                 />
                             </div>
                             <div>
-                                <label className="block">Segunda Medida do Fluxo Pic</label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Segunda Medida do Fluxo Pic</label>
                                 <input
                                     type="number"
                                     value={record.pneumofunctionalAssessment.peakFlow.secondMeasurement || ''}
@@ -599,14 +649,175 @@ export default function EditCardio() {
                                     className="border rounded-md p-2"
                                 />
                             </div>
-                            {/* Adicione outros campos de avaliação pneumofuncional aqui, conforme necessário */}
-                        </div>
-
-                        {/* Avaliação Cardiofuncional */}
-                        <div>
-                            <h3 className="font-semibold">Avaliação Cardiofuncional</h3>
                             <div>
-                                <label className="block">IMC</label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Terceira Medida do Fluxo Pic</label>
+                                <input
+                                    type="number"
+                                    value={record.pneumofunctionalAssessment.peakFlow.thirdMeasurement || ''}
+                                    onChange={(e) => setRecord({
+                                        ...record,
+                                        pneumofunctionalAssessment: {
+                                            ...record.pneumofunctionalAssessment,
+                                            peakFlow: {
+                                                ...record.pneumofunctionalAssessment.peakFlow,
+                                                thirdMeasurement: e.target.value ? Number(e.target.value) : 0
+                                            }
+                                        }
+                                    })}
+                                    placeholder="Digite a Terceira Medida do Fluxo Pic"
+                                    className="border rounded-md p-2"
+                                />
+                            </div>
+                                <label className="flex gap-2 text-base font-semibold text-gray-800 mb-2">Manovacuometria</label>
+                                <label className="flex gap-2 text-base font-semibold text-gray-800 mb-2">Pressão Expiratória Máxima</label>
+
+                                <div>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Primeira Medição</label>
+                                    <input
+                                        type="number"
+                                        value={record.pneumofunctionalAssessment.manovacuometry.pemax.firstMeasurement || ''}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            pneumofunctionalAssessment: {
+                                                ...record.pneumofunctionalAssessment,
+                                                manovacuometry: {
+                                                    ...record.pneumofunctionalAssessment.manovacuometry,
+                                                    pemax: {
+                                                        ...record.pneumofunctionalAssessment.manovacuometry.pemax,
+                                                        firstMeasurement: e.target.value ? Number(e.target.value) : 0
+                                                    }
+                                                }
+                                            }
+                                        })}
+                                        placeholder="Digite a Primeira Medição"
+                                        className="border rounded-md p-2"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Segunda Medição</label>
+                                    <input
+                                        type="number"
+                                        value={record.pneumofunctionalAssessment.manovacuometry.pemax.secondMeasurement || ''}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            pneumofunctionalAssessment: {
+                                                ...record.pneumofunctionalAssessment,
+                                                manovacuometry: {
+                                                    ...record.pneumofunctionalAssessment.manovacuometry,
+                                                    pemax: {
+                                                        ...record.pneumofunctionalAssessment.manovacuometry.pemax,
+                                                        secondMeasurement: e.target.value ? Number(e.target.value) : 0
+                                                    }
+                                                }
+                                            }
+                                        })}
+                                        placeholder="Digite a Segunda Medição"
+                                        className="border rounded-md p-2"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Terceira Medição</label>
+                                    <input
+                                        type="number"
+                                        value={record.pneumofunctionalAssessment.manovacuometry.pemax.thirdMeasurement || ''}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            pneumofunctionalAssessment: {
+                                                ...record.pneumofunctionalAssessment,
+                                                manovacuometry: {
+                                                    ...record.pneumofunctionalAssessment.manovacuometry,
+                                                    pemax: {
+                                                        ...record.pneumofunctionalAssessment.manovacuometry.pemax,
+                                                        thirdMeasurement: e.target.value ? Number(e.target.value) : 0
+                                                    }
+                                                }
+                                            }
+                                        })}
+                                        placeholder="Digite a Terceira Medição"
+                                        className="border rounded-md p-2"
+                                    />
+                                </div>
+
+                                <label className="flex gap-2 text-base font-semibold text-gray-800 mb-2">Pressão Inspiratória Máxima</label>
+
+                                <div>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Primeira Medição</label>
+                                    <input
+                                        type="number"
+                                        value={record.pneumofunctionalAssessment.manovacuometry.pimax.firstMeasurement || ''}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            pneumofunctionalAssessment: {
+                                                ...record.pneumofunctionalAssessment,
+                                                manovacuometry: {
+                                                    ...record.pneumofunctionalAssessment.manovacuometry,
+                                                    pimax: {
+                                                        ...record.pneumofunctionalAssessment.manovacuometry.pimax,
+                                                        firstMeasurement: e.target.value ? Number(e.target.value) : 0
+                                                    }
+                                                }
+                                            }
+                                        })}
+                                        placeholder="Digite a Primeira Medição"
+                                        className="border rounded-md p-2"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Segunda Medição</label>
+                                    <input
+                                        type="number"
+                                        value={record.pneumofunctionalAssessment.manovacuometry.pimax.secondMeasurement || ''}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            pneumofunctionalAssessment: {
+                                                ...record.pneumofunctionalAssessment,
+                                                manovacuometry: {
+                                                    ...record.pneumofunctionalAssessment.manovacuometry,
+                                                    pimax: {
+                                                        ...record.pneumofunctionalAssessment.manovacuometry.pimax,
+                                                        secondMeasurement: e.target.value ? Number(e.target.value) : 0
+                                                    }
+                                                }
+                                            }
+                                        })}
+                                        placeholder="Digite a Segunda Medição"
+                                        className="border rounded-md p-2"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Terceira Medição</label>
+                                    <input
+                                        type="number"
+                                        value={record.pneumofunctionalAssessment.manovacuometry.pimax.thirdMeasurement || ''}
+                                        onChange={(e) => setRecord({
+                                            ...record,
+                                            pneumofunctionalAssessment: {
+                                                ...record.pneumofunctionalAssessment,
+                                                manovacuometry: {
+                                                    ...record.pneumofunctionalAssessment.manovacuometry,
+                                                    pimax: {
+                                                        ...record.pneumofunctionalAssessment.manovacuometry.pimax,
+                                                        thirdMeasurement: e.target.value ? Number(e.target.value) : 0
+                                                    }
+                                                }
+                                            }
+                                        })}
+                                        placeholder="Digite a Terceira Medição"
+                                        className="border rounded-md p-2"
+                                    />
+                                </div>
+                                
+                                
+                                
+                                
+                                {/* Adicione outros campos de avaliação pneumofuncional aqui, conforme necessário */}
+                            </div>
+                            
+                        {/* Avaliação Cardiofuncional */}
+                            <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                                <h3 className="text-2xl block text-gray-700 font-medium pb-6">Avaliação Cardiofuncional</h3>
+                            <div>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">BMI</label>
                                 <input
                                     type="number"
                                     value={record.cardiofunctionalAssessment.bmi || ''}
@@ -617,12 +828,12 @@ export default function EditCardio() {
                                             bmi: e.target.value ? Number(e.target.value) : 0
                                         }
                                     })}
-                                    placeholder="Digite o IMC"
+                                    placeholder="Digite o BMI"
                                     className="border rounded-md p-2"
                                 />
                             </div>
                             <div>
-                                <label className="block">Capacidade Pulmonar</label>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Capacidade Pulmonar</label>
                                 <input
                                     type="number"
                                     value={record.cardiofunctionalAssessment.abdominalPerimeter || ''}
@@ -638,7 +849,7 @@ export default function EditCardio() {
                                 />
                             </div>
                             <div>
-                                <label className="block">Cintura</label>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Cintura</label>
                                 <input
                                     type="number"
                                     value={record.cardiofunctionalAssessment.waistHipRatio || ''}
@@ -654,7 +865,7 @@ export default function EditCardio() {
                                 />
                             </div>
                             <div>
-                                <label className="block">Percentual de Gordura Corporal</label>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Percentual de Gordura Corporal</label>
                                 <input
                                     type="number"
                                     value={record.cardiofunctionalAssessment.bioimpedance.bodyFat || ''}
@@ -674,7 +885,7 @@ export default function EditCardio() {
                             </div>
 
                             <div>
-                                <label className="block">Gordura Visceral</label>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Gordura Visceral</label>
                                 <input
                                     type="number"
                                     value={record.cardiofunctionalAssessment.bioimpedance.visceralFat || ''}
@@ -694,7 +905,7 @@ export default function EditCardio() {
                             </div>
 
                             <div>
-                                <label className="block">Porcentagem de Massa Muscular</label>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Porcentagem de Massa Muscular</label>
                                 <input
                                     type="number"
                                     value={record.cardiofunctionalAssessment.bioimpedance.muscleMassPercentage || ''}
@@ -714,7 +925,7 @@ export default function EditCardio() {
                             </div>
 
                             <div>
-                                <label className="block">Medida Bicipital</label>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Medida Bicipital</label>
                                 <input
                                     type="number"
                                     value={record.cardiofunctionalAssessment.adipometry.skinfoldMeasurements.bicipital || ''}
@@ -737,7 +948,7 @@ export default function EditCardio() {
                             </div>
 
                             <div>
-                                <label className="block">Medida Tricipital</label>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Medida Tricipital</label>
                                 <input
                                     type="number"
                                     value={record.cardiofunctionalAssessment.adipometry.skinfoldMeasurements.tricipital || ''}
@@ -760,7 +971,7 @@ export default function EditCardio() {
                             </div>
 
                             <div>
-                                <label className="block">Medida Subescapular</label>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Medida Subescapular</label>
                                 <input
                                     type="number"
                                     value={record.cardiofunctionalAssessment.adipometry.skinfoldMeasurements.subscapular || ''}
@@ -783,7 +994,7 @@ export default function EditCardio() {
                             </div>
 
                             <div>
-                                <label className="block">Medida Abdominal</label>
+                                    <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">Medida Abdominal</label>
                                 <input
                                     type="number"
                                     value={record.cardiofunctionalAssessment.adipometry.skinfoldMeasurements.abdominal || ''}
@@ -809,13 +1020,13 @@ export default function EditCardio() {
                         </div>
 
                         {/* Botões de ação */}
-                        <div className="flex gap-4 mt-6">
-                            <CancelButton onClick={() => router.push('/Medico/Fichas')}/>
-                            <SaveButton onClick={handleSave}/>
+                            <div className="flex w-full items-baseline justify-end gap-4 mt-4 pr-8">
+                            <CancelButton onClick={() => router.push('/Medico/Fichas')} />
+                            <SaveButton onClick={handleSave} />
                         </div>
                     </div>
                 )}
-                <Footer/>
+                <Footer />
             </div>
         </PrivateRoute>
     );

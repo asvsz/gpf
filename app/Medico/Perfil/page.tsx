@@ -114,14 +114,14 @@ export default function Perfil({}: ClinicianProps ) {
 
           <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
             <div className='flex flex-col gap-4 pb-4'>
-              <h2 className="text-xl font-bold mb-4 text-black">Perfil do Fisioterapeuta</h2>
-              <p>
-                Nome: {clinician.name} {clinician.surname}
+              <h3 className="text-2xl block text-gray-700 font-medium pb-6">Perfil do Fisioterapeuta</h3>
+              <p
+                className='flex gap-2'><h3 className='font-semibold'>Nome: </h3>{clinician.name} {clinician.surname}
               </p>
-              <p>Email: {clinician.email}</p>
-              <p>Genero: {clinician.gender}</p>
-              <p>Especialização: {clinician.occupation}</p>
-              <p>Número de Telefone: {clinician.phoneNumber}</p>
+              <p className='flex gap-2'><h3 className='font-semibold'>Email:</h3> {clinician.email}</p>
+              <p className='flex gap-2'><h3 className='font-semibold'>Genero:</h3>{clinician.gender}</p>
+              <p className='flex gap-2'><h3 className='font-semibold'>Especialização: </h3>{clinician.occupation}</p>
+            <p className='flex gap-2'><h3 className='font-semibold'>Número de Telefone: </h3>{clinician.phoneNumber}</p>
             </div>
             <div className="flex gap-4 ">
               <ButtonOne

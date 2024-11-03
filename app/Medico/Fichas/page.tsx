@@ -205,7 +205,7 @@ export default function Fichas() {
                        }}
                    /><ButtonIcon
                    icon={<GoPlus className="text-3xl"/>}
-                   texto="Trauma"
+                        texto="Trauma Ortopédico"
                    onClick={() => {
                        router.push(`/Medico/Fichas/CriarTrauma`);
                    }}

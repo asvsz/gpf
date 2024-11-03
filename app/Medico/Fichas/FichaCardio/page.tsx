@@ -4,6 +4,8 @@ import api from "@/app/services/api";
 import PrivateRoute from '@/app/components/PrivateRoute';
 import NavbarDoctor from "@/app/components/NavbarDoctor";
 import Footer from "@/app/components/Footer";
+import ButtonOne from '@/app/components/ButtonOne';
+import { useRouter } from 'next/navigation';
 
 interface CardioRecordProps {
     medicalDiagnosis: string;
@@ -84,6 +86,8 @@ export default function ViewCardioRecord() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    const router = useRouter()
+
     // Função para buscar os dados do registro neurofuncional
     const fetchRecordData = async () => {
         const recordId = localStorage.getItem('currentRecordId');
@@ -125,90 +129,94 @@ export default function ViewCardioRecord() {
     return (
         <PrivateRoute requiredUserType='clinician'>
             <div className="flex flex-col min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-                <NavbarDoctor/>
-                <h2 className="font-bold text-4xl text-gray-700 pt-8">Visualizar Registro Neurofuncional</h2>
+                <NavbarDoctor />
+                <h2 className="font-bold text-4xl text-gray-700 pt-8">Visualizar Registro Cardiofuncional</h2>
 
                 {error && <div className="text-red-500 mb-4">{error}</div>}
 
                 {loading ? (
-                    <div className="flex justify-center items-center h-64">
+                    <div className="flex justify-center text-lg text-gray-500 items-center h-64">
                         <span>Carregando...</span>
                     </div>
                 ) : record ? (
-                    <div className="flex flex-col mb-10">
-                        <div>
-                            <h3 className="font-semibold">Diagnóstico Médico:</h3>
+                    <div className="grid gap-8 pb-8">
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Diagnóstico Médico:</h3>
                             <p>{record.medicalDiagnosis}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Anamnese:</h3>
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Anamnese:</h3>
                             <p>{record.anamnesis}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Exame Físico:</h3>
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Exame Físico:</h3>
                             <p>{record.physicalExamination}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Triagem:</h3>
+                        <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Triagem:</h3>
                             <p>{record.triage}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Hábitos de Vida:</h3>
-                            <p>Consome Álcool: {record.lifestyleHabits.alcoholConsumption ? 'Sim' : 'Não'}</p>
-                            <p>Fumante: {record.lifestyleHabits.smoker ? 'Sim' : 'Não'}</p>
-                            <p>Obesidade: {record.lifestyleHabits.obesity ? 'Sim' : 'Não'}</p>
-                            <p>Diabetes: {record.lifestyleHabits.diabetes ? 'Sim' : 'Não'}</p>
-                            <p>Usuário de Drogas: {record.lifestyleHabits.drugUser ? 'Sim' : 'Não'}</p>
-                            <p>Atividade Física: {record.lifestyleHabits.physicalActivity ? 'Sim' : 'Não'}</p>
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Hábitos de Vida:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Consome Álcool:</h3> {record.lifestyleHabits.alcoholConsumption ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Fumante: </h3>{record.lifestyleHabits.smoker ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Obesidade: </h3>{record.lifestyleHabits.obesity ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Diabetes: </h3>{record.lifestyleHabits.diabetes ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Usuário de Drogas: </h3>{record.lifestyleHabits.drugUser ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Atividade Física: </h3>{record.lifestyleHabits.physicalActivity ? 'Sim' : 'Não'}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Sinais Vitais:</h3>
-                            <p>Frequência Cardíaca: {record.vitalSigns.heartRate}</p>
-                            <p>Frequência Respiratória: {record.vitalSigns.respiratoryRate}</p>
-                            <p>Pressão Arterial: {record.vitalSigns.bloodPressure.systolic}/{record.vitalSigns.bloodPressure.diastolic}</p>
-                            <p>Temperatura: {record.vitalSigns.temperature}</p>
-                            <p>Saturação de Oxigênio: {record.vitalSigns.oxygenSaturation}</p>
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Sinais Vitais:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Frequência Cardíaca: </h3>{record.vitalSigns.heartRate}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Frequência Respiratória: </h3>{record.vitalSigns.respiratoryRate}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Pressão Arterial: </h3>{record.vitalSigns.bloodPressure.systolic}/{record.vitalSigns.bloodPressure.diastolic}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Temperatura: </h3>{record.vitalSigns.temperature}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Saturação de Oxigênio: </h3>{record.vitalSigns.oxygenSaturation}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Inspeção Física:</h3>
-                            <p>Palpação Facial e Sinusal Dolorosa: {record.physicalInspection.isFaceSinusPalpationHurtful ? 'Sim' : 'Não'}</p>
-                            <p>Tipo de Secreção Nasal: {record.physicalInspection.nasalSecretion.type}</p>
-                            <p>Secreção Nasal Fetida: {record.physicalInspection.nasalSecretion.isFetid ? 'Sim' : 'Não'}</p>
-                            <p>Quantidade de Secreção Nasal: {record.physicalInspection.nasalSecretion.quantity}</p>
-                            <p>Coceira Nasal: {record.physicalInspection.nasalItching}</p>
-                            <p>Espirros: {record.physicalInspection.sneezing}</p>
-                            <p>Tipo de Tórax: {record.physicalInspection.chestType}</p>
-                            <p>Sinais Respiratórios ou Cardíacos: {record.physicalInspection.respiratoryOrCardiacSigns}</p>
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Inspeção Física:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Palpação Facial e Sinusal Dolorosa: </h3>{record.physicalInspection.isFaceSinusPalpationHurtful ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Tipo de Secreção Nasal: </h3>{record.physicalInspection.nasalSecretion.type}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Secreção Nasal Fetida: </h3>{record.physicalInspection.nasalSecretion.isFetid ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Quantidade de Secreção Nasal: </h3>{record.physicalInspection.nasalSecretion.quantity}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Coceira Nasal: </h3>{record.physicalInspection.nasalItching}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Espirros: </h3>{record.physicalInspection.sneezing}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Tipo de Tórax: </h3>{record.physicalInspection.chestType}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Sinais Respiratórios ou Cardíacos: </h3>{record.physicalInspection.respiratoryOrCardiacSigns}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Avaliação Pneumofuncional:</h3>
-                            <p>Primeira Medição do Fluxo de Pico: {record.pneumofunctionalAssessment.peakFlow.firstMeasurement}</p>
-                            <p>Segunda Medição do Fluxo de Pico: {record.pneumofunctionalAssessment.peakFlow.secondMeasurement}</p>
-                            <p>Terceira Medição do Fluxo de Pico: {record.pneumofunctionalAssessment.peakFlow.thirdMeasurement}</p>
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Avaliação Pneumofuncional:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Primeira Medição do Fluxo de Pico: </h3>{record.pneumofunctionalAssessment.peakFlow.firstMeasurement}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Segunda Medição do Fluxo de Pico: </h3>{record.pneumofunctionalAssessment.peakFlow.secondMeasurement}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Terceira Medição do Fluxo de Pico: </h3>{record.pneumofunctionalAssessment.peakFlow.thirdMeasurement}</p>
                         </div>
 
-                        <div>
-                            <h3 className="font-semibold">Avaliação Cardiofuncional:</h3>
-                            <p>IMC: {record.cardiofunctionalAssessment.bmi}</p>
-                            <p>Perímetro Abdominal: {record.cardiofunctionalAssessment.abdominalPerimeter}</p>
-                            <p>Relação Cintura-Qüadril: {record.cardiofunctionalAssessment.waistHipRatio}</p>
-                            <p>Gordura Corporal: {record.cardiofunctionalAssessment.bioimpedance.bodyFat}</p>
-                            <p>Gordura Visceral: {record.cardiofunctionalAssessment.bioimpedance.visceralFat}</p>
-                            <p>Porcentagem de Massa Muscular: {record.cardiofunctionalAssessment.bioimpedance.muscleMassPercentage}</p>
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Avaliação Cardiofuncional:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>IMC: </h3>{record.cardiofunctionalAssessment.bmi}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Perímetro Abdominal: </h3>{record.cardiofunctionalAssessment.abdominalPerimeter}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Relação Cintura-Quadril: </h3>{record.cardiofunctionalAssessment.waistHipRatio}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Gordura Corporal: </h3>{record.cardiofunctionalAssessment.bioimpedance.bodyFat}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Gordura Visceral: </h3>{record.cardiofunctionalAssessment.bioimpedance.visceralFat}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Porcentagem de Massa Muscular: </h3>{record.cardiofunctionalAssessment.bioimpedance.muscleMassPercentage}</p>
                         </div>
-
+                        <div className="flex w-full items-baseline justify-end gap-4 mt-4 pr-8">
+                            <ButtonOne
+                                texto='Voltar'
+                                onClick={() => router.back()} />
+                        </div>
                     </div>
                 ) : (
                     <div>Registro não encontrado.</div>
                 )}
-                <Footer/>
+                <Footer />
             </div>
         </PrivateRoute>
     );

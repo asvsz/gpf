@@ -152,49 +152,48 @@ export default function ViewNeurofunctionalRecord() {
                             <p>{record.physicalExamination}</p>
                         </div>
 
-                            <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
-                                <h3 className="text-2xl block text-gray-700 font-medium pb-6">Triagem:</h3>
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Triagem:</h3>
                             <p>{record.triage}</p>
                         </div>
 
-                            <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
-                                <h3 className="text-2xl block text-gray-700 font-medium pb-6">Hábitos de Vida:</h3>
-                                <p className='flex gap-2'><h3 className='font-semibold'>Consome Álcool:</h3> {record.lifestyleHabits.alcoholConsumption ? 'Sim' : 'Não'}</p>
-                                <p className='flex gap-2'><h3 className='font-semibold'>Fumante:</h3> {record.lifestyleHabits.smoker ? 'Sim' : 'Não'}</p>
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Hábitos de Vida:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Consome Álcool:</h3> {record.lifestyleHabits.alcoholConsumption ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Fumante:</h3> {record.lifestyleHabits.smoker ? 'Sim' : 'Não'}</p>
                         </div>
 
                         <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
-                                <h3 className="text-2xl block text-gray-700 font-medium pb-6">Sinais Vitais:</h3>
-                                <p className='flex gap-2'><h3 className='font-semibold'>Pressão Arterial: </h3>{record.vitalSigns.bloodPressure}</p>
-                                <p className='flex gap-2'><h3 className='font-semibold'>Frequência Cardíaca:</h3> {record.vitalSigns.heartRate}</p>
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Sinais Vitais:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Pressão Arterial: </h3>{record.vitalSigns.bloodPressure}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Frequência Cardíaca:</h3> {record.vitalSigns.heartRate}</p>
                         </div>
 
                         <div className="bg-gray-100 shadow-lg rounded-lg p-6">
-                                <h3 className="text-2xl block text-gray-700 font-medium pb-6">Inspeção Física:</h3>
-                                <p className='flex gap-2'><h3 className='font-semibold'>Mobilidade Independente:</h3> {record.physicalInspection.independentMobility ? 'Sim' : 'Não'}</p>
-                        </div>
-
-                            <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
-                                <h3 className="text-2xl block text-gray-700 font-medium pb-6">Avaliação Sensória:</h3>
-                                <p className='flex gap-2'><h3 className='font-semibold'>Superficial:</h3> {record.sensoryAssessment.superficial}</p>
-                                <p className='flex gap-2'><h3 className='font-semibold'>Profunda:</h3> {record.sensoryAssessment.deep}</p>
-                        </div>
-
-                            <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
-                                <h3 className="text-2xl block text-gray-700 font-medium pb-6">Mobilidade do Paciente:</h3>
-                                <p className='flex gap-2'><h3 className='font-semibold'>Tempo de Caminhada de 3 Metros:</h3> {record.patientMobility.threeMeterWalkTimeInSeconds} s</p>
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Inspeção Física:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Mobilidade Independente:</h3> {record.physicalInspection.independentMobility ? 'Sim' : 'Não'}</p>
                         </div>
 
                         <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
-                                <h3 className="text-2xl block text-gray-700 font-medium pb-6">Avaliação Fisioterapêutica:</h3>
-                                <p className='flex gap-2'><h3 className='font-semibold'>Diagnóstico:</h3> {record.physiotherapyAssessment.diagnosis}</p>
-                                <p className='flex gap-2'><h3 className='font-semibold'>Objetivos do Tratamento: </h3>{record.physiotherapyAssessment.treatmentGoals}</p>
-                            </div>
-                            <div className="flex w-full items-baseline justify-end gap-4 mt-4 pr-8">
-                                <ButtonOne
-                                    texto='Voltar'
-                                    onClick={() => router.back()} />
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Avaliação Sensória:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Superficial:</h3> {record.sensoryAssessment.superficial}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Profunda:</h3> {record.sensoryAssessment.deep}</p>
+                        </div>
 
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Mobilidade do Paciente:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Tempo de Caminhada de 3 Metros:</h3> {record.patientMobility.threeMeterWalkTimeInSeconds} s</p>
+                        </div>
+
+                        <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
+                            <h3 className="text-2xl block text-gray-700 font-medium pb-6">Avaliação Fisioterapêutica:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Diagnóstico:</h3> {record.physiotherapyAssessment.diagnosis}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Objetivos do Tratamento: </h3>{record.physiotherapyAssessment.treatmentGoals}</p>
+                        </div>
+                        <div className="flex w-full items-baseline justify-end gap-4 mt-4 pr-8">
+                            <ButtonOne
+                                texto='Voltar'
+                                onClick={() => router.back()} />
                         </div>
                     </div>
                 ) : (

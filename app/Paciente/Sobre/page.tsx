@@ -1,13 +1,13 @@
 'use client';
+import NavbarPaciente from "@/app/components/NavbarPaciente";
 import FooterBar from "@/app/components/Footer";
-import NavbarDoctor from "@/app/components/NavbarDoctor";
 import PrivateRoute from "@/app/components/PrivateRoute";
 
 export default function SistemaDescricao() {
   return (
-    <PrivateRoute requiredUserType="clinician">
+    <PrivateRoute requiredUserType="patient">
       <div className="gap-4 grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-        <NavbarDoctor />
+        <NavbarPaciente />
         <div className="flex row-start-2 items-center sm:items-start z-0">
           <main className="flex-grow p-6 sm:p-12 bg-gray-50">
             <div className="bg-white shadow-lg rounded-lg p-8">

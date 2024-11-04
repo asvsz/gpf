@@ -18,7 +18,7 @@ export default function SearchEngine({onSearch}: SearchEngineProps){
         </div>
         <input
           type="text"
-          placeholder="Busque um paciente..."
+          placeholder="Busque pelo nome..."
           onChange={handleSearch}
           className="p-3 pl-10 mb-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-800"
         />

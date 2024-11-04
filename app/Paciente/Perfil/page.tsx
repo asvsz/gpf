@@ -44,7 +44,7 @@ export default function PerfilPaciente({}: PatientProps ) {
     }
   }
 
-  // Função para buscar todos os clínicos
+  // Função para buscar todos os pacientes
   const fetchClinicians = async () => {
     const token = localStorage.getItem('access_token');
     try {
@@ -62,7 +62,7 @@ export default function PerfilPaciente({}: PatientProps ) {
     }
   };
 
-  // Função para buscar o clínico com base no e-mail
+  // Função para buscar o paciente com base no e-mail
   const fetchPatientByEmail = (email: string) => {
     const matchedPatient = patients.find((patient) => patient.email === email);
     if (matchedPatient) {

@@ -20,13 +20,13 @@ const NavbarPaciente: React.FC = () => {
             {pathname === '/Paciente/Prontuario' && (
               <span className="absolute inset-0 rounded-lg border-2 border-custom-green" />
             )}
-            Prontuario
+            Prontuário
           </Link>
           <Link href="/Paciente/Medicos" className={`relative py-2 px-4 rounded ${pathname === '/Paciente/Medicos' ? 'bg-white text-custom-green' : 'text-white'}`}>
             {pathname === '/Paciente/Medicos' && (
               <span className="absolute inset-0 rounded-lg border-2 border-custom-green" />
             )}
-            Medicos
+            Fisioterapeutas
           </Link>
           <Link href="/Paciente/Solicitacoes" className={`relative py-2 px-4 rounded ${pathname === '/Paciente/Solicitacoes' ? 'bg-white text-custom-green' : 'text-white'}`}>
             {pathname === '/Paciente/Solicitacoes' && (

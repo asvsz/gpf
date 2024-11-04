@@ -6,12 +6,14 @@ import { useRouter } from 'next/navigation';
 
 type AuthContextType = {
   user: string | null;
-  prontuarioId: string | null; // Adicione esta linha
-  clinicianId: string | null; // Adicione esta linha
+  prontuarioId: string | null; 
+  clinicianId: string | null; 
+  patientId: string | null; 
   login: (userType: string) => void;
   logout: () => void;
-  setProntuarioId: (id: string | null) => void; // Adicione esta linha
-  setClinicianId: (id: string | null) => void; // Adicione esta linha
+  setProntuarioId: (id: string | null) => void; 
+  setClinicianId: (id: string | null) => void; 
+  setPatientId: (id: string | null) => void; 
 };
 
 type AuthProviderProps = {
@@ -22,16 +24,19 @@ const AuthContext = createContext<AuthContextType>({
   user: null,
   prontuarioId: null, 
   clinicianId: null, 
+  patientId: null, 
   login: () => { },
   logout: () => { },
   setProntuarioId: () => { }, 
   setClinicianId: () => { }, 
+  setPatientId: () => { }, 
 });
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<string | null>(null);
   const [prontuarioId, setProntuarioId] = useState<string | null>(null); // Adicione esta linha
   const [clinicianId, setClinicianId] = useState<string | null>(null); // Adicione esta linha
+  const [patientId, setPatientId] = useState<string | null>(null); // Adicione esta linha
   const [isMounted, setIsMounted] = useState(false); // Verifica se o componente foi montado
   const router = useRouter();
 
@@ -58,7 +63,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   if (!isMounted) return null; // Garante que o componente só será renderizado no cliente
 
   return (
-    <AuthContext.Provider value={{ user, prontuarioId, login, logout, setProntuarioId, clinicianId, setClinicianId }}>
+    <AuthContext.Provider value={{ user, prontuarioId, login, logout, setProntuarioId, clinicianId, setClinicianId, patientId, setPatientId}}>
       {children}
     </AuthContext.Provider>
   );

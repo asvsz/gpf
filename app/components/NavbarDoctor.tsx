@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'; // Importando usePathname
 import { ImProfile } from "react-icons/im";
 import Image from 'next/image';
 import Logo from '../assets/logo.svg';
-import Perfil from '../Medico/Perfil/page';
+import PerfilDoctor from '../Medico/Perfil/page';
 
 const NavbarDoctor: React.FC = () => {
   const pathname = usePathname(); // Obtém o pathname atual
@@ -42,7 +42,7 @@ const NavbarDoctor: React.FC = () => {
           </Link>
         </div>
         <div className='flex gap-4 justify-between items-center'>
-          <Perfil id='"clinician_id_value' />
+          <PerfilDoctor id='"clinician_id_value' />
           <ImProfile />
         </div>
       </div>

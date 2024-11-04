@@ -7,24 +7,24 @@ import api from '@/app/services/api';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-interface ClinicianProps {
+interface PatientProps {
   id: string;
   name?: string;
   surname?: string;
+  cpf?: string;
   gender?: string;
-  occupation?: string;
+  birthDate?: string;
   phoneNumber?: string;
   email?: string;
-  password?: string;
 }
 
-export default function PerfilDoctor({}: ClinicianProps ) {
+export default function PerfilPaciente({}: PatientProps ) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [clinician, setClinician] = useState<ClinicianProps | null>(null);
-  const [clinicians, setClinicians] = useState<ClinicianProps[]>([]);
+  const [patient, setPatient] = useState<PatientProps | null>(null);
+  const [patients, setPatients] = useState<PatientProps[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const { setClinicianId } = useAuth()
+  const { setPatientId } = useAuth()
   const router = useRouter()
 
   const handleOpenModal = () => {
@@ -36,11 +36,11 @@ export default function PerfilDoctor({}: ClinicianProps ) {
   };
 
   const handleEditButton = () => {
-    if (clinician) {
-      setClinicianId(clinician.id)
-      router.push('/Medico/Perfil/Editar')
+    if (patient) {
+      setPatientId(patient.id)
+      router.push('/Paciente/Perfil/Editar')
     } else {
-      console.error('Clinician não definido');
+      console.error('Paciente não definido');
     }
   }
 
@@ -48,13 +48,13 @@ export default function PerfilDoctor({}: ClinicianProps ) {
   const fetchClinicians = async () => {
     const token = localStorage.getItem('access_token');
     try {
-      const response = await api.get('/clinicians', {
+      const response = await api.get('/patients', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      setClinicians(response.data.clinicians);
+      setPatients(response.data.patients);
     } catch (error) {
       console.error('Erro ao buscar os clínicos:', error);
     } finally {
@@ -63,12 +63,12 @@ export default function PerfilDoctor({}: ClinicianProps ) {
   };
 
   // Função para buscar o clínico com base no e-mail
-  const fetchClinicianByEmail = (email: string) => {
-    const matchedClinician = clinicians.find((clinician) => clinician.email === email);
-    if (matchedClinician) {
-      setClinician(matchedClinician);
+  const fetchPatientByEmail = (email: string) => {
+    const matchedPatient = patients.find((patient) => patient.email === email);
+    if (matchedPatient) {
+      setPatient(matchedPatient);
     } else {
-      console.error('Clinician não encontrado para o e-mail:', email);
+      console.error('Paciente não encontrado para o e-mail:', email);
     }
   };
 
@@ -92,36 +92,36 @@ export default function PerfilDoctor({}: ClinicianProps ) {
 
   // Após carregar os clínicos, buscamos pelo e-mail
   useEffect(() => {
-    if (!loading && clinicians.length > 0) {
+    if (!loading && patients.length > 0) {
       const email = localStorage.getItem('user_email');  // Extraímos o e-mail armazenado
 
       if (email) {
-        fetchClinicianByEmail(email);
+        fetchPatientByEmail(email);
       }
     }
-  }, [clinicians, loading]);
+  }, [patients, loading]);
 
   return (
     <div className="flex items-center justify-center ">
-      {clinician ? (
+      {patient ? (
         <>
           <button
             className="px-4 text-white rounded-lg"
             onClick={handleOpenModal}
           >
-            {clinician.name} {clinician.surname}
+            {patient.name} {patient.surname}
           </button>
 
           <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
             <div className='flex flex-col gap-4 pb-4'>
               <h3 className="text-2xl block text-gray-700 font-medium pb-6">Perfil do Fisioterapeuta</h3>
               <p
-                className='flex gap-2'><h3 className='font-semibold'>Nome: </h3>{clinician.name} {clinician.surname}
+                className='flex gap-2'><h3 className='font-semibold'>Nome: </h3>{patient.name} {patient.surname}
               </p>
-              <p className='flex gap-2'><h3 className='font-semibold'>Email:</h3> {clinician.email}</p>
-              <p className='flex gap-2'><h3 className='font-semibold'>Genero:</h3>{clinician.gender}</p>
-              <p className='flex gap-2'><h3 className='font-semibold'>Especialização: </h3>{clinician.occupation}</p>
-            <p className='flex gap-2'><h3 className='font-semibold'>Número de Telefone: </h3>{clinician.phoneNumber}</p>
+              <p className='flex gap-2'><h3 className='font-semibold'>Email:</h3> {patient.email}</p>
+              <p className='flex gap-2'><h3 className='font-semibold'>Genero:</h3>{patient.gender}</p>
+              <p className='flex gap-2'><h3 className='font-semibold'>CPF: </h3>{patient.cpf}</p>
+            <p className='flex gap-2'><h3 className='font-semibold'>Número de Telefone: </h3>{patient.phoneNumber}</p>
             </div>
             <div className="flex gap-4 ">
               <ButtonOne

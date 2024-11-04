@@ -34,7 +34,7 @@ interface TraumaRecordProps {
     specialOrthopedicTest: string;
 }
 
-export default function ViewNeurofunctionalRecord() {
+export default function ViewTraumaRecord() {
     const [record, setRecord] = useState<TraumaRecordProps | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);

@@ -31,50 +31,31 @@ export default function ProntuarioPage() {
           ) : (
             <>
               {paciente && (
-                <div className="bg-gray-100 shadow-lg rounded-lg p-6">
-                  <h2 className="text-2xl font-semibold text-gray-700 mb-4">Dados Pessoais</h2>
+                  <div className="bg-gray-100 shadow-lg rounded-lg p-6">
+                    <h2 className="text-2xl font-semibold text-gray-700 mb-4">Dados Pessoais</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <p>
-                        <strong className=' text-gray-600 text-lg font-semibold'>Nome: </strong>
-                        <span className="font-sans">{paciente.name} {paciente.surname}</span>
-                      </p>
-                      <p>
-                        <strong className='text-gray-600 font-semibold '>CPF: </strong>
-                        <span className="font-sans">{paciente.cpf}</span>
-                      </p>
-                      <p>
-                        <strong className='text-gray-600 font-semibold'>Gênero: </strong>
-                        <span className="font-light">{paciente.gender}</span>
-                      </p>
-                      <p>
-                        <strong className='text-gray-600 font-semibold'>Data de Nascimento: </strong>
-                        <span className="font-sans">{paciente.birthDate}</span>
-                      </p>
-                      <p>
-                        <strong className='text-gray-600 font-semibold'>Telefone: </strong>
-                        <span className="font-sans">{paciente.phoneNumber}</span>
-                      </p>
-                      <p>
-                        <strong className='text-gray-600 font-semibold'>Email: </strong>
-                        <span className="font-sans">{paciente.email}</span>
-                      </p>
+                      <p><strong className="text-gray-600 text-lg font-semibold">Nome:</strong> {paciente.name} {paciente.surname}</p>
+                      <p><strong className="text-gray-600 text-lg font-semibold">CPF:</strong> {paciente.cpf}</p>
+                      <p><strong className="text-gray-600 text-lg font-semibold">Gênero:</strong> {paciente.gender}</p>
+                      <p><strong className="text-gray-600 text-lg font-semibold">Data de Nascimento:</strong> {paciente.birthDate}</p>
+                      <p><strong className="text-gray-600 text-lg font-semibold">Telefone:</strong> {paciente.phoneNumber}</p>
+                      <p><strong className="text-gray-600 text-lg font-semibold">Email:</strong> {paciente.email}</p>
                     </div>
-
-                </div>
-              )}
-
+                  </div>
+                )}
+                
               <div className="bg-gray-100 shadow-lg rounded-lg p-6">
                 <h2 className="text-2xl font-semibold text-gray-700 mb-4">Informações Adicionais</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <p><strong>Profissão:</strong> {prontuario.profession}</p>
-                  <p><strong>Alergias:</strong> {prontuario.allergies}</p>
-                  <p><strong>Estado Civil:</strong> {prontuario.maritalStatus}</p>
-                  <p><strong>Altura:</strong> {prontuario.height} cm</p>
-                  <p><strong>Peso:</strong> {prontuario.weight} kg</p>
-                  <p><strong>Medicamentos em Uso:</strong> {prontuario.medicationsInUse.join(", ")}</p>
-                  <p><strong>Diagnósticos:</strong> {prontuario.diagnosis.join(", ")}</p>
-                  <p><strong>Data de Criação:</strong> {prontuario.createdAt}</p>
-                  <p><strong>Última Atualização:</strong> {prontuario.updatedAt}</p>
+                  <p><strong className="text-gray-600 text-lg font-semibold">Profissão:</strong> {prontuario.profession}</p>
+                  <p><strong className="text-gray-600 text-lg font-semibold">Alergias:</strong> {prontuario.allergies}</p>
+                  <p><strong className="text-gray-600 text-lg font-semibold">Estado Civil:</strong> {prontuario.maritalStatus}</p>
+                  <p><strong className="text-gray-600 text-lg font-semibold">Altura:</strong> {prontuario.height} cm</p>
+                  <p><strong className="text-gray-600 text-lg font-semibold">Peso:</strong> {prontuario.weight} kg</p>
+                  <p><strong className="text-gray-600 text-lg font-semibold">Medicamentos em Uso:</strong> {prontuario.medicationsInUse.join(", ")}</p>
+                  <p><strong className="text-gray-600 text-lg font-semibold">Diagnósticos:</strong> {prontuario.diagnosis.join(", ")}</p>
+                  <p><strong className="text-gray-600 text-lg font-semibold">Data de Criação:</strong> {prontuario.createdAt}</p>
+                  <p><strong className="text-gray-600 text-lg font-semibold">Última Atualização:</strong> {prontuario.updatedAt}</p>
                 </div>
               </div>
             </>

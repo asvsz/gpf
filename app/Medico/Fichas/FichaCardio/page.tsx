@@ -130,7 +130,7 @@ export default function ViewCardioRecord() {
         <PrivateRoute requiredUserType='clinician'>
             <div className="flex flex-col min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
                 <NavbarDoctor />
-                <h2 className="font-bold text-4xl text-gray-700 pt-8">Visualizar Registro Cardiofuncional</h2>
+                <h2 className="font-bold text-4xl text-gray-700 pt-8">Visualizar Registro Cardiorespiratório</h2>
 
                 {error && <div className="text-red-500 mb-4">{error}</div>}
 
@@ -196,16 +196,29 @@ export default function ViewCardioRecord() {
                             <p className='flex gap-2'><h3 className='font-semibold'>Primeira Medição do Fluxo de Pico: </h3>{record.pneumofunctionalAssessment.peakFlow.firstMeasurement}</p>
                             <p className='flex gap-2'><h3 className='font-semibold'>Segunda Medição do Fluxo de Pico: </h3>{record.pneumofunctionalAssessment.peakFlow.secondMeasurement}</p>
                             <p className='flex gap-2'><h3 className='font-semibold'>Terceira Medição do Fluxo de Pico: </h3>{record.pneumofunctionalAssessment.peakFlow.thirdMeasurement}</p>
+                            <h3 className="text-lg block text-gray-700 font-medium pb-6">Manovacuometria:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Terceira Medição do Fluxo de Pemax: </h3>{record.pneumofunctionalAssessment.manovacuometry.pemax.firstMeasurement}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Terceira Medição do Fluxo de Pemax: </h3>{record.pneumofunctionalAssessment.manovacuometry.pemax.secondMeasurement}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Terceira Medição do Fluxo de Pemax: </h3>{record.pneumofunctionalAssessment.manovacuometry.pemax.secondMeasurement}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Terceira Medição do Fluxo de Pimax: </h3>{record.pneumofunctionalAssessment.manovacuometry.pimax.firstMeasurement}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Terceira Medição do Fluxo de Pimax: </h3>{record.pneumofunctionalAssessment.manovacuometry.pimax.secondMeasurement}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Terceira Medição do Fluxo de Pimax: </h3>{record.pneumofunctionalAssessment.manovacuometry.pimax.thirdMeasurement}</p>
                         </div>
 
                         <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
                             <h3 className="text-2xl block text-gray-700 font-medium pb-6">Avaliação Cardiofuncional:</h3>
-                            <p className='flex gap-2'><h3 className='font-semibold'>IMC: </h3>{record.cardiofunctionalAssessment.bmi}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>IBM: </h3>{record.cardiofunctionalAssessment.bmi}</p>
                             <p className='flex gap-2'><h3 className='font-semibold'>Perímetro Abdominal: </h3>{record.cardiofunctionalAssessment.abdominalPerimeter}</p>
                             <p className='flex gap-2'><h3 className='font-semibold'>Relação Cintura-Quadril: </h3>{record.cardiofunctionalAssessment.waistHipRatio}</p>
                             <p className='flex gap-2'><h3 className='font-semibold'>Gordura Corporal: </h3>{record.cardiofunctionalAssessment.bioimpedance.bodyFat}</p>
                             <p className='flex gap-2'><h3 className='font-semibold'>Gordura Visceral: </h3>{record.cardiofunctionalAssessment.bioimpedance.visceralFat}</p>
                             <p className='flex gap-2'><h3 className='font-semibold'>Porcentagem de Massa Muscular: </h3>{record.cardiofunctionalAssessment.bioimpedance.muscleMassPercentage}</p>
+                            <h3 className="text-lg block text-gray-700 font-medium pb-6">Medidas de Pregas Cutâneas:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Bicipital: </h3>{record.cardiofunctionalAssessment.adipometry.skinfoldMeasurements.bicipital}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Tricipital: </h3>{record.cardiofunctionalAssessment.adipometry.skinfoldMeasurements.tricipital}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Subescapular: </h3>{record.cardiofunctionalAssessment.adipometry.skinfoldMeasurements.subscapular}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Abdominal: </h3>{record.cardiofunctionalAssessment.adipometry.skinfoldMeasurements.abdominal}</p>
+
                         </div>
                         <div className="flex w-full items-baseline justify-end gap-4 mt-4 pr-8">
                             <ButtonOne

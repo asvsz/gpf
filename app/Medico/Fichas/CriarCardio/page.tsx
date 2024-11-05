@@ -253,7 +253,7 @@ const CriarCardio = () => {
         <div className="flex flex-col min-h-screen p-8 pb-20 sm:p-20 font-[var(--font-geist-sans)]">
             <NavbarDoctor />
             <div className="flex flex-col gap-8">
-                <h1 className='font-bold text-4xl text-gray-700 pt-8'>Criar Ficha Cardiorrespiratória</h1>
+                <h1 className='font-bold text-4xl text-gray-700 pt-8'>Criar Ficha Cardiorespiratória</h1>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
 
                 <div>
@@ -595,6 +595,144 @@ const CriarCardio = () => {
                                         peakFlow: {
                                             ...pneumofunctionalAssessment.peakFlow,
                                             firstMeasurement: parseInt(e.target.value)
+                                        }
+                                    })}
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Pico de Fluxo - Segunda Medição:
+                                <input
+                                    type="number"
+                                    value={pneumofunctionalAssessment.peakFlow.secondMeasurement}
+                                    onChange={(e) => setPneumofunctionalAssessment({
+                                        ...pneumofunctionalAssessment,
+                                        peakFlow: {
+                                            ...pneumofunctionalAssessment.peakFlow,
+                                            secondMeasurement: parseInt(e.target.value)
+                                        }
+                                    })}
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Pico de Fluxo - Terceira Medição:
+                                <input
+                                    type="number"
+                                    value={pneumofunctionalAssessment.peakFlow.thirdMeasurement}
+                                    onChange={(e) => setPneumofunctionalAssessment({
+                                        ...pneumofunctionalAssessment,
+                                        peakFlow: {
+                                            ...pneumofunctionalAssessment.peakFlow,
+                                            thirdMeasurement: parseInt(e.target.value)
+                                        }
+                                    })}
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Manovacuometria (Pemax) - Primeira Medição:
+                                <input
+                                    type="number"
+                                    value={pneumofunctionalAssessment.manovacuometry.pemax.firstMeasurement}
+                                    onChange={(e) => setPneumofunctionalAssessment({
+                                        ...pneumofunctionalAssessment,
+                                        manovacuometry: {
+                                            ...pneumofunctionalAssessment.manovacuometry,
+                                            pemax: {
+                                                ...pneumofunctionalAssessment.manovacuometry.pemax,
+                                                firstMeasurement: parseInt(e.target.value)
+                                            } 
+                                        }
+                                    })}
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Manovacuometria (Pemax) - Segunda Medição:
+                                <input
+                                    type="number"
+                                    value={pneumofunctionalAssessment.manovacuometry.pemax.secondMeasurement}
+                                    onChange={(e) => setPneumofunctionalAssessment({
+                                        ...pneumofunctionalAssessment,
+                                        manovacuometry: {
+                                            ...pneumofunctionalAssessment.manovacuometry,
+                                            pemax: {
+                                                ...pneumofunctionalAssessment.manovacuometry.pemax,
+                                                secondMeasurement: parseInt(e.target.value)
+                                            } 
+                                        }
+                                    })}
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Manovacuometria (Pemax) - Terceira Medição:
+                                <input
+                                    type="number"
+                                    value={pneumofunctionalAssessment.manovacuometry.pemax.thirdMeasurement}
+                                    onChange={(e) => setPneumofunctionalAssessment({
+                                        ...pneumofunctionalAssessment,
+                                        manovacuometry: {
+                                            ...pneumofunctionalAssessment.manovacuometry,
+                                            pemax: {
+                                                ...pneumofunctionalAssessment.manovacuometry.pemax,
+                                                thirdMeasurement: parseInt(e.target.value)
+                                            } 
+                                        }
+                                    })}
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Manovacuometria (Pimax) - Primeira Medição:
+                                <input
+                                    type="number"
+                                    value={pneumofunctionalAssessment.manovacuometry.pimax.firstMeasurement}
+                                    onChange={(e) => setPneumofunctionalAssessment({
+                                        ...pneumofunctionalAssessment,
+                                        manovacuometry: {
+                                            ...pneumofunctionalAssessment.manovacuometry,
+                                            pimax: {
+                                                ...pneumofunctionalAssessment.manovacuometry.pimax,
+                                                firstMeasurement: parseInt(e.target.value)
+                                            } 
+                                        }
+                                    })}
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Manovacuometria (Pimax) - Segunda Medição:
+                                <input
+                                    type="number"
+                                    value={pneumofunctionalAssessment.manovacuometry.pimax.secondMeasurement}
+                                    onChange={(e) => setPneumofunctionalAssessment({
+                                        ...pneumofunctionalAssessment,
+                                        manovacuometry: {
+                                            ...pneumofunctionalAssessment.manovacuometry,
+                                            pimax: {
+                                                ...pneumofunctionalAssessment.manovacuometry.pimax,
+                                                secondMeasurement: parseInt(e.target.value)
+                                            } 
+                                        }
+                                    })}
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Manovacuometria (Pimax) - Terceira Medição:
+                                <input
+                                    type="number"
+                                    value={pneumofunctionalAssessment.manovacuometry.pimax.thirdMeasurement}
+                                    onChange={(e) => setPneumofunctionalAssessment({
+                                        ...pneumofunctionalAssessment,
+                                        manovacuometry: {
+                                            ...pneumofunctionalAssessment.manovacuometry,
+                                            pimax: {
+                                                ...pneumofunctionalAssessment.manovacuometry.pimax,
+                                                thirdMeasurement: parseInt(e.target.value)
+                                            } 
                                         }
                                     })}
                                     className="border rounded w-full py-2 px-3 mt-1"

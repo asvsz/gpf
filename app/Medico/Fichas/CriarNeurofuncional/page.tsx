@@ -357,33 +357,54 @@ const CriarNeurofuncional = () => {
                             ))}
 
 
-                            {/* Sensory Assessment */}
-                            <h3 className='text-xl block text-gray-700 font-medium pb-6'>Avaliação Sensorial</h3>
-                            <label className="block mb-2 text-gray-700 font-medium">
-                                Superficial:
-                                <select
-                                    value={sensoryAssessment.superficial}
-                                    onChange={(e) => setSensoryAssessment({
-                                        ...sensoryAssessment,
-                                        superficial: e.target.value
-                                    })}
-                                    className="border rounded w-full py-2 px-3 mt-1"
-                                >
-                                    <option value="Tactile">Tátil</option>
-                                    <option value="Pain">Dor</option>
-                                </select>
+                            <label className="text-gray-700 font-medium">
+                                Combinação de Sensações
                             </label>
-                            <label className="block mb-2 text-gray-700 font-medium">
-                                Profundo:
-                                <select
-                                    value={sensoryAssessment.deep}
-                                    onChange={(e) => setSensoryAssessment({ ...sensoryAssessment, deep: e.target.value })}
-                                    className="border rounded w-full py-2 px-3 mt-1"
-                                >
-                                    <option value="PositionSense">Sentido de Posição</option>
-                                    <option value="Vibration">Vibração</option>
-                                </select>
-                            </label>
+                            <div className="flex gap-6">
+                                <label className="flex gap-2 text-base font-normal text-gray-700 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={sensoryAssessment.combinedSensations.graphesthesia}
+                                        onChange={(e) => setSensoryAssessment(prev => ({
+                                            ...prev,
+                                            combinedSensations: {
+                                                ...prev.combinedSensations,
+                                                graphesthesia: e.target.checked
+                                            }
+                                        }))}
+                                    />
+                                    Grafestesia
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={sensoryAssessment.combinedSensations.barognosis}
+                                        onChange={(e) => setSensoryAssessment(prev => ({
+                                            ...prev,
+                                            combinedSensations: {
+                                                ...prev.combinedSensations,
+                                                barognosis: e.target.checked
+                                            }
+                                        }))}
+                                    />
+                                    Barognose
+                                </label>
+                                <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={sensoryAssessment.combinedSensations.stereognosis}
+                                        onChange={(e) => setSensoryAssessment(prev => ({
+                                            ...prev,
+                                            combinedSensations: {
+                                                ...prev.combinedSensations,
+                                                stereognosis: e.target.checked
+                                            }
+                                        }))}
+                                    />
+                                    Estereognosia
+                                </label>
+                            </div>
+
 
                             {/* Patient Mobility */}
                             <h3 className='text-xl block text-gray-700 font-medium pb-6'>Avaliação de Mobilidade do Paciente</h3>

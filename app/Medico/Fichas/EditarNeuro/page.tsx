@@ -407,7 +407,7 @@ export default function EditNeurofunctionalRecord() {
                                             physicalInspection: { ...record.physicalInspection, usesWalker: e.target.checked }
                                         })}
                                     />
-                                    Usa Walker
+                                    Usa Andador
                                 </label>
                                 <label className="flex gap-2 text-base font-normal text-gray-800">
                                     <input

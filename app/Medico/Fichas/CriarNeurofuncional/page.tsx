@@ -230,7 +230,7 @@ const CriarNeurofuncional = () => {
 
                         {/* Form Fields */}
                         <div className='mt-6'>
-                            <h3 className='text-xl font-semibold'>Dados da Ficha Neurofuncional</h3>
+                            <h3 className='text-2xl block text-gray-700 font-medium pb-6'>Dados da Ficha Neurofuncional</h3>
 
                             <div className="text-xl block text-gray-700 font-medium pb-6">
                                 <label className="text-xl block text-gray-700 font-medium pb-6">Diagnóstico Médico:</label>                                <textarea

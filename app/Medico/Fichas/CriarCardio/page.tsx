@@ -251,71 +251,72 @@ const CriarCardio = () => {
 
     return (
         <div className="flex flex-col min-h-screen p-8 pb-20 sm:p-20 font-[var(--font-geist-sans)]">
-            <NavbarDoctor/>
+            <NavbarDoctor />
             <div className="flex flex-col gap-8">
-                <h1 className='text-3xl font-bold mb-4'>Criar Ficha Cardiorrespiratória</h1>
-                {error && <p style={{color: 'red'}}>{error}</p>}
+                <h1 className='font-bold text-4xl text-gray-700 pt-8'>Criar Ficha Cardiorrespiratória</h1>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
 
                 <div>
-                    <label className="block mb-2">
-                        CPF do Paciente:
+                    <div className="block mb-2">
+                        <label className="flex flex-col text-lg text-gray-700 font-medium">CPF do Paciente:</label>
                         <input
                             type="text"
                             value={cpf}
                             onChange={(e) => setCpf(e.target.value)}
                             placeholder="Digite o CPF do paciente"
-                            className="border rounded w-full py-2 px-3 mt-1"
+                            className="border rounded py-2 px-3 mt-1"
                         />
-                    </label>
-                    <ButtonOne texto={'Buscar Paciente'} onClick={handleCpfSubmit}/>
+                    </div>
+                    <ButtonOne texto={'Buscar Paciente'} onClick={handleCpfSubmit} />
                 </div>
 
                 {paciente && (
-                    <div className="border p-4 rounded bg-gray-100">
-                        <h2 className='text-2xl'>Dados do Paciente</h2>
-                        <p>Nome: {paciente.name} {paciente.surname}</p>
-                        <p>CPF: {paciente.cpf}</p>
+                    <div className="flex flex-col border p-4 rounded bg-gray-100 gap-4">
+                        <h2 className='text-2xl block text-gray-700 font-medium pb-6'>Dados do Paciente</h2>
+                        <p className='text-lg text-gray-700 font-medium'>Nome: {paciente.name} {paciente.surname}</p>
+                        <p className='text-lg text-gray-700 font-medium'>CPF: {paciente.cpf}</p>
 
                         <div className='mt-6'>
-                            <h3 className='text-xl font-semibold'>Dados da Ficha Cardiorrespiratória</h3>
+                            <h3 className='text-2xl block text-gray-700 font-medium pb-6'>Dados da Ficha Cardiorrespiratória</h3>
 
                             {/* Diagnóstico Médico */}
-                            <label className="block mb-2">
-                                Diagnóstico Médico:
-                                <input
-                                    type="text"
+                            <div className="block mb-2">
+                                <label className="text-xl block text-gray-700 font-medium pb-6">Diagnóstico Médico:</label>
+                                <textarea
                                     value={medicalDiagnosis}
                                     onChange={(e) => setMedicalDiagnosis(e.target.value)}
                                     placeholder="Digite o diagnóstico médico"
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
-                            </label>
+                            </div>
 
                             {/* Anamnese */}
-                            <label className="block mb-2">
-                                Anamnese:
+                            <div className="block mb-2">
+                                <label className="text-xl block text-gray-700 font-medium pb-6">Anamnese:</label>
                                 <textarea
                                     value={anamnesis}
                                     onChange={(e) => setAnamnesis(e.target.value)}
                                     placeholder="História da doença e outras informações."
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
-                            </label>
+                            </div>
 
                             {/* Exame Físico */}
-                            <label className="block mb-2">
-                                Exame Físico:
+                            <div className="block mb-2">
+                                <label className="text-xl block text-gray-700 font-medium pb-6">
+                                    Exame Físico:
+                                </label>
                                 <textarea
                                     value={physicalExamination}
                                     onChange={(e) => setPhysicalExamination(e.target.value)}
                                     placeholder="Estado físico do paciente."
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
-                            </label>
+                            </div>
 
                             {/* Triagem */}
-                            <label className="block mb-2">
-                                Triagem:
+                            <div className="block mb-2">
+                                <label className="text-xl block text-gray-700 font-medium pb-6">Triagem:</label>
                                 <select
                                     value={triage}
                                     onChange={(e) => setTriage(e.target.value)}
@@ -326,12 +327,12 @@ const CriarCardio = () => {
                                     <option value="yellow">Amarelo</option>
                                     <option value="red">Vermelho</option>
                                 </select>
-                            </label>
+                            </div>
 
                             {/* Hábitos de Vida */}
-                            <h4 className='font-semibold'>Hábitos de Vida</h4>
+                            <h4 className='text-xl block text-gray-700 font-medium pb-6'>Hábitos de Vida</h4>
                             {Object.keys(lifestyleHabits).map((habit) => (
-                                <label key={habit} className="block mb-2">
+                                <label key={habit} className="flex gap-2 items-center mb-2 text-gray-700 font-medium">
                                     <input
                                         type="checkbox"
                                         checked={lifestyleHabits[habit as keyof LifestyleHabits]} // Use o tipo de índice
@@ -345,10 +346,10 @@ const CriarCardio = () => {
                             ))}
 
                             {/* Inspeção Física */}
-                            <h4 className='font-semibold'>Inspeção Física</h4>
+                            <h4 className='text-xl block text-gray-700 font-medium pb-6'>Inspeção Física</h4>
 
                             {/* Palpação dos seios da face dolorosa */}
-                            <label className="block mb-2">
+                            <label className="flex gap-2 items-center mb-2 text-gray-700 font-medium">
                                 <input
                                     type="checkbox"
                                     checked={physicalInspection.isFaceSinusPalpationHurtful}
@@ -362,7 +363,10 @@ const CriarCardio = () => {
 
                             {/* Secreção Nasal */}
                             <label className="block mb-2">
-                                Tipo de Secreção Nasal:
+                                <label className=" block mb-2 text-gray-700 font-medium">
+                                    Tipo de Secreção Nasal:
+                                </label>
+
                                 <select
                                     value={physicalInspection.nasalSecretion.type}
                                     onChange={(e) => setPhysicalInspection({
@@ -380,7 +384,7 @@ const CriarCardio = () => {
                                 </select>
                             </label>
 
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Secreção Nasal é Fetida:
                                 <input
                                     type="checkbox"
@@ -395,7 +399,7 @@ const CriarCardio = () => {
                                 />
                             </label>
 
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Quantidade de Secreção Nasal:
                                 <select
                                     value={physicalInspection.nasalSecretion.quantity}
@@ -416,7 +420,7 @@ const CriarCardio = () => {
                             </label>
 
                             {/* Coceira Nasal */}
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Coceira Nasal:
                                 <select
                                     value={physicalInspection.nasalItching}
@@ -433,7 +437,7 @@ const CriarCardio = () => {
                             </label>
 
                             {/* Espirros */}
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Espirros:
                                 <select
                                     value={physicalInspection.sneezing}
@@ -450,7 +454,7 @@ const CriarCardio = () => {
                             </label>
 
                             {/* Tipo de Tórax */}
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Tipo de Tórax:
                                 <select
                                     value={physicalInspection.chestType}
@@ -468,7 +472,7 @@ const CriarCardio = () => {
                             </label>
 
                             {/* Sinais Respiratórios ou Cardíacos */}
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Sinais Respiratórios ou Cardíacos:
                                 <select
                                     value={physicalInspection.respiratoryOrCardiacSigns}
@@ -487,10 +491,10 @@ const CriarCardio = () => {
                             {/* Outros campos de Inspeção Física, Secreção Nasal etc. */}
 
                             {/* Sinais Vitais */}
-                            <h4 className='font-semibold'>Sinais Vitais</h4>
+                            <h4 className='text-xl block text-gray-700 font-medium pb-6'>Sinais Vitais</h4>
 
                             {/* Frequência Cardíaca */}
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Frequência Cardíaca:
                                 <input
                                     type="number"
@@ -504,7 +508,7 @@ const CriarCardio = () => {
                             </label>
 
                             {/* Taxa Respiratória */}
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Taxa Respiratória:
                                 <input
                                     type="number"
@@ -518,8 +522,8 @@ const CriarCardio = () => {
                             </label>
 
                             {/* Pressão Arterial */}
-                            <h5 className='font-semibold mt-4'>Pressão Arterial</h5>
-                            <label className="block mb-2">
+                            <h5 className='text-xl block text-gray-700 font-medium pb-6'>Pressão Arterial</h5>
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Sistólica:
                                 <input
                                     type="number"
@@ -534,7 +538,7 @@ const CriarCardio = () => {
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
                             </label>
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Diastólica:
                                 <input
                                     type="number"
@@ -551,7 +555,7 @@ const CriarCardio = () => {
                             </label>
 
                             {/* Temperatura */}
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Temperatura:
                                 <input
                                     type="number"
@@ -565,7 +569,7 @@ const CriarCardio = () => {
                             </label>
 
                             {/* Saturação de Oxigênio */}
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Saturação de Oxigênio:
                                 <input
                                     type="number"
@@ -580,8 +584,8 @@ const CriarCardio = () => {
 
 
                             {/* Avaliação Pneumofuncional */}
-                            <h4 className='font-semibold'>Avaliação Pneumofuncional</h4>
-                            <label className="block mb-2">
+                            <h4 className='text-xl block text-gray-700 font-medium pb-6'>Avaliação Pneumofuncional</h4>
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Pico de Fluxo - Primeira Medição:
                                 <input
                                     type="number"
@@ -598,10 +602,10 @@ const CriarCardio = () => {
                             </label>
 
                             {/* Avaliação Cardiofuncional */}
-                            <h4 className='font-semibold'>Avaliação Cardiofuncional</h4>
+                            <h4 className='text-xl block text-gray-700 font-medium pb-6'>Avaliação Cardiofuncional</h4>
 
                             {/* IMC */}
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 IMC:
                                 <input
                                     type="number"
@@ -615,7 +619,7 @@ const CriarCardio = () => {
                             </label>
 
                             {/* Perímetro Abdominal */}
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Perímetro Abdominal:
                                 <input
                                     type="number"
@@ -629,7 +633,7 @@ const CriarCardio = () => {
                             </label>
 
                             {/* Relação Cintura-Quadril */}
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Relação Cintura-Quadril:
                                 <input
                                     type="number"
@@ -643,8 +647,8 @@ const CriarCardio = () => {
                             </label>
 
                             {/* Bioimpedância */}
-                            <h5 className='font-semibold'>Bioimpedância</h5>
-                            <label className="block mb-2">
+                            <h5 className='text-xl block text-gray-700 font-medium pb-6'>Bioimpedância</h5>
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Gordura Corporal:
                                 <input
                                     type="number"
@@ -660,7 +664,7 @@ const CriarCardio = () => {
                                 />
                             </label>
 
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Gordura Visceral:
                                 <input
                                     type="number"
@@ -676,7 +680,7 @@ const CriarCardio = () => {
                                 />
                             </label>
 
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Percentagem de Massa Muscular:
                                 <input
                                     type="number"
@@ -693,8 +697,8 @@ const CriarCardio = () => {
                             </label>
 
                             {/* Adipometria */}
-                            <h5 className='font-semibold'>Adipometria</h5>
-                            <label className="block mb-2">
+                            <h5 className='text-xl block text-gray-700 font-medium pb-6'>Adipometria</h5>
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Medidas de Pregas Cutâneas - Bicipital:
                                 <input
                                     type="number"
@@ -713,7 +717,7 @@ const CriarCardio = () => {
                                 />
                             </label>
 
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Medidas de Pregas Cutâneas - Tricipital:
                                 <input
                                     type="number"
@@ -732,7 +736,7 @@ const CriarCardio = () => {
                                 />
                             </label>
 
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Medidas de Pregas Cutâneas - Subescapular:
                                 <input
                                     type="number"
@@ -751,7 +755,7 @@ const CriarCardio = () => {
                                 />
                             </label>
 
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Medidas de Pregas Cutâneas - Abdominal:
                                 <input
                                     type="number"
@@ -769,13 +773,14 @@ const CriarCardio = () => {
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
                             </label>
-
-                            <ButtonOne texto="Criar Ficha Cardiorrespiratória" onClick={handleCreateFicha}/>
+                            <div className="flex w-full items-baseline justify-end gap-4 mt-4 pr-8">
+                                <ButtonOne texto="Criar Ficha Cardiorrespiratória" onClick={handleCreateFicha} />
+                            </div>
                         </div>
                     </div>
                 )}
             </div>
-            <Footer/>
+            <Footer />
         </div>
 
     );

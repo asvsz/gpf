@@ -161,34 +161,72 @@ export default function ViewNeurofunctionalRecord() {
                             <h3 className="text-2xl block text-gray-700 font-medium pb-6">Hábitos de Vida:</h3>
                             <p className='flex gap-2'><h3 className='font-semibold'>Consome Álcool:</h3> {record.lifestyleHabits.alcoholConsumption ? 'Sim' : 'Não'}</p>
                             <p className='flex gap-2'><h3 className='font-semibold'>Fumante:</h3> {record.lifestyleHabits.smoker ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Obesidade:</h3> {record.lifestyleHabits.obesity ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Diabetes:</h3> {record.lifestyleHabits.diabetes ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Usuário de Drogas:</h3> {record.lifestyleHabits.drugUser ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Atividades Fisícas:</h3> {record.lifestyleHabits.physicalActivity ? 'Sim' : 'Não'}</p>
                         </div>
 
                         <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
                             <h3 className="text-2xl block text-gray-700 font-medium pb-6">Sinais Vitais:</h3>
                             <p className='flex gap-2'><h3 className='font-semibold'>Pressão Arterial: </h3>{record.vitalSigns.bloodPressure}</p>
                             <p className='flex gap-2'><h3 className='font-semibold'>Frequência Cardíaca:</h3> {record.vitalSigns.heartRate}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Frequência Respiratória:</h3> {record.vitalSigns.respiratoryRate}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Saturação do Oxigênio:</h3> {record.vitalSigns.oxygenSaturation}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Temperatura Corporal:</h3> {record.vitalSigns.bodyTemperature}</p>
                         </div>
 
                         <div className="bg-gray-100 shadow-lg rounded-lg p-6">
                             <h3 className="text-2xl block text-gray-700 font-medium pb-6">Inspeção Física:</h3>
                             <p className='flex gap-2'><h3 className='font-semibold'>Mobilidade Independente:</h3> {record.physicalInspection.independentMobility ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Usa Moletas:</h3> {record.physicalInspection.usesCrutches ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Usa Andador:</h3> {record.physicalInspection.usesWalker ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Usa Cadeira de Rodas:</h3> {record.physicalInspection.wheelchairUser ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Tem Cicatriz:</h3> {record.physicalInspection.hasScar ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Tem Escara:</h3> {record.physicalInspection.hasBedsore ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Cooperativo:</h3> {record.physicalInspection.cooperative ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Não Cooperativo:</h3> {record.physicalInspection.nonCooperative ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Hidratado:</h3> {record.physicalInspection.hydrated ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Tem Hematoma:</h3> {record.physicalInspection.hasHematoma ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Tem Edema:</h3> {record.physicalInspection.hasEdema ? 'Sim' : 'Não'}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Tem Deformidade:</h3> {record.physicalInspection.hasDeformity ? 'Sim' : 'Não'}</p>
                         </div>
 
                         <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
                             <h3 className="text-2xl block text-gray-700 font-medium pb-6">Avaliação Sensória:</h3>
                             <p className='flex gap-2'><h3 className='font-semibold'>Superficial:</h3> {record.sensoryAssessment.superficial}</p>
                             <p className='flex gap-2'><h3 className='font-semibold'>Profunda:</h3> {record.sensoryAssessment.deep}</p>
+                            <h3 className="text-lg block text-gray-700 font-medium pb-6">Combinação de Sensações:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Grafestesia:</h3> {record.sensoryAssessment.combinedSensations.graphesthesia}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Barognose:</h3> {record.sensoryAssessment.combinedSensations.barognosis}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Estereognose:</h3> {record.sensoryAssessment.combinedSensations.stereognosis}</p>
                         </div>
 
                         <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
                             <h3 className="text-2xl block text-gray-700 font-medium pb-6">Mobilidade do Paciente:</h3>
                             <p className='flex gap-2'><h3 className='font-semibold'>Tempo de Caminhada de 3 Metros:</h3> {record.patientMobility.threeMeterWalkTimeInSeconds} s</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Tem Risco de Queda:</h3> {record.patientMobility.hasFallRisk} s</p>
+                            <h3 className="text-lg block text-gray-700 font-medium pb-6">Mudanças de Postura:</h3>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Ponte:</h3> {record.patientMobility.postureChanges.bridge} s</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Rolar para Direita:</h3> {record.patientMobility.postureChanges.semiRollRight} s</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Rolar para Esquerda:</h3> {record.patientMobility.postureChanges.semiRollLeft} s</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Rolar Completo:</h3> {record.patientMobility.postureChanges.fullRoll} s</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Arrastar:</h3> {record.patientMobility.postureChanges.drag} s</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Prono para Apoio de Antebraço:</h3> {record.patientMobility.postureChanges.proneToForearmSupport} s</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Apoio de Antebraço para Quatro Apoios:</h3> {record.patientMobility.postureChanges.forearmSupportToAllFours} s</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Quatro Apoios:</h3> {record.patientMobility.postureChanges.allFours} s</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Quatro Apoios To Kneeling::</h3> {record.patientMobility.postureChanges.allFoursToKneeling} s</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Ajoelhar para Meio Ajoelhar Direito:</h3> {record.patientMobility.postureChanges.kneelingToHalfKneelingRight} s</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Ajoelhar para Meio Ajoelhar Esquerdo:</h3> {record.patientMobility.postureChanges.kneelingToHalfKneelingLeft} s</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Meio Ajoelhar Direito para Ficar em Pé:</h3> {record.patientMobility.postureChanges.halfKneelingRightToStanding} s</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Meio Ajoelhar Esquerdo para Ficar em Pé:</h3> {record.patientMobility.postureChanges.halfKneelingLeftToStanding} s</p>
                         </div>
 
                         <div className="flex flex-col gap-4 bg-gray-100 shadow-lg rounded-lg p-6">
                             <h3 className="text-2xl block text-gray-700 font-medium pb-6">Avaliação Fisioterapêutica:</h3>
                             <p className='flex gap-2'><h3 className='font-semibold'>Diagnóstico:</h3> {record.physiotherapyAssessment.diagnosis}</p>
                             <p className='flex gap-2'><h3 className='font-semibold'>Objetivos do Tratamento: </h3>{record.physiotherapyAssessment.treatmentGoals}</p>
+                            <p className='flex gap-2'><h3 className='font-semibold'>Conduta Fisioterapêutica: </h3>{record.physiotherapyAssessment.physiotherapeuticConduct}</p>
                         </div>
                         <div className="flex w-full items-baseline justify-end gap-4 mt-4 pr-8">
                             <ButtonOne

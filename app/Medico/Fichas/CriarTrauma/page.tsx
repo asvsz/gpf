@@ -161,8 +161,8 @@ const CriarTrauma = () => {
                 {error && <p style={{color: 'red'}}>{error}</p>}
 
                 <div>
-                    <label className="flex flex-col text-lg text-gray-700 font-medium pb-6">
-                        CPF do Paciente:
+                    <div className="block mb-2">
+                        <label className="flex flex-col text-lg text-gray-700 font-medium">CPF do Paciente:</label>
                         <input
                             type="text"
                             value={cpf}
@@ -170,7 +170,7 @@ const CriarTrauma = () => {
                             placeholder="Digite o CPF do paciente"
                             className="border rounded py-2 px-3 mt-1"
                         />
-                    </label>
+                    </div>
                     <ButtonOne texto={'Buscar Paciente'} onClick={handleCpfSubmit}/>
                 </div>
 

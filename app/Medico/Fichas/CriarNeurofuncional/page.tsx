@@ -6,7 +6,7 @@ import { useClinicians } from '@/app/hooks/useFetchClinico'; // Importe o novo h
 import api from '@/app/services/api';
 import NavbarDoctor from "@/app/components/NavbarDoctor";
 import Footer from "@/app/components/Footer";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import ButtonOne from "@/app/components/ButtonOne";
 
 interface Paciente {
@@ -198,23 +198,23 @@ const CriarNeurofuncional = () => {
 
     return (
         <div className="flex flex-col min-h-screen p-8 pb-20 sm:p-20 font-[var(--font-geist-sans)]">
-            <NavbarDoctor/>
+            <NavbarDoctor />
             <div className="flex flex-col gap-8">
-                <h1 className='text-3xl font-bold mb-4'>Criar Ficha Neurofuncional</h1>
-                {error && <p style={{color: 'red'}}>{error}</p>}
+                <h1 className='font-bold text-4xl text-gray-700 pt-8'>Criar Ficha Neurofuncional</h1>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
 
                 {/* Input for Patient CPF */}
                 <div>
-                    <label className="block mb-2">
-                        CPF do Paciente:
+                    <div className="block mb-2">
+                        <label className="flex flex-col text-lg text-gray-700 font-medium">CPF do Paciente:</label>
                         <input
                             type="text"
                             value={cpf}
                             onChange={(e) => setCpf(e.target.value)}
                             placeholder="Digite o CPF do paciente"
-                            className="border rounded w-full py-2 px-3 mt-1"
+                            className="border rounded py-2 px-3 mt-1"
                         />
-                    </label>
+                    </div>
                     <ButtonOne
                         texto={'Buscar Paciente'}
                         onClick={handleCpfSubmit}
@@ -223,76 +223,58 @@ const CriarNeurofuncional = () => {
 
                 {/* Patient Details */}
                 {paciente && (
-                    <div className="border p-4 rounded bg-gray-100">
-                        <h2 className='text-2xl'>Dados do Paciente</h2>
-                        <p>Nome: {paciente.name} {paciente.surname}</p>
-                        <p>CPF: {paciente.cpf}</p>
-
-                        {registroMedico && (
-                            <div className="mt-4">
-                                <h3 className='text-xl'>Registro Médico Universal</h3>
-                                <p>Profissão: {registroMedico.profession}</p>
-                                <p>Email de Contato de Emergência: {registroMedico.emergencyContactEmail}</p>
-                                <p>Número de Contato de Emergência: {registroMedico.emergencyContactNumber}</p>
-                                <p>Estado Civil: {registroMedico.maritalStatus}</p>
-                                <p>Altura: {registroMedico.height} cm</p>
-                                <p>Peso: {registroMedico.weight} kg</p>
-                                <p>Alergias: {registroMedico.allergies.join(', ')}</p>
-                                <p>Medicamentos em Uso: {registroMedico.medicationsInUse.join(', ')}</p>
-                                <p>Diagnóstico: {registroMedico.diagnosis.join(', ')}</p>
-                            </div>
-                        )}
+                    <div className="flex flex-col border p-4 rounded bg-gray-100 gap-4">
+                        <h2 className='text-2xl block text-gray-700 font-medium pb-6'>Dados do Paciente</h2>
+                        <p className='text-lg text-gray-700 font-medium'>Nome: {paciente.name} {paciente.surname}</p>
+                        <p className='text-lg text-gray-700 font-medium '>CPF: {paciente.cpf}</p>
 
                         {/* Form Fields */}
                         <div className='mt-6'>
                             <h3 className='text-xl font-semibold'>Dados da Ficha Neurofuncional</h3>
 
-                            <label className="block mb-2">
-                                Diagnóstico Médico:
-                                <input
-                                    type="text"
+                            <div className="text-xl block text-gray-700 font-medium pb-6">
+                                <label className="text-xl block text-gray-700 font-medium pb-6">Diagnóstico Médico:</label>                                <textarea
                                     value={medicalDiagnosis}
                                     onChange={(e) => setMedicalDiagnosis(e.target.value)}
                                     placeholder="Digite o diagnóstico médico"
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
-                            </label>
+                            </div>
 
-                            <label className="block mb-2">
-                                Anamnese:
+                            <div className="block mb-2">
+                                <label className="text-xl block text-gray-700 font-medium pb-6">Anamnese:</label>
                                 <textarea
                                     value={anamnesis}
                                     onChange={(e) => setAnamnesis(e.target.value)}
                                     placeholder="Digite a anamnese"
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
-                            </label>
+                            </div>
 
-                            <label className="block mb-2">
-                                Exame Físico:
+                            <div className="block mb-2">
+                                <label className="text-xl block text-gray-700 font-medium pb-6">Exame Físico:</label>
                                 <textarea
                                     value={physicalExamination}
                                     onChange={(e) => setPhysicalExamination(e.target.value)}
                                     placeholder="Digite o exame físico"
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
-                            </label>
+                            </div>
 
-                            <label className="block mb-2">
-                                Triage:
-                                <input
-                                    type="text"
+                            <div className="block mb-2">
+                                <label className="text-xl block text-gray-700 font-medium pb-6">Triage:</label>
+                                <textarea
                                     value={triage}
                                     onChange={(e) => setTriage(e.target.value)}
                                     placeholder="Digite a triagem"
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
-                            </label>
+                            </div>
 
                             {/* Lifestyle Habits */}
-                            <h3 className='mt-4 text-lg font-semibold'>Hábitos de Vida</h3>
+                            <label className='text-xl block text-gray-700 font-medium pb-6'>Hábitos de Vida</label>
                             {Object.keys(lifestyleHabits).map((key) => (
-                                <label className="block mb-2" key={key}>
+                                <label className="flex gap-2 items-center mb-2 text-gray-700 font-medium" key={key}>
                                     <input
                                         type="checkbox"
                                         checked={lifestyleHabits[key as keyof typeof lifestyleHabits]}
@@ -303,15 +285,33 @@ const CriarNeurofuncional = () => {
                                             })
                                         }
                                     />
-                                    {key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}
+                                    {key
+                                        .replace(/([A-Z])/g, ' $1')
+                                        .replace(/^./, (str) => str.toUpperCase())
+                                        .replace("Alcohol Consumption", "Consumo de Álcool")
+                                        .replace("Smoker", "Fumante")
+                                        .replace("Obesity", "Obesidade")
+                                        .replace("Diabetes", "Diabetes")
+                                        .replace("Drug User", "Usuário de Drogas")
+                                        .replace("Physical Activity", "Atividade Física")
+                                    }
                                 </label>
                             ))}
 
-                            {/* Vital Signs */}
-                            <h3 className='mt-4 text-lg font-semibold'>Sinais Vitais</h3>
+
+                            {/* Sinais Vitais */}
+                            <label className='text-xl block text-gray-700 font-medium pb-6'>Sinais Vitais</label>
                             {Object.keys(vitalSigns).map((key) => (
-                                <label className="block mb-2" key={key}>
-                                    {key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}:
+                                <label className="block mb-2 text-gray-700 font-medium" key={key}>
+                                    {key
+                                        .replace(/([A-Z])/g, ' $1')
+                                        .replace(/^./, (str) => str.toUpperCase())
+                                        .replace("Blood Pressure", "Pressão Arterial")
+                                        .replace("Heart Rate", "Frequência Cardíaca")
+                                        .replace("Respiratory Rate", "Frequência Respiratória")
+                                        .replace("Oxygen Saturation", "Saturação de Oxigênio")
+                                        .replace("Body Temperature", "Temperatura Corporal")
+                                    }:
                                     <input
                                         type="number"
                                         value={vitalSigns[key as keyof typeof vitalSigns]}
@@ -327,9 +327,9 @@ const CriarNeurofuncional = () => {
                             ))}
 
                             {/* Physical Inspection */}
-                            <h3 className='mt-4 text-lg font-semibold'>Inspeção Física</h3>
+                            <h3 className='text-xl block text-gray-700 font-medium pb-6'>Inspeção Física</h3>
                             {Object.keys(physicalInspection).map((key) => (
-                                <label className="block mb-2" key={key}>
+                                <label className="flex gap-2 items-center mb-2 text-gray-700 font-medium" key={key}>
                                     <input
                                         type="checkbox"
                                         checked={physicalInspection[key as keyof typeof physicalInspection]}
@@ -340,13 +340,26 @@ const CriarNeurofuncional = () => {
                                             })
                                         }
                                     />
-                                    {key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}
+                                    {key
+                                        .replace('independentMobility', 'Mobilidade Independente')
+                                        .replace('usesCrutches', 'Usa Muletas')
+                                        .replace('usesWalker', 'Usa Andador')
+                                        .replace('wheelchairUser', 'Usuário de Cadeira de Rodas')
+                                        .replace('hasScar', 'Tem Cicatriz')
+                                        .replace('hasBedsore', 'Tem Úlcera de Pressão')
+                                        .replace('cooperative', 'Cooperativo')
+                                        .replace('nonCooperative', 'Não Cooperativo')
+                                        .replace('hydrated', 'Hidratado')
+                                        .replace('hasHematoma', 'Tem Hematoma')
+                                        .replace('hasEdema', 'Tem Edema')
+                                        .replace('hasDeformity', 'Tem Deformidade')}
                                 </label>
                             ))}
 
+
                             {/* Sensory Assessment */}
-                            <h3 className='mt-4 text-lg font-semibold'>Avaliação Sensorial</h3>
-                            <label className="block mb-2">
+                            <h3 className='text-xl block text-gray-700 font-medium pb-6'>Avaliação Sensorial</h3>
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Superficial:
                                 <select
                                     value={sensoryAssessment.superficial}
@@ -360,11 +373,11 @@ const CriarNeurofuncional = () => {
                                     <option value="Pain">Dor</option>
                                 </select>
                             </label>
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Profundo:
                                 <select
                                     value={sensoryAssessment.deep}
-                                    onChange={(e) => setSensoryAssessment({...sensoryAssessment, deep: e.target.value})}
+                                    onChange={(e) => setSensoryAssessment({ ...sensoryAssessment, deep: e.target.value })}
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 >
                                     <option value="PositionSense">Sentido de Posição</option>
@@ -373,8 +386,8 @@ const CriarNeurofuncional = () => {
                             </label>
 
                             {/* Patient Mobility */}
-                            <h3 className='mt-4 text-lg font-semibold'>Avaliação de Mobilidade do Paciente</h3>
-                            <label className="block mb-2">
+                            <h3 className='text-xl block text-gray-700 font-medium pb-6'>Avaliação de Mobilidade do Paciente</h3>
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Tempo de Caminhada de 3 Metros (segundos):
                                 <input
                                     type="number"
@@ -386,7 +399,7 @@ const CriarNeurofuncional = () => {
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
                             </label>
-                            <label className="block mb-2">
+                            <label className="flex gap-2 items-center text-gray-700 font-medium">
                                 Risco de Queda:
                                 <input
                                     type="checkbox"
@@ -397,13 +410,48 @@ const CriarNeurofuncional = () => {
                                     })}
                                 />
                             </label>
+                            <label className="flex text-lg py-4 items-center text-gray-700 font-medium">
+                                Mudanças de Postura
+                            </label>
+                            {Object.keys(patientMobility.postureChanges).map((key) => (
+                                <label key={key} className="flex flex-col mb-2 text-gray-700 font-medium">
+                                    {key
+                                        .replace(/([A-Z])/g, ' $1')
+                                        .replace(/^./, (str) => str.toUpperCase())
+                                        .replace('Bridge', 'Ponte')
+                                        .replace('Semi Roll Right', 'Rolar para Direita')
+                                        .replace('Semi Roll Left', 'Rolar para Esquerda')
+                                        .replace('Full Roll', 'Rolar Completo')
+                                        .replace('Drag', 'Arrastar')
+                                        .replace('Prone To Forearm Support', 'Prono para Apoio de Antebraço')
+                                        .replace('Forearm Support To All Fours', 'Apoio de Antebraço para Quatro Apoios')
+                                        .replace('All Fours', 'Quatro Apoios')
+                                        .replace('All Fours To Kneeling', 'Quatro Apoios para Ajoelhar')
+                                        .replace('Kneeling To Half Kneeling Right', 'Ajoelhar para Meio Ajoelhar Direito')
+                                        .replace('Kneeling To Half Kneeling Left', 'Ajoelhar para Meio Ajoelhar Esquerdo')
+                                        .replace('Half Kneeling Right To Standing', 'Meio Ajoelhar Direito para Ficar em Pé')
+                                        .replace('Half Kneeling Left To Standing', 'Meio Ajoelhar Esquerdo para Ficar em Pé')}
+                                    :
+                                    <input
+                                        type="text"
+                                        value={patientMobility.postureChanges[key as keyof typeof patientMobility.postureChanges]}
+                                        onChange={(e) => setPatientMobility({
+                                            ...patientMobility,
+                                            postureChanges: {
+                                                ...patientMobility.postureChanges,
+                                                [key]: e.target.value
+                                            }
+                                        })}
+                                        className="border rounded p-1 mt-1"
+                                    />
+                                </label>
+                            ))}
 
                             {/* Physiotherapy Assessment */}
-                            <h3 className='mt-4 text-lg font-semibold'>Avaliação Fisioterapêutica</h3>
-                            <label className="block mb-2">
+                            <h3 className='text-xl block text-gray-700 font-medium pb-6'>Avaliação Fisioterapêutica</h3>
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Diagnóstico:
-                                <input
-                                    type="text"
+                                <textarea
                                     value={physiotherapyAssessment.diagnosis}
                                     onChange={(e) => setPhysiotherapyAssessment({
                                         ...physiotherapyAssessment,
@@ -412,7 +460,7 @@ const CriarNeurofuncional = () => {
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
                             </label>
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Objetivos do Tratamento:
                                 <textarea
                                     value={physiotherapyAssessment.treatmentGoals}
@@ -423,7 +471,7 @@ const CriarNeurofuncional = () => {
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
                             </label>
-                            <label className="block mb-2">
+                            <label className="block mb-2 text-gray-700 font-medium">
                                 Conduta Fisioterapêutica:
                                 <textarea
                                     value={physiotherapyAssessment.physiotherapeuticConduct}
@@ -436,13 +484,15 @@ const CriarNeurofuncional = () => {
                             </label>
 
                             {/* Submit Button */}
-                            <ButtonOne texto="Criar Ficha Neurofuncional" onClick={handleCreateFicha}/>
+                            <div className="flex w-full items-baseline justify-end gap-4 mt-4 pr-8">
+                                <ButtonOne texto="Criar Ficha Neurofuncional" onClick={handleCreateFicha} />
+                            </div>
                         </div>
                     </div>
                 )}
             </div>
 
-            <Footer/>
+            <Footer />
         </div>
     );
 };

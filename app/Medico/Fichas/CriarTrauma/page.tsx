@@ -53,6 +53,8 @@ const CriarTrauma = () => {
         characteristic: '',
     });
 
+    const [specialOrthopedicTest, setSpecialOrthopedicTest] = useState('');
+
     useEffect(() => {
         const fetchPacientes = async () => {
             try {
@@ -151,145 +153,294 @@ const CriarTrauma = () => {
         }
     };
 
-
-
     return (
         <div className="flex flex-col min-h-screen p-8 pb-20 sm:p-20 font-[var(--font-geist-sans)]">
             <NavbarDoctor/>
             <div className="flex flex-col gap-8">
-                <h1 className='text-3xl font-bold mb-4'>Criar Ficha de Trauma</h1>
+                <h1 className='font-bold text-4xl text-gray-700 pt-8'>Criar Ficha de Trauma</h1>
                 {error && <p style={{color: 'red'}}>{error}</p>}
 
                 <div>
-                    <label className="block mb-2">
+                    <label className="flex flex-col text-lg text-gray-700 font-medium pb-6">
                         CPF do Paciente:
                         <input
                             type="text"
                             value={cpf}
                             onChange={(e) => setCpf(e.target.value)}
                             placeholder="Digite o CPF do paciente"
-                            className="border rounded w-full py-2 px-3 mt-1"
+                            className="border rounded py-2 px-3 mt-1"
                         />
                     </label>
                     <ButtonOne texto={'Buscar Paciente'} onClick={handleCpfSubmit}/>
                 </div>
 
                 {paciente && (
-                    <div className="border p-4 rounded bg-gray-100">
-                        <h2 className='text-2xl'>Dados do Paciente</h2>
-                        <p>Nome: {paciente.name} {paciente.surname}</p>
-                        <p>CPF: {paciente.cpf}</p>
+                    <div className="border p-8 pb-8 rounded bg-gray-100">
+                        <h2 className='text-2xl block text-gray-700 font-medium pb-6'>Dados do Paciente</h2>
+                        <p className='text-lg text-gray-700 font-medium pb-6'>Nome: {paciente.name} {paciente.surname}</p>
+                        <p className='text-lg text-gray-700 font-medium pb-6'>CPF: {paciente.cpf}</p>
 
                         <div className='mt-6'>
-                            <h3 className='text-xl font-semibold'>Dados da Ficha de Trauma</h3>
+                            <h3 className='text-2xl block text-gray-700 font-medium pb-6'>Dados da Ficha de Trauma</h3>
 
                             {/* Diagnóstico Médico */}
-                            <label className="block mb-2">
-                                Diagnóstico Médico:
-                                <input
-                                    type="text"
+                            <div className="block mb-2">
+                                <label className="text-xl block text-gray-700 font-medium pb-6">Diagnóstico Médico:</label>
+                                <textarea
                                     value={medicalDiagnosis}
                                     onChange={(e) => setMedicalDiagnosis(e.target.value)}
                                     placeholder="Digite o diagnóstico médico"
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
-                            </label>
+                            </div>
 
                             {/* Anamnese */}
-                            <label className="block mb-2">
-                                Anamnese:
+                            <div className="block mb-2">
+                                <label className="text-xl block text-gray-700 font-medium pb-6">Anamnese:</label>
                                 <textarea
                                     value={anamnesis}
                                     onChange={(e) => setAnamnesis(e.target.value)}
                                     placeholder="Digite a anamnese"
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
-                            </label>
+                            </div>
 
                             {/* Exame Físico */}
-                            <label className="block mb-2">
-                                Exame Físico:
+                            <div className="block mb-2">
+                                <label className="text-xl block text-gray-700 font-medium pb-6">
+                                    Exame Físico:
+                                </label>
                                 <textarea
                                     value={physicalExamination}
                                     onChange={(e) => setPhysicalExamination(e.target.value)}
                                     placeholder="Digite o exame físico"
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
-                            </label>
+                            </div>
 
                             {/* Triagem */}
-                            <label className="block mb-2">
-                                Triagem:
+                            <div className="block mb-2">
+                                <label className="text-xl block text-gray-700 font-medium pb-6">Triagem:</label>
                                 <textarea
                                     value={triage}
                                     onChange={(e) => setTriage(e.target.value)}
                                     placeholder="Digite a triagem"
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
-                            </label>
+                            </div>
 
                             {/* Palpação */}
-                            <label className="block mb-2">
-                                Palpação:
+                            <div className="block mb-2">
+                                <label className="text-xl block text-gray-700 font-medium pb-6">Palpação:</label>
                                 <textarea
                                     value={palpation}
                                     onChange={(e) => setPalpation(e.target.value)}
                                     placeholder="Digite a palpação"
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
-                            </label>
+                            </div>
 
                             {/* Edema */}
-                            <label className="block mb-2">
-                                Edema:
+                            <div className="block mb-2">
+                                <label className="text-xl block text-gray-700 font-medium pb-6">Edema:</label>
                                 <textarea
                                     value={edema}
                                     onChange={(e) => setEdema(e.target.value)}
                                     placeholder="Digite as informações sobre edema"
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
-                            </label>
+                            </div>
 
                             {/* Teste de Pressão Digital */}
-                            <label className="block mb-2">
-                                Teste de Pressão Digital:
+                            <div className="block mb-2">
+                                <label className="text-xl block text-gray-700 font-medium pb-6">Teste de Corrosão:</label>
                                 <textarea
                                     value={pittingTest}
                                     onChange={(e) => setPittingTest(e.target.value)}
                                     placeholder="Digite os resultados do teste de pressão digital"
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
-                            </label>
+                            </div>
+                            {/* Teste de Pressão Digital */}
+                            <div className="block mb-2">
+                                <label className="text-xl block text-gray-700 font-medium pb-6">Teste de Pressão Digital:</label>
+                                <textarea
+                                    value={fingerPressureTest}
+                                    onChange={(e) => setFingerPressureTest(e.target.value)}
+                                    placeholder="Digite os resultados do teste de pressão digital"
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </div>
 
                             {/* Perímetro */}
-                            <label className="block mb-2">
-                                Perímetro:
+                            <label className="text-xl block text-gray-700 font-medium pb-6">Perimetria</label>
+                            <label className="block mb-2 text-gray-700">
+                                Braço Direito:
                                 <input
                                     type="number"
-                                    value={perimetry}
-                                    onChange={(e) => setPerimetry(parseFloat(e.target.value))}
+                                    value={perimetry.rightArm}
+                                    onChange={(e) => setPerimetry({
+                                        ...perimetry,
+                                        rightArm: parseFloat(e.target.value)
+                                    })}
+                                    placeholder="Digite o perímetro"
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Braço Esquerdo:
+                                <input
+                                    type="number"
+                                    value={perimetry.leftArm}
+                                    onChange={(e) => setPerimetry({
+                                        ...perimetry,
+                                        leftArm: parseFloat(e.target.value)
+                                    })}
+                                    placeholder="Digite o perímetro"
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Coxa Direita (Superior):
+                                <input
+                                    type="number"
+                                    value={perimetry.upperRightThigh}
+                                    onChange={(e) => setPerimetry({
+                                        ...perimetry,
+                                        upperRightThigh: parseFloat(e.target.value)
+                                    })}
+                                    placeholder="Digite o perímetro"
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Coxa Esquerda (Superior):
+                                <input
+                                    type="number"
+                                    value={perimetry.upperLeftThigh}
+                                    onChange={(e) => setPerimetry({
+                                        ...perimetry,
+                                        upperLeftThigh: parseFloat(e.target.value)
+                                    })}
+                                    placeholder="Digite o perímetro"
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Coxa Direita (Inferior):
+                                <input
+                                    type="number"
+                                    value={perimetry.lowerRightThigh}
+                                    onChange={(e) => setPerimetry({
+                                        ...perimetry,
+                                        lowerRightThigh: parseFloat(e.target.value)
+                                    })}
+                                    placeholder="Digite o perímetro"
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Coxa Esquerda (Inferior):
+                                <input
+                                    type="number"
+                                    value={perimetry.lowerLeftThigh}
+                                    onChange={(e) => setPerimetry({
+                                        ...perimetry,
+                                        lowerLeftThigh: parseFloat(e.target.value)
+                                    })}
+                                    placeholder="Digite o perímetro"
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Joelho Direito:
+                                <input
+                                    type="number"
+                                    value={perimetry.rightKnee}
+                                    onChange={(e) => setPerimetry({
+                                        ...perimetry,
+                                        rightKnee: parseFloat(e.target.value)
+                                    })}
+                                    placeholder="Digite o perímetro"
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Joelho Esquerdo:
+                                <input
+                                    type="number"
+                                    value={perimetry.leftKnee}
+                                    onChange={(e) => setPerimetry({
+                                        ...perimetry,
+                                        leftKnee: parseFloat(e.target.value)
+                                    })}
                                     placeholder="Digite o perímetro"
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
                             </label>
 
                             {/* Avaliação de Dor Subjetiva */}
-                            <label className="block mb-2">
-                                Avaliação de Dor Subjetiva:
+
+                            <label className="text-xl block text-gray-700 font-medium pb-6">Avaliação de Dor Subjetiva</label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Intensidade da Dor
                                 <input
                                     type="number"
-                                    value={subjectivePainAssessment}
-                                    onChange={(e) => setSubjectivePainAssessment(parseInt(e.target.value))}
-                                    placeholder="Avalie a dor de 0 a 10"
+                                    value={subjectivePainAssessment.intensity}
+                                    onChange={(e) => setSubjectivePainAssessment({
+                                        ...subjectivePainAssessment,
+                                        intensity: parseFloat(e.target.value)
+                                    })}
+                                    placeholder="Digite o perímetro"
                                     className="border rounded w-full py-2 px-3 mt-1"
                                 />
                             </label>
-
-                            <ButtonOne texto="Criar Ficha de Trauma" onClick={handleCreateFicha}/>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Localização da Dor
+                                <input
+                                    type="string"
+                                    value={subjectivePainAssessment.location}
+                                    onChange={(e) => setSubjectivePainAssessment({
+                                        ...subjectivePainAssessment,
+                                        location: (e.target.value)
+                                    })}
+                                    placeholder="Digite o perímetro"
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Característica da Dor
+                                <input
+                                    type="string"
+                                    value={subjectivePainAssessment.characteristic}
+                                    onChange={(e) => setSubjectivePainAssessment({
+                                        ...subjectivePainAssessment,
+                                        characteristic: (e.target.value)
+                                    })}
+                                    placeholder="Digite o perímetro"
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            <label className="block mb-2 text-gray-700 font-medium">
+                                Teste Ortopédico Especial:
+                                <textarea
+                                    value={specialOrthopedicTest}
+                                    onChange={(e) => setSpecialOrthopedicTest(e.target.value)}
+                                    placeholder="Digite as informações sobre o teste"
+                                    className="border rounded w-full py-2 px-3 mt-1"
+                                />
+                            </label>
+                            
+                        </div>
+                        <div className="flex w-full items-baseline justify-end gap-4 mt-4 pr-8">
+                            <ButtonOne texto="Criar Ficha de Trauma" onClick={handleCreateFicha} />
                         </div>
                     </div>
+
+                    
                 )}
             </div>
+            
             <Footer/>
         </div>
     );

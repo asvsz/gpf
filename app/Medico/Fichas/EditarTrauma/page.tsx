@@ -203,7 +203,7 @@ export default function EditTraumaRecord() {
                                         checked={record.pittingTest}
                                         onChange={(e) => setRecord({ ...record, pittingTest: e.target.checked })}
                                     />
-                                    Teste de Edema
+                                    Teste de Corrosão
                                 </label>
                                 <label className="flex gap-2 text-base font-normal text-gray-800 mb-2">
                                     <input

@@ -127,7 +127,7 @@ export default function ViewCardioRecord() {
 
     // Exibição do formulário para visualização do registro neurofuncional
     return (
-        <PrivateRoute requiredUserType='clinician'>
+        // <PrivateRoute requiredUserType='clinician'>
             <div className="flex flex-col min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
                 <NavbarDoctor />
                 <h2 className="font-bold text-4xl text-gray-700 pt-8">Visualizar Registro Cardiorespiratório</h2>
@@ -231,6 +231,6 @@ export default function ViewCardioRecord() {
                 )}
                 <Footer />
             </div>
-        </PrivateRoute>
+        // </PrivateRoute>
     );
 }

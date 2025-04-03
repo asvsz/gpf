@@ -32,7 +32,7 @@ const TipoUsuario: React.FC = () => {
             <h1 className="font-bold text-4xl text-custom-green pb-6 mb-6">Selecione o Tipo de Usuário</h1>
             <div className="flex flex-col items-center space-y-6">
               <button
-                  className="font-medium bg-gray-300 text-xl text-custom-green rounded-lg px-6 py-2 hover:bg-custom-green hover:text-white transition duration-300"
+                  className="font-medium bg-gray-300 text-xl text-custom-green rounded-lg px-8 py-2 hover:bg-custom-green hover:text-white transition duration-300"
                   onClick={() => handleUserTypeSelection('patient')}
               >
                 Paciente
@@ -41,7 +41,7 @@ const TipoUsuario: React.FC = () => {
                   className="font-medium bg-gray-300 text-xl text-green-800 rounded-lg px-8 py-2 hover:bg-custom-green hover:text-white transition duration-300"
                   onClick={() => handleUserTypeSelection('clinician')}
               >
-                Clínico
+                Fisioterapeuta
               </button>
             </div>
           </div>

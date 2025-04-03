@@ -64,7 +64,7 @@ const Login = () => {
           {/* Conteúdo do login à direita */}
           <div className="flex flex-col justify-center items-center space-y-6 w-2/2"> {/* Ajuste a largura conforme necessário */}
             <h2 className='font-bold pb-10 text-4xl text-custom-green'>
-              Login como {user === 'clinician' ? 'Clínico' : 'Paciente'}
+              Login como {user === 'clinician' ? 'Fisioterapeuta' : 'Paciente'}
             </h2>
             <form onSubmit={handleLogin} className="w-full max-w-md"> {/* Limite a largura do formulário */}
               <Input
